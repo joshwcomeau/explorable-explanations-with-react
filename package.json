@@ -12,5 +12,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "guppy": {
+    "id": "explorable-explanations-with-react",
+    "name": "explorable-explanations-with-react",
+    "type": "create-react-app",
+    "color": "#00C853",
+    "icon": null,
+    "createdAt": 1530392335770
   }
 }

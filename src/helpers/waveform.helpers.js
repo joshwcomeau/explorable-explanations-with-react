@@ -2,7 +2,6 @@
 import { COLORS } from '../constants';
 import { range, sum, convertHexToRGBA } from '../utils';
 
-
 /**
  * This method gets an array of axis-relative points that can be used for
  * further calculations.
@@ -16,6 +15,7 @@ export const getPointsForWaveform = ({
   frequency,
   amplitude,
   width,
+  height,
   offset = 0,
 }: WaveformProps): Array<WaveformPoint> => {
   // Get an array of `x` values.
@@ -48,15 +48,20 @@ export const getPointsForWaveform = ({
     // TODO: Probably makes sense to keep it from 0-1, makes more semantic sense
     const progress = progressRelativeToCycles * 100 + offset;
 
-    return {
-      x,
-      y: getPositionAtPointRelativeToAxis(
-        shape,
-        frequency,
-        amplitude,
-        progress
-      ),
-    };
+    // Let's start by calculating the Y value from -1 to 1.
+    // This is "mathematically pure", since amplitude ranges from -1 to 1.
+    // It isn't the final step, though, since really we want to know the
+    // SVG coordinate for this value.
+    const mathematicallyPureY = getPositionAtPointRelativeToAxis(
+      shape,
+      frequency,
+      amplitude,
+      progress
+    );
+
+    const y = translateAxisRelativeYValue(mathematicallyPureY, height);
+
+    return { x, y };
   });
 
   if (shape === 'triangle') {
@@ -171,7 +176,7 @@ export const getPositionAtPointRelativeToAxis = (
       // adding that amount so that it ranges from `0 - 2*amplitude`
       const adjustedMax = amplitude * 2;
 
-      return progressThroughIteration * adjustedMax / 100 - amplitude;
+      return (progressThroughIteration * adjustedMax) / 100 - amplitude;
     }
 
     case 'triangle': {
@@ -216,7 +221,7 @@ export const getPositionAtPointRelativeToAxis = (
           // (since `* 1` can always be omitted).
           // If the wave is at half amplitude, though, our triangle's peak
           // should be halfway up from the X-axis. So we multiply by 0.5.
-          return progressThroughQuadrant / 25 * amplitude;
+          return (progressThroughQuadrant / 25) * amplitude;
         }
 
         case 2: {
@@ -235,7 +240,7 @@ export const getPositionAtPointRelativeToAxis = (
           //
           // But yeah, because our max amplitude can be less than 1, we have
           // to use `amplitude` instead of `1`.
-          return amplitude - progressThroughQuadrant / 25 * amplitude;
+          return amplitude - (progressThroughQuadrant / 25) * amplitude;
         }
 
         case 3: {
@@ -250,7 +255,7 @@ export const getPositionAtPointRelativeToAxis = (
           // By subtracting our max amplitude from the end of the Q2 formula,
           // we lower it accordingly.
           return (
-            amplitude - progressThroughQuadrant / 25 * amplitude - amplitude
+            amplitude - (progressThroughQuadrant / 25) * amplitude - amplitude
           );
         }
 
@@ -261,7 +266,7 @@ export const getPositionAtPointRelativeToAxis = (
           //
           // This make sense when you think about it. Q3 is just Q2 but lower.
           // Similarly, Q4 is just Q1 but lower.
-          return progressThroughQuadrant / 25 * amplitude - amplitude;
+          return (progressThroughQuadrant / 25) * amplitude - amplitude;
         }
 
         default: {
@@ -452,7 +457,7 @@ export const getHarmonicsForWave = ({
 
         const frequency = baseFrequency * harmonicIndex;
         const amplitude =
-          baseAmplitude / harmonicIndex ** 2 * amplitudePhaseMultiplier;
+          (baseAmplitude / harmonicIndex ** 2) * amplitudePhaseMultiplier;
 
         return { shape: 'sine', frequency, amplitude, ...delegated };
       });
@@ -485,7 +490,7 @@ export const getWaveforms = ({
       // Our phase ranges from 0 to 360, but we need to convert that to our
       // 0-100 offset for the waves. Additionally, we want the value to go
       // from 100-o, so that the phase moves to the right instead of the left.
-      const offset = 100 - phase * 100 / 360;
+      const offset = 100 - (phase * 100) / 360;
 
       return [
         {

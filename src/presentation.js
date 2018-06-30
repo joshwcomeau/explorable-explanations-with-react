@@ -18,6 +18,7 @@ import {
 import createTheme from 'spectacle/lib/themes/default';
 
 import Waveform from './components/Waveform';
+import WaveformCalculator from './components/WaveformCalculator';
 
 // Require CSS
 require('normalize.css');
@@ -38,11 +39,7 @@ const theme = createTheme(
 export default class Presentation extends React.Component {
   render() {
     return (
-      <Deck
-        transition={['fade']}
-        transitionDuration={500}
-        theme={theme}
-      >
+      <Deck transition={['fade']} transitionDuration={500} theme={theme}>
         <Slide bgColor="primary">
           <Heading size={1} fit caps lineHeight={1} textColor="secondary">
             Spectacle Boilerplate
@@ -53,11 +50,15 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Waveform
-
-          />
+          <WaveformCalculator
+            frequency={1}
+            amplitude={1}
+            width={500}
+            height={250}
+          >
+            {points => <Waveform width={500} height={250} points={points} />}
+          </WaveformCalculator>
         </Slide>
-
       </Deck>
     );
   }
