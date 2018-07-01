@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "hoist-non-react-statics": "2.5.5",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-motion": "^0.5.2",
+    "react-spring": "5.3.18",
     "spectacle-scripts": "2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "guppy": {
     "id": "explorable-explanations-with-react",
@@ -20,5 +25,13 @@
     "color": "#00C853",
     "icon": null,
     "createdAt": 1530392335770
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.4.8",
+    "@storybook/addon-links": "^3.4.8",
+    "@storybook/addons": "^3.4.8",
+    "@storybook/react": "^3.4.8",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0"
   }
 }
