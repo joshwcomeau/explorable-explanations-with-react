@@ -18,7 +18,6 @@ export const SHAPES: Array<WaveformShape> = [
 export const SPRING_SETTINGS = {
   stiffness: 170,
   damping: 26,
-  precision: 0.1,
 };
 
 type Colors = {

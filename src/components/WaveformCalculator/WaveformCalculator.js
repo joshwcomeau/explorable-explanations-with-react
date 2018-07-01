@@ -1,20 +1,20 @@
 // @flow
 import React, { PureComponent } from 'react';
+import { Motion, spring } from 'react-motion';
 
+import { SPRING_SETTINGS } from '../../constants';
 import {
   convertProgressToCycle,
   getPointsForWaveform,
+  applyWaveformAddition,
   createSVGPathFromWaveformPoints,
   translateAxisRelativeYValue,
 } from '../../helpers/waveform.helpers';
 
-type WaveformPoint = {
-  x: number,
-  y: number,
-};
+import type { WaveformPoint, WaveformShape } from '../../types';
 
 type Props = {
-  shape: 'sine' | 'triangle' | 'square' | 'sawtooth',
+  shape: WaveformShape,
   width: number,
   height: number,
   // frequency is the number of cycles to squeeze into this waveform
@@ -28,16 +28,20 @@ type Props = {
   // started. It can be used to derive the "offset", a value from 0 to 99
   // that represents where in the phase this wave starts from.
   progress?: number,
-  children: (points: Array<WaveformPoint>) => React$Node,
+  children: (points: Array<WaveformPoint>) => any,
 };
 
 type State = {
-  points: Array<WaveformPoint>,
+  isTweening: boolean,
+  tweenFromShape: WaveformShape,
+  tweenFromPoints: ?Array<WaveformPoint>,
 };
 
 class WaveformCalculator extends PureComponent {
   state = {
-    points: [],
+    isTweening: false,
+    tweenFromPoints: getPointsForWaveform(this.props),
+    tweenToShape: this.props.shape,
   };
 
   static defaultProps = {
@@ -45,28 +49,71 @@ class WaveformCalculator extends PureComponent {
     progress: 0,
   };
 
-  static getDerivedStateFromProps = (nextProps: Props) => {
-    const { width, height, shape, frequency, amplitude, progress } = nextProps;
+  componentWillReceiveProps(nextProps: Props) {
+    if (this.props.shape !== nextProps.shape) {
+      // This component will always think about things in terms of "fromPoints"
+      // and "toShape". The reason for this discrepancy is that I want this to
+      // be interruptible, and so if the wave is halfway between a sine and saw
+      // when it moves to triangle, I need to start a new transition from this
+      // mid-point.
+      this.setState({
+        isTweening: true,
+        tweenFromPoints: getPointsForWaveform(this.props),
+        tweenToShape: nextProps.shape,
+      });
+    }
+  }
 
-    const offset = convertProgressToCycle(progress);
-
-    const points = getPointsForWaveform({
+  render() {
+    const {
+      width,
+      height,
       shape,
       frequency,
       amplitude,
-      width,
-      height,
-      offset,
-    });
+      progress,
+      children,
+    } = this.props;
+    const { isTweening, tweenFromPoints, tweenToShape } = this.state;
 
-    return { points };
-  };
+    const tweenAmount = isTweening ? spring(1, SPRING_SETTINGS) : 0;
 
-  render() {
-    const { children } = this.props;
-    const { points } = this.state;
+    const offset = convertProgressToCycle(progress);
 
-    return children(points);
+    return (
+      <Motion
+        style={{ tweenAmount }}
+        onRest={() =>
+          this.setState({
+            isTweening: false,
+          })
+        }
+      >
+        {({ tweenAmount }) => {
+          const waveformProps = {
+            width,
+            height,
+            frequency,
+            amplitude,
+            progress,
+            offset,
+          };
+
+          const points = applyWaveformAddition(
+            tweenFromPoints,
+            [
+              getPointsForWaveform({
+                shape,
+                ...waveformProps,
+              }),
+            ],
+            tweenAmount
+          );
+
+          return children(points);
+        }}
+      </Motion>
+    );
   }
 }
 

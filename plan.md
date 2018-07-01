@@ -33,3 +33,10 @@ Main Presentation
 CFP: https://docs.google.com/document/d/15LmX3HZ0-yssOQZlYIrAN7XHyzZKUGIFfaOPp-yW0SY/edit#heading=h.mt9lkosdjeje
 
 For the intercept ball, mention how the instinct is to embed it within the <Waveform> component (after all, that's how a non-react, imperative solution would work!). This burdens that component, though, and makes it less flexible.
+
+---
+
+STRETCH GOALS:
+
+- Make `<WaveformCalculator>` interruptible.
+  This is a surprisingly hard problem, since we need some way of "resetting" the progress value.
