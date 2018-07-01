@@ -51,10 +51,10 @@ export default class Presentation extends React.Component {
 
         <Slide>
           <WaveformCalculator
-            frequency={1}
-            amplitude={1}
             width={500}
             height={250}
+            frequency={1}
+            amplitude={1}
           >
             {points => <Waveform width={500} height={250} points={points} />}
           </WaveformCalculator>

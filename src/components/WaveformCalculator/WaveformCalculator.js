@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import {
   convertProgressToCycle,
@@ -8,8 +8,15 @@ import {
   translateAxisRelativeYValue,
 } from '../../helpers/waveform.helpers';
 
+type WaveformPoint = {
+  x: number,
+  y: number,
+};
+
 type Props = {
   shape: 'sine' | 'triangle' | 'square' | 'sawtooth',
+  width: number,
+  height: number,
   // frequency is the number of cycles to squeeze into this waveform
   // visualization. The default value of `1` means that a single iteration of
   // the waveform is drawn. `2` means that the cycle is rendered twice, etc
@@ -21,24 +28,25 @@ type Props = {
   // started. It can be used to derive the "offset", a value from 0 to 99
   // that represents where in the phase this wave starts from.
   progress?: number,
+  children: (points: Array<WaveformPoint>) => React$Node,
 };
 
-class WaveformCalculator extends Component {
+type State = {
+  points: Array<WaveformPoint>,
+};
+
+class WaveformCalculator extends PureComponent {
+  state = {
+    points: [],
+  };
+
   static defaultProps = {
     shape: 'sine',
     progress: 0,
   };
 
-  render() {
-    const {
-      width,
-      height,
-      shape,
-      frequency,
-      amplitude,
-      progress,
-      children,
-    } = this.props;
+  static getDerivedStateFromProps = (nextProps: Props) => {
+    const { width, height, shape, frequency, amplitude, progress } = nextProps;
 
     const offset = convertProgressToCycle(progress);
 
@@ -50,6 +58,13 @@ class WaveformCalculator extends Component {
       height,
       offset,
     });
+
+    return { points };
+  };
+
+  render() {
+    const { children } = this.props;
+    const { points } = this.state;
 
     return children(points);
   }
