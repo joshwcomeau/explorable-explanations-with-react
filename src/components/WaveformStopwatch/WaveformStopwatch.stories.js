@@ -10,11 +10,13 @@ import WaveformStopwatch from './WaveformStopwatch';
 
 storiesOf('WaveformStopwatch', module)
   .add('Basic count, default frequency-snap', () => (
-    <StopwatchManager>{timeElapsed => timeElapsed}</StopwatchManager>
+    <StopwatchManager>
+      {timeElapsed => <span>{timeElapsed}</span>}
+    </StopwatchManager>
   ))
   .add('Snap to 2Hz', () => (
     <StopwatchManager frequency={2}>
-      {timeElapsed => timeElapsed}
+      {timeElapsed => <span>{timeElapsed}</span>}
     </StopwatchManager>
   ))
   .add('Progress Bar', () => (
@@ -80,16 +82,22 @@ const BarWrapper = styled.div`
   width: 500px;
   height: 20px;
   background: rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  border-radius: 20px;
 `;
 
-const Bar = styled.div`
+const Bar = styled.div.attrs({
+  style: props => ({
+    transform: `scaleX(${props.progress + 0.001})`,
+  }),
+})`
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   width: 100px;
+  height: 20px;
   background: red;
-  transform: scaleX(${props => props.progress});
   transform-origin: center left;
 `;
 

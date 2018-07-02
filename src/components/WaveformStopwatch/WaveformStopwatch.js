@@ -1,5 +1,8 @@
 // @flow
 import React, { Component } from 'react';
+import { Motion, spring } from 'react-motion';
+
+import { SPRING_SETTINGS } from '../../constants';
 
 type Props = {
   isRunning: boolean,
@@ -139,7 +142,16 @@ class WaveformStopwatch extends Component {
       timeElapsed = 0;
     }
 
-    return this.props.children(timeElapsed);
+    return (
+      <Motion
+        defaultStyle={{ timeElapsed: 0 }}
+        style={{
+          timeElapsed: timeElapsed ? spring(timeElapsed, SPRING_SETTINGS) : 0,
+        }}
+      >
+        {({ timeElapsed }) => this.props.children(timeElapsed)}
+      </Motion>
+    );
   }
 }
 
