@@ -7,6 +7,28 @@ import { SHAPES } from '../../constants';
 import Waveform from '../Waveform';
 import WaveformCalculator from './WaveformCalculator';
 
+storiesOf('WaveformCalculator', module)
+  .add('Basic Sine', () => (
+    <WaveformCalculator width={500} height={250} frequency={1} amplitude={1}>
+      {points => <Waveform width={500} height={250} points={points} />}
+    </WaveformCalculator>
+  ))
+  .add('Shapeshifter', () => (
+    <ShapeToggle>
+      {shape => (
+        <WaveformCalculator
+          shape={shape}
+          width={500}
+          height={250}
+          frequency={1}
+          amplitude={1}
+        >
+          {points => <Waveform width={500} height={250} points={points} />}
+        </WaveformCalculator>
+      )}
+    </ShapeToggle>
+  ));
+
 class ShapeToggle extends Component {
   state = {
     shape: 'sine',
@@ -59,28 +81,3 @@ class ShapeToggle extends Component {
     );
   }
 }
-
-// The typical usecase is to provide a `shape` and let <Waveform> work out the
-// specific points, but during waveform addition, the waveform needs to draw
-// arbitrary points. This story checks that alternative usecase.
-storiesOf('WaveformCalculator', module)
-  .add('Basic Sine', () => (
-    <WaveformCalculator width={500} height={250} frequency={1} amplitude={1}>
-      {points => <Waveform width={500} height={250} points={points} />}
-    </WaveformCalculator>
-  ))
-  .add('Shapeshifter', () => (
-    <ShapeToggle>
-      {shape => (
-        <WaveformCalculator
-          shape={shape}
-          width={500}
-          height={250}
-          frequency={1}
-          amplitude={1}
-        >
-          {points => <Waveform width={500} height={250} points={points} />}
-        </WaveformCalculator>
-      )}
-    </ShapeToggle>
-  ));

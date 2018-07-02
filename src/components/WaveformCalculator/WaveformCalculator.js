@@ -4,7 +4,7 @@ import { Motion, spring } from 'react-motion';
 
 import { SPRING_SETTINGS } from '../../constants';
 import {
-  convertProgressToCycle,
+  convertTimeElapsedToCycle,
   getPointsForWaveform,
   applyWaveformAddition,
   createSVGPathFromWaveformPoints,
@@ -24,10 +24,10 @@ type Props = {
   // Amplitude is the strength of the waveform (AKA loudness, volume).
   // it can range from 0 to 1, and affects how 'tall' the waveform is.
   amplitude: number,
-  // Progress is the number of seconds that have passed since the animation
+  // timeElapsed is the number of seconds that have passed since the animation
   // started. It can be used to derive the "offset", a value from 0 to 99
   // that represents where in the phase this wave starts from.
-  progress?: number,
+  timeElapsed?: number,
   children: (points: Array<WaveformPoint>) => any,
 };
 
@@ -46,7 +46,7 @@ class WaveformCalculator extends PureComponent {
 
   static defaultProps = {
     shape: 'sine',
-    progress: 0,
+    timeElapsed: 0,
   };
 
   componentWillReceiveProps(nextProps: Props) {
@@ -71,14 +71,14 @@ class WaveformCalculator extends PureComponent {
       shape,
       frequency,
       amplitude,
-      progress,
+      timeElapsed,
       children,
     } = this.props;
     const { isTweening, tweenFromPoints, tweenToShape } = this.state;
 
     const tweenAmount = isTweening ? spring(1, SPRING_SETTINGS) : 0;
 
-    const offset = convertProgressToCycle(progress);
+    const offset = convertTimeElapsedToCycle(timeElapsed, frequency);
 
     return (
       <Motion
@@ -95,7 +95,7 @@ class WaveformCalculator extends PureComponent {
             height,
             frequency,
             amplitude,
-            progress,
+            timeElapsed,
             offset,
           };
 

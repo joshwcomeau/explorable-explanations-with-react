@@ -347,8 +347,14 @@ export const applyWaveformAddition = (
   });
 };
 
+// DEPRECATED
 export const convertProgressToCycle = (progress: number) =>
   (progress * 100) % 100;
+
+export const convertTimeElapsedToCycle = (
+  timeElapsed: number,
+  frequency: number
+) => ((timeElapsed * 100) % 100) * frequency;
 
 type GetHarmonicsForWaveArgs = {
   harmonicsForShape?: WaveformShape,

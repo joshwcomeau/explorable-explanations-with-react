@@ -29,6 +29,9 @@ Main Presentation
 7.  Show an alternative with <WaveformCalculator>
 8.  Source for the new waveform
 9.  Source for WaveformCalculator
+10. The next thing to figure out is, how do we animate this? I thought about just translating the wave, and hiding the overflow, but then I realized the frequency can go above 1, and then you'd need to repeat the wave a bunch of times... it seemed easier just to recalculate the points. All I need is a time-keeping mechanism.
+11. Photo of stopwatch
+12. new API, with stopwatch passing a `secondsElapsed`.
 
 CFP: https://docs.google.com/document/d/15LmX3HZ0-yssOQZlYIrAN7XHyzZKUGIFfaOPp-yW0SY/edit#heading=h.mt9lkosdjeje
 
@@ -40,3 +43,5 @@ STRETCH GOALS:
 
 - Make `<WaveformCalculator>` interruptible.
   This is a surprisingly hard problem, since we need some way of "resetting" the progress value.
+- Mention how render props start to look a bit like callback hell, and how pseudo-HOCs can fix that
+- Use context to pass width/height/frequency/amplitude around the tree?
