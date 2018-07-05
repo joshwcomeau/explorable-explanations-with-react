@@ -1,22 +1,23 @@
 Intro
 
+0.  Anecdote about the theme music maybe? Crossroads?
 1.  Title card
-2.  Intro - name, job
+1.  Intro - name, job
     2A. Cats, unlikely animal friendships
-3.  … And I really like building stuff on the side
-4.  Quick demo of Tello
-5.  Quick demo of Guppy
-6.  Demo of Waveforms - cover how frequency and amplitude work
-7.  One of my most satisfying side-projects ever
-8.  [Snippet of email 1]
-9.  [Snippet of email 2]
-10. This project was meaningful to people because it allowed them to learn in a way that videos or articles don’t. Being able to play with the model is a way to supercharge intuitive understanding
-11. There’s a whole community of people doing this stuff! explorabl.es
-12. Demo of “To Build A Better Ballot”
-13. React might be the perfect tool to build these kinds of things
-14. Going back to waveforms demo. Notice how the waveform on the left changes several times throughout the experience.
-15. React was built to solve these kinds of problems. Working on them makes you a better React developer
-16. Today we’re gonna recreate this explorable explanation
+1.  … And I really like building stuff on the side
+1.  Quick demo of Tello
+1.  Quick demo of Guppy
+1.  Demo of Waveforms - cover how frequency and amplitude work
+1.  One of my most satisfying side-projects ever
+1.  [Snippet of email 1]
+1.  [Snippet of email 2]
+1.  This project was meaningful to people because it allowed them to learn in a way that videos or articles don’t. Being able to play with the model is a way to supercharge intuitive understanding
+1.  There’s a whole community of people doing this stuff! explorabl.es
+1.  Demo of “To Build A Better Ballot”
+1.  React might be the perfect tool to build these kinds of things
+1.  Going back to waveforms demo. Notice how the waveform on the left changes several times throughout the experience.
+1.  React was built to solve these kinds of problems. Working on them makes you a better React developer
+1.  Today we’re gonna recreate this explorable explanation
 
 Main Presentation
 
@@ -32,6 +33,8 @@ Main Presentation
 10. The next thing to figure out is, how do we animate this? I thought about just translating the wave, and hiding the overflow, but then I realized the frequency can go above 1, and then you'd need to repeat the wave a bunch of times... it seemed easier just to recalculate the points. All I need is a time-keeping mechanism.
 11. Photo of stopwatch
 12. new API, with stopwatch passing a `secondsElapsed`.
+13. Mention how there's certainly a better way to do this, but ultimately we gotta move on with our life. Shipping beats perfection.
+14.
 
 CFP: https://docs.google.com/document/d/15LmX3HZ0-yssOQZlYIrAN7XHyzZKUGIFfaOPp-yW0SY/edit#heading=h.mt9lkosdjeje
 

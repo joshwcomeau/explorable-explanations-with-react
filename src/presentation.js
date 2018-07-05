@@ -1,7 +1,6 @@
 // Import React
 import React from 'react';
-
-// Import Spectacle Core tags
+import { injectGlobal } from 'styled-components';
 import {
   BlockQuote,
   Cite,
@@ -13,9 +12,11 @@ import {
   Slide,
   Text,
 } from 'spectacle';
-
-// Import theme
 import createTheme from 'spectacle/lib/themes/default';
+
+import { COLORS } from './constants';
+
+import TitleSlide from './slides/Title';
 
 import Waveform from './components/Waveform';
 import WaveformCalculator from './components/WaveformCalculator';
@@ -23,16 +24,32 @@ import WaveformCalculator from './components/WaveformCalculator';
 // Require CSS
 require('normalize.css');
 
+// HACK: Spectacle applies a `transform: scale(1)` to all slides.
+// This means that any children with position: fixed don't actually position
+// themselves relative to the viewport, they position themselves relative to
+// the 1000x700px slide container.
+// This class allows us to override that scale, since none of my slides use
+// scale in transitions anyway.
+injectGlobal`
+  .slideWithoutScale {
+    transform: none !important;
+  }
+`;
+
 const theme = createTheme(
   {
-    primary: 'white',
-    secondary: '#1F2022',
-    tertiary: '#03A9FC',
-    quartenary: '#CECECE',
+    primary: '#FFFFFF',
+    secondary: '#222222',
+    pink: COLORS.pink[500],
+    red: COLORS.red[500],
+    green: COLORS.green[700],
+    blue: COLORS.blue[500],
+    indigo: COLORS.indigo[700],
+    purple: COLORS.purple[500],
   },
   {
-    primary: 'Montserrat',
-    secondary: 'Helvetica',
+    primary: 'Lato',
+    secondary: 'Playfair Display',
   }
 );
 
@@ -40,13 +57,8 @@ export default class Presentation extends React.Component {
   render() {
     return (
       <Deck transition={['fade']} transitionDuration={500} theme={theme}>
-        <Slide bgColor="primary">
-          <Heading size={1} fit caps lineHeight={1} textColor="secondary">
-            Spectacle Boilerplate
-          </Heading>
-          <Text margin="10px 0 0" textColor="tertiary" size={1} fit bold>
-            open the presentation/index.js file to get started
-          </Text>
+        <Slide>
+          <TitleSlide />
         </Slide>
 
         <Slide>
