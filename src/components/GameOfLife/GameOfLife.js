@@ -42,34 +42,21 @@ class GameOfLife extends PureComponent {
     // `stackedHeight` in one place, for consistency.
   };
 
-  constructor(props) {
-    super(props);
-
-    const { width, height, cellWidth, cellGap, stackedHeight } = props;
-
-    const { numRows, numCols } = getInitialBoardDimensions(this.props);
-
-    // The initial board should be totally empty, so that our first _real_
-    // board can fade in.
-    this.board = generateNewBoard(numRows, numCols);
-
-    // Randomly generate a board.
-    // TODO: Find a nicer starting pattern?
-    this.nextBoard = generateNewBoard(numRows, numCols, {
-      randomize: true,
-    });
-
-    // We'll keep the current frame in state.
-    // This is because we want the component to re-render on every frame,
-    // so we can leverage the component lifecycle to do this for us.
-    this.state = {
-      frame: 0,
-    };
-  }
+  state = {
+    frame: 0,
+  };
 
   componentDidMount() {
-    this.drawBackgroundGrid();
-    this.draw();
+    this.initialize();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (
+      this.props.width !== nextProps.width ||
+      this.props.height !== nextProps.height
+    ) {
+      this.initialize();
+    }
   }
 
   componentDidUpdate() {
@@ -104,8 +91,14 @@ class GameOfLife extends PureComponent {
         const currentColor = colors[currentColorIndex];
         const nextColor = colors[nextColorIndex];
 
+        // TODO: Might be nice if each cell had a different animation speed.
+        // Could be seeded from the coords
+        const fractionMultiple = 2;
+        const fractionOffset =
+          colIndex / row.length / 2 + rowIndex / row.length / 2;
         const progressThroughTick = clamp(
-          ((frame % framesPerTick) / framesPerTick) * 4 - 2,
+          ((frame % framesPerTick) / framesPerTick) * fractionMultiple -
+            fractionOffset,
           0,
           1
         );
@@ -140,6 +133,33 @@ class GameOfLife extends PureComponent {
       });
     }
   }
+
+  initialize = () => {
+    const { width, height, cellWidth, cellGap, stackedHeight } = this.props;
+    const { numRows, numCols } = getInitialBoardDimensions(this.props);
+
+    window.cancelAnimationFrame(this.animationFrameId);
+
+    // The initial board should be totally empty, so that our first _real_
+    // board can fade in.
+    this.board = generateNewBoard(numRows, numCols);
+
+    // Randomly generate a board.
+    // TODO: Find a nicer starting pattern?
+    this.nextBoard = generateNewBoard(numRows, numCols, {
+      randomize: true,
+    });
+
+    // We'll keep the current frame in state.
+    // This is because we want the component to re-render on every frame,
+    // so we can leverage the component lifecycle to do this for us.
+    this.setState({
+      frame: 0,
+    });
+
+    this.drawBackgroundGrid();
+    this.draw();
+  };
 
   handleMouseMove = ev => {
     // NOTE: I happen to know that in this app, the canvas sits at the
@@ -224,7 +244,7 @@ class GameOfLife extends PureComponent {
     this.nextBoard = isStartOfNextTick ? tick(nextBoard) : nextBoard;
 
     this.setState({ frame: frame + 1 }, () => {
-      window.requestAnimationFrame(this.draw);
+      this.animationFrameId = window.requestAnimationFrame(this.draw);
     });
   };
 

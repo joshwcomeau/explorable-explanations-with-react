@@ -31,7 +31,7 @@ require('normalize.css');
 // This class allows us to override that scale, since none of my slides use
 // scale in transitions anyway.
 injectGlobal`
-  .slideWithoutScale {
+  .spectacle-content {
     transform: none !important;
   }
 `;
