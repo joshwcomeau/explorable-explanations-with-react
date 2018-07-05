@@ -34,32 +34,26 @@ type Props = {
 type State = {
   isTweening: boolean,
   tweenFromShape: WaveformShape,
-  tweenFromPoints: ?Array<WaveformPoint>,
 };
 
 class WaveformCalculator extends PureComponent {
   state = {
     isTweening: false,
-    tweenFromPoints: getPointsForWaveform(this.props),
-    tweenToShape: this.props.shape,
+    tweenFromShape: this.props.shape,
   };
 
   static defaultProps = {
     shape: 'sine',
+    frequency: 1,
+    amplitude: 1,
     timeElapsed: 0,
   };
 
   componentWillReceiveProps(nextProps: Props) {
     if (this.props.shape !== nextProps.shape) {
-      // This component will always think about things in terms of "fromPoints"
-      // and "toShape". The reason for this discrepancy is that I want this to
-      // be interruptible, and so if the wave is halfway between a sine and saw
-      // when it moves to triangle, I need to start a new transition from this
-      // mid-point.
       this.setState({
         isTweening: true,
-        tweenFromPoints: getPointsForWaveform(this.props),
-        tweenToShape: nextProps.shape,
+        tweenFromShape: this.props.shape,
       });
     }
   }
@@ -78,8 +72,6 @@ class WaveformCalculator extends PureComponent {
 
     const tweenAmount = isTweening ? spring(1, SPRING_SETTINGS) : 0;
 
-    const offset = convertTimeElapsedToCycle(timeElapsed, frequency);
-
     return (
       <Motion
         style={{ tweenAmount }}
@@ -90,23 +82,12 @@ class WaveformCalculator extends PureComponent {
         }
       >
         {({ tweenAmount }) => {
-          const waveformProps = {
-            width,
-            height,
-            frequency,
-            amplitude,
-            timeElapsed,
-            offset,
-          };
-
           const points = applyWaveformAddition(
-            tweenFromPoints,
-            [
-              getPointsForWaveform({
-                shape,
-                ...waveformProps,
-              }),
-            ],
+            getPointsForWaveform({
+              ...this.props,
+              shape: this.state.tweenFromShape,
+            }),
+            [getPointsForWaveform(this.props)],
             tweenAmount
           );
 

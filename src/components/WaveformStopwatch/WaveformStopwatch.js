@@ -137,7 +137,8 @@ class WaveformStopwatch extends Component {
 
     let timeElapsed;
     if (startedAt instanceof Date && lastTickAt instanceof Date) {
-      timeElapsed = (lastTickAt - startedAt) / 1000;
+      const rawTimeElapsed = (lastTickAt - startedAt) / 1000;
+      timeElapsed = spring(rawTimeElapsed, SPRING_SETTINGS);
     } else {
       timeElapsed = 0;
     }
@@ -145,9 +146,8 @@ class WaveformStopwatch extends Component {
     return (
       <Motion
         defaultStyle={{ timeElapsed: 0 }}
-        style={{
-          timeElapsed: timeElapsed ? spring(timeElapsed, SPRING_SETTINGS) : 0,
-        }}
+        style={{ timeElapsed }}
+        onRest={() => this.setState({ startedAt: null, lastTickAt: null })}
       >
         {({ timeElapsed }) => this.props.children(timeElapsed)}
       </Motion>

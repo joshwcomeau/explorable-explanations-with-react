@@ -16,8 +16,10 @@ export const getPointsForWaveform = ({
   amplitude,
   width,
   height,
-  offset = 0,
+  timeElapsed = 0,
 }: WaveformProps): Array<WaveformPoint> => {
+  const offset = convertTimeElapsedToCycle(timeElapsed, frequency);
+
   // Get an array of `x` values.
   // For now, we're drawing lines at every second point, for performance.
   // After experimentation, this may change.
@@ -44,7 +46,7 @@ export const getPointsForWaveform = ({
     // As a refresher: `offset` ranges from 0 to 99, and it controls how much
     // to shift the waveform by.
     // Example: A sine wave with 50 offset will look like an inverted sine wave.
-    // The `* 100` is necessary since offset is 0-99 instead of 0-1.
+    // The `* 100` is necessary since offset is 1-100 instead of 0-1.
     // TODO: Probably makes sense to keep it from 0-1, makes more semantic sense
     const progress = progressRelativeToCycles * 100 + offset;
 
@@ -118,6 +120,7 @@ export const createSVGPathFromWaveformPoints = (
     // For all subsequent points, we can just draw a line to it.
     return `${acc} L ${x},${y}`;
   }, '');
+
 /**
  * Given progress between 0 and 100, figure out the Y position, relative
  * to the X axis (from 1 to -1)

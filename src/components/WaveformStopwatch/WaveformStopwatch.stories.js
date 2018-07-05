@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { SHAPES } from '../../constants';
 
 import Waveform from '../Waveform';
+import WaveformCalculator from '../WaveformCalculator';
 import WaveformStopwatch from './WaveformStopwatch';
 
 storiesOf('WaveformStopwatch', module)
@@ -22,6 +23,20 @@ storiesOf('WaveformStopwatch', module)
   .add('Progress Bar', () => (
     <StopwatchManager>
       {timeElapsed => <StopwatchBar progress={timeElapsed} />}
+    </StopwatchManager>
+  ))
+  .add('Waveform', () => (
+    <StopwatchManager frequency={2}>
+      {timeElapsed => (
+        <WaveformCalculator
+          width={500}
+          height={250}
+          frequency={2}
+          timeElapsed={timeElapsed}
+        >
+          {points => <Waveform points={points} />}
+        </WaveformCalculator>
+      )}
     </StopwatchManager>
   ));
 
