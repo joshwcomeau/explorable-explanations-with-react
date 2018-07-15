@@ -14,14 +14,13 @@ import styled from 'styled-components';
 
 import GameOfLife from '../../components/GameOfLife';
 import WindowDimensions from '../../components/WindowDimensions';
+import { COLORS } from '../../constants';
 
 class Title extends Component {
   render() {
     return (
       <Fragment>
-        <TitleText size={2} textColor="secondary" textFont="secondary">
-          Explorable Explanations with React
-        </TitleText>
+        <TitleText>Explorable Explanations with React</TitleText>
         <WindowDimensions>
           {({ width, height }) => (
             <GameOfLifeWrapper>
@@ -39,9 +38,20 @@ class Title extends Component {
   }
 }
 
-const TitleText = styled(Heading)`
-  position: relative;
+const TitleText = styled.h1`
+  position: fixed;
   z-index: 1;
+  top: 0px;
+  left: 0px;
+  text-align: left;
+  display: block;
+  padding: 20px 30px;
+  margin: 10px;
+  font-family: 'Raleway';
+  font-weight: 900;
+  font-size: 3vw;
+  color: ${COLORS.white};
+  background: ${COLORS.gray[900]};
 `;
 
 const GameOfLifeWrapper = styled.div`

@@ -49,7 +49,7 @@ const theme = createTheme(
   },
   {
     primary: 'Lato',
-    secondary: 'Playfair Display',
+    secondary: 'Raleway',
   }
 );
 
