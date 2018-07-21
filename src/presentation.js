@@ -75,31 +75,13 @@ export default class Presentation extends React.Component {
           <IntroSlide />
         </Slide>
 
+
         <Slide>
-          <Heading size={3}>Things I Like:</Heading>
-          <img src={spacerSrc} height={500} />
+        <Heading size={3}>I like building things</Heading>
         </Slide>
 
-        <Slide transition={['none']}>
-          <Heading size={3}>Things I Like:</Heading>
-          <img src={unlikelyAnimalFriendships1Src} height={500} />
-        </Slide>
-
-        <Slide transition={['none']}>
-          <Heading size={3}>Things I Like:</Heading>
-          <video
-            autoPlay
-            loop
-            src={unlikelyAnimalFriendships2Src}
-            style={{
-              height: 500,
-              margin: 'auto',
-            }}
-          />
-        </Slide>
-
-        <Slide transition={['none']}>
-          <Heading size={3}>Things I Like:</Heading>
+        <Slide>
+          <Heading size={3}>Tello</Heading>
           <video
             autoPlay
             loop
@@ -111,8 +93,8 @@ export default class Presentation extends React.Component {
           />
         </Slide>
 
-        <Slide transition={['none']}>
-          <Heading size={3}>Things I Like:</Heading>
+        <Slide >
+          <Heading size={3}>Guppy</Heading>
           <video
             autoPlay
             loop
@@ -122,6 +104,87 @@ export default class Presentation extends React.Component {
               margin: 'auto',
             }}
           />
+        </Slide>
+
+        <Slide
+          notes={`
+            I usually have a side project going, and earlier this year I wanted
+            to try something different. Before I got into programming, I was
+            an audio engineer. I've always been fascinated by how
+            sound works, the physics of sound are really interesting. And yet,
+            it's not common knowledge, it's institutional knowledge for audio
+            engineers and other folks who work with sound.
+
+            I think the reason for that is that it's not easily transmitted
+            knowledge
+          `}
+        >
+          <Heading size={1}>🔊</Heading>
+        </Slide>
+
+        <Slide
+          notes={`
+            For example, when you search for this stuff on Google, you get
+            articles like this. I don't want to denigrate this page, or others
+            like it, because the authors clearly put a lot of time and care
+            into creating something helpful, but it's a tall order for someone
+            without an audio background to be presented with words and pictures,
+            and to come away with a working intuitive knowledge for complex
+            systems.
+
+            There's a couple things that make this tough.
+
+
+
+
+            Something interesting I heard a while ago is that language is lossy.
+            I have a body of working knowledge in my head, and I can try and
+            transmit that body of working knowledge to others, through words
+            and drawings, but
+          `}
+        >
+          Screenshot of https://method-behind-the-music.com/mechanics/physics/
+        </Slide>
+
+        <Slide
+          notes={`
+            The first is that language is lossy.
+
+            Words are a way to try and transmit an idea from my head to yours,
+            but at best they're a rough approximation. Complex systems aren't
+            easily compressed into a handful of vocal bits, it would take hours
+            of talking just to go over all the rules of a system.
+
+            And, it still wouldn't be sufficient, because...
+          `}
+        >
+          <Heading size={3}>Language is lossy</Heading>
+        </Slide>
+
+        <Slide
+          notes={`
+            ...learning is active. Deep, intuitive understanding requires that
+            your brain not only absorb the words, but think about them, make
+            the connections, create a working model of the system.
+          `}
+        >
+          <Heading size={3}>Learning is active</Heading>
+        </Slide>
+
+        <Slide
+          notes={`
+            The best way to do that is through experimentation.
+
+            Our brains are really good at building intuition through
+            experimentation. We all understand how gravity works because we can
+            toss things in the air and see how they react. When you think about
+            it, basketball players are amazing, because it demonstrates such
+            deep understanding of how gravity affects objects. And they develop
+            that skill not through reading about acceleration and mass, but by
+            throwing things and seeing how they respond.
+          `}
+        >
+          <Heading size={3}>Learning is active</Heading>
         </Slide>
 
         <Slide>

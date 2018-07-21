@@ -48,3 +48,12 @@ STRETCH GOALS:
   This is a surprisingly hard problem, since we need some way of "resetting" the progress value.
 - Mention how render props start to look a bit like callback hell, and how pseudo-HOCs can fix that
 - Use context to pass width/height/frequency/amplitude around the tree?
+- Show off <AudioCtx> and <Oscillator> components?
+
+
+
+NOTES:
+
+- Find a text definition about frequency, amplitude, and compare it with the version I built with sliders.
+
+Learning with books, lossy medium, because I have this concept in my head, and I have to transmit it into yours.
