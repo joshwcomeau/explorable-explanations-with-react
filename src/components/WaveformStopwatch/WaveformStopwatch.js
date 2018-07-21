@@ -6,27 +6,36 @@ import { SPRING_SETTINGS } from '../../constants';
 
 type Props = {
   isRunning: boolean,
-  snapToFrequency: number,
+  amplitude: number,
+  frequency: number,
+  children: (progress: number) => React$Node,
 };
 
 type State = {
-  timeElapsed: number,
+  // `progress` is the number of cycles that have advanced since starting.
+  // It can be decimal: eg. a progress of 1.5 means that the waveform has
+  // advanced by 1 and a half iterations.
+  progress: number,
   lastTickAt: ?Date,
-  stopRequestedAt: ?number,
+  // When we receive the request to stop the animation, it's nice to follow
+  // through to the end of the current cycle, so that it winds up in its
+  // original position.
+  // This number controls the cycle the stop was requested in.
+  stopRequestedAtCycle: ?number,
 };
 
 class WaveformStopwatch extends Component {
   animationFrameId: number;
 
   state = {
-    startedAt: null,
+    progress: 0,
     lastTickAt: null,
-    stopRequestedAt: null,
+    stopRequestedAtCycle: null,
   };
 
   static defaultProps = {
     isRunning: false,
-    snapToFrequency: 1,
+    frequency: 1,
   };
 
   componentDidUpdate(prevProps) {
@@ -43,113 +52,88 @@ class WaveformStopwatch extends Component {
     if (isJustStarting) {
       this.start();
     } else if (isJustStopping) {
-      this.requestStop();
+      this.stop();
     }
   }
 
+  componentWillUnmount() {
+    window.cancelAnimationFrame(this.animationFrameId);
+  }
+
   start = () => {
-    const startedAt = new Date();
-
-    this.setState(
-      {
-        startedAt,
-        lastTickAt: startedAt,
-      },
-      this.tick
-    );
+    this.setState({ lastTickAt: new Date() }, this.tick);
   };
 
-  requestStop = () => {
+  stop = () => {
     this.setState({
-      stopRequestedAt: new Date(),
+      stopRequestedAtCycle: this.state.progress,
     });
-  };
-
-  stop = finalTickAt => {
-    this.setState(state => ({
-      lastTickAt: finalTickAt,
-      stopRequestedAt: null,
-    }));
   };
 
   tick = () => {
     this.animationFrameId = window.requestAnimationFrame(() => {
-      const { snapToFrequency } = this.props;
-      const { startedAt, lastTickAt, stopRequestedAt } = this.state;
+      const { frequency } = this.props;
+      const { progress, stopRequestedAtCycle, lastTickAt } = this.state;
 
-      // TODO: is this check necessary? What for?
       if (!lastTickAt) {
         return;
       }
 
       const tickAt = new Date();
-      const secondsSinceLastTick = (tickAt - lastTickAt) / 1000;
 
-      if (stopRequestedAt) {
-        // We may wish to 'snap' to the nearest frequency (eg. 2Hz)
-        // First, find the period for this frequency, since that's the number
-        // of seconds we want to snap to
-        // (eg. 2Hz means we want to snap to the nearest 500ms)
-        const period = 1 / snapToFrequency;
+      let secondsSinceLastTick = (tickAt - lastTickAt) / 1000;
+      // Let's clamp the `secondsSinceLastTick` to 0.5 max. This is to avoid the
+      // wild flurry that happens when returning to an inactive tab.
+      secondsSinceLastTick = Math.min(secondsSinceLastTick, 0.5);
 
-        // How much time passed between the start of the stopwatch, and when the
-        // stop was requested? How many periods does that correspond to?
-        const deltaBetweenStartAndStop = (stopRequestedAt - startedAt) / 1000;
-        const numOfPeriodsBetweenStartAndStop = Math.floor(
-          deltaBetweenStartAndStop / period
-        );
+      const periodsSinceLastTick = secondsSinceLastTick * frequency;
 
-        // We want to stop the stopwatch right as it passes 1 more period.
-        // So if there were 8 periods between start and stop, and there's been
-        // 9 periods between start and now, we can round down the time to that
-        // last period and end now.
-        const deltaBetweenStartAndNow = (tickAt - startedAt) / 1000;
-        const numOfPeriodsBetweenStartAndNow = Math.floor(
-          deltaBetweenStartAndNow / period
-        );
+      // At first glance, you might think we're just translating a fixed SVG
+      // by `n` pixels to the left on every tick.
+      // Actually, though, we're redrawing the wave on every tick.
+      // This winds up being simpler, since it's an endless animation; this way
+      // we don't have to worry about running out of wave, and every tick is
+      // exactly the same.
+      //
+      // So, since we're not actually "moving" anything, all we need to know is
+      // how many cycles have passed. If the number is 0.2, we're 20% through
+      // the wave, and can start drawing from there.
+      // By changing that value, we get the illusion of it moving.
+      // on every frame.
 
-        if (numOfPeriodsBetweenStartAndNow > numOfPeriodsBetweenStartAndStop) {
-          // It's time to stop!
-          // Round to the nearest frequency interval. So if our frequency is
-          // 2Hz, round to the nearest 0.5 seconds.
-          // There's probably a smarter way to do this, but for now I'm just
-          // converting the number of periods to seconds, and adding it.
-          const numOfNewMilliseconds =
-            numOfPeriodsBetweenStartAndNow * period * 1000;
+      const nextProgressVal = progress + periodsSinceLastTick;
 
-          const finalTickAt = new Date(startedAt);
-          finalTickAt.setMilliseconds(
-            finalTickAt.getMilliseconds() + numOfNewMilliseconds
-          );
+      // If this is the tick that pushes us into the next cycle, and we've
+      // requested a stop, let's end this animation.
+      if (typeof stopRequestedAtCycle === 'number') {
+        const nextCyclesInteger = Math.floor(nextProgressVal);
 
-          this.stop(finalTickAt);
+        if (nextCyclesInteger > progress) {
+          this.setState({
+            progress: Math.floor(nextProgressVal),
+            lastTickAt: tickAt,
+            stopRequestedAtCycle: null,
+          });
           return;
         }
       }
 
-      this.setState({ lastTickAt: tickAt }, this.tick);
-      return;
+      this.setState(
+        { progress: nextProgressVal, lastTickAt: tickAt },
+        this.tick
+      );
     });
   };
 
   render() {
-    const { startedAt, lastTickAt } = this.state;
-
-    let timeElapsed;
-    if (startedAt instanceof Date && lastTickAt instanceof Date) {
-      const rawTimeElapsed = (lastTickAt - startedAt) / 1000;
-      timeElapsed = spring(rawTimeElapsed, SPRING_SETTINGS);
-    } else {
-      timeElapsed = 0;
-    }
+    const { progress } = this.state;
 
     return (
       <Motion
-        defaultStyle={{ timeElapsed: 0 }}
-        style={{ timeElapsed }}
-        onRest={() => this.setState({ startedAt: null, lastTickAt: null })}
+        defaultStyle={{ progress: 0 }}
+        style={{ progress: spring(progress, SPRING_SETTINGS) }}
       >
-        {({ timeElapsed }) => this.props.children(timeElapsed)}
+        {({ progress }) => this.props.children(progress)}
       </Motion>
     );
   }

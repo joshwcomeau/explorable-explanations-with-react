@@ -16,9 +16,9 @@ export const getPointsForWaveform = ({
   amplitude,
   width,
   height,
-  timeElapsed = 0,
+  progress = 0,
 }: WaveformProps): Array<WaveformPoint> => {
-  const offset = convertTimeElapsedToCycle(timeElapsed, frequency);
+  const offset = convertProgressToOffset(progress);
 
   // Get an array of `x` values.
   // For now, we're drawing lines at every second point, for performance.
@@ -350,14 +350,8 @@ export const applyWaveformAddition = (
   });
 };
 
-// DEPRECATED
-export const convertProgressToCycle = (progress: number) =>
+export const convertProgressToOffset = (progress: number) =>
   (progress * 100) % 100;
-
-export const convertTimeElapsedToCycle = (
-  timeElapsed: number,
-  frequency: number
-) => ((timeElapsed * 100) % 100) * frequency;
 
 type GetHarmonicsForWaveArgs = {
   harmonicsForShape?: WaveformShape,

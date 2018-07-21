@@ -12,27 +12,27 @@ import WaveformStopwatch from './WaveformStopwatch';
 storiesOf('WaveformStopwatch', module)
   .add('Basic count, default frequency-snap', () => (
     <StopwatchManager>
-      {timeElapsed => <span>{timeElapsed}</span>}
+      {progress => <span>{progress}</span>}
     </StopwatchManager>
   ))
   .add('Snap to 2Hz', () => (
     <StopwatchManager frequency={2}>
-      {timeElapsed => <span>{timeElapsed}</span>}
+      {progress => <span>{progress}</span>}
     </StopwatchManager>
   ))
   .add('Progress Bar', () => (
     <StopwatchManager>
-      {timeElapsed => <StopwatchBar progress={timeElapsed} />}
+      {progress => <StopwatchBar progress={progress} />}
     </StopwatchManager>
   ))
   .add('Waveform', () => (
     <StopwatchManager frequency={2}>
-      {timeElapsed => (
+      {progress => (
         <WaveformCalculator
           width={500}
           height={250}
           frequency={2}
-          timeElapsed={timeElapsed}
+          progress={progress}
         >
           {points => <Waveform points={points} />}
         </WaveformCalculator>
@@ -68,11 +68,12 @@ class StopwatchManager extends Component {
     return (
       <Fragment>
         <WaveformStopwatch
-          snapToFrequency={frequency}
+          frequency={frequency}
           isRunning={this.state.isRunning}
         >
           {children}
         </WaveformStopwatch>
+        <br />
         <button onClick={this.toggle}>Toggle</button>
       </Fragment>
     );
