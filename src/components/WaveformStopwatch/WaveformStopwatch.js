@@ -38,6 +38,12 @@ class WaveformStopwatch extends Component {
     frequency: 1,
   };
 
+  componentDidMount() {
+    if (this.props.isRunning) {
+      this.start();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const isJustStarting = !prevProps.isRunning && this.props.isRunning;
     const isJustStopping = prevProps.isRunning && !this.props.isRunning;

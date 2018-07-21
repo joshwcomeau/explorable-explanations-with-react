@@ -36,8 +36,8 @@ class Canvas extends Component {
     // value, and then we'll use CSS to set its _actual_ size properly.
 
     return (
-      <CanvasElem
-        innerRef={this.captureRef}
+      <canvas
+        ref={this.captureRef}
         width={250}
         height={250}
         {...delegated}
@@ -46,9 +46,5 @@ class Canvas extends Component {
   }
 }
 
-const CanvasElem = styled.canvas`
-  /* I'm implementing my own cursor in Canvas. */
-  cursor: none;
-`;
 
 export default Canvas;

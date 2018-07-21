@@ -1,15 +1,14 @@
-// Import React
-import React from 'react';
-import { injectGlobal } from 'styled-components';
+import React, {Fragment} from 'react';
+import styled, { injectGlobal } from 'styled-components';
 import { Cite, Deck, Heading, ListItem, List, Slide, Text } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 import preloader from 'spectacle/lib/utils/preloader';
 
 import { COLORS } from './constants';
+import {convertProgressToOffset} from './helpers/waveform.helpers';
 
 import spacerSrc from './assets/spacer.png';
-import unlikelyAnimalFriendships1Src from './assets/unlikely-animal-friendships-1.gif';
-import unlikelyAnimalFriendships2Src from './assets/unlikely-animal-friendships-2.mp4';
+import basketballSrc from './assets/basketball.gif';
 import telloDemoSrc from './assets/tello-demo.mp4';
 import guppyDemoSrc from './assets/guppy-demo.mp4';
 
@@ -19,12 +18,15 @@ import IntroSlide from './slides/Intro';
 import Highlighted from './components/Highlighted';
 import Quote from './components/Quote';
 import Waveform from './components/Waveform';
+import AirGrid from './components/AirGrid';
+import Spacer from './components/Spacer';
 import WaveformCalculator from './components/WaveformCalculator';
+import WaveformIntercept from './components/WaveformIntercept';
+import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 
 preloader({
   spacerSrc,
-  unlikelyAnimalFriendships1Src,
-  unlikelyAnimalFriendships2Src,
+  basketballSrc,
 });
 
 // Require CSS
@@ -111,12 +113,12 @@ export default class Presentation extends React.Component {
             I usually have a side project going, and earlier this year I wanted
             to try something different. Before I got into programming, I was
             an audio engineer. I've always been fascinated by how
-            sound works, the physics of sound are really interesting. And yet,
-            it's not common knowledge, it's institutional knowledge for audio
-            engineers and other folks who work with sound.
+            sound works, the physics of sound are really interesting.
 
-            I think the reason for that is that it's not easily transmitted
-            knowledge
+            And yet, it's specialized, institutional knowledge for audio
+            engineers and other folks who work with sound. It's not common
+            knowledge. And I think the reason for that is that sound is a
+            complex system, and it's hard to learn through traditional methods.
           `}
         >
           <Heading size={1}>🔊</Heading>
@@ -133,14 +135,6 @@ export default class Presentation extends React.Component {
             systems.
 
             There's a couple things that make this tough.
-
-
-
-
-            Something interesting I heard a while ago is that language is lossy.
-            I have a body of working knowledge in my head, and I can try and
-            transmit that body of working knowledge to others, through words
-            and drawings, but
           `}
         >
           Screenshot of https://method-behind-the-music.com/mechanics/physics/
@@ -165,7 +159,9 @@ export default class Presentation extends React.Component {
           notes={`
             ...learning is active. Deep, intuitive understanding requires that
             your brain not only absorb the words, but think about them, make
-            the connections, create a working model of the system.
+            the connections, create a working model of the system. And it's
+            hard to bridge the gap between theoretical and intuitive
+            understanding
           `}
         >
           <Heading size={3}>Learning is active</Heading>
@@ -177,14 +173,91 @@ export default class Presentation extends React.Component {
 
             Our brains are really good at building intuition through
             experimentation. We all understand how gravity works because we can
-            toss things in the air and see how they react. When you think about
+            toss things in the air and see how they react.
+          `}
+        >
+          <Heading size={1}>👩‍🔬</Heading>
+        </Slide>
+
+        <Slide
+          notes={`
+            When you think about
             it, basketball players are amazing, because it demonstrates such
             deep understanding of how gravity affects objects. And they develop
             that skill not through reading about acceleration and mass, but by
-            throwing things and seeing how they respond.
+            throwing things and seeing what happens
           `}
         >
-          <Heading size={3}>Learning is active</Heading>
+          <img src={basketballSrc} />
+        </Slide>
+
+        <Slide
+          notes={`
+            So I wanted to build a thing that would let people learn about
+            sound by experimenting.
+          `}
+        >
+          <AmplitudeFrequencyManager>
+            {({amplitude, frequency, progress}) => (
+              <AirGrid
+                shape="sine"
+                width={600}
+                height={300}
+                waveformAmplitude={amplitude}
+                waveformFrequency={frequency}
+                waveformProgress={progress}
+              />
+            )}
+          </AmplitudeFrequencyManager>
+        </Slide>
+
+        <Slide
+          notes={`
+            So I wanted to build a thing that would let people learn about
+            sound by experimenting.
+          `}
+        >
+          <AmplitudeFrequencyManager>
+            {({amplitude, frequency, progress}) => (
+              <Row>
+                <div style={{position: 'relative' }}>
+                  <WaveformCalculator
+                    width={300}
+                    height={150}
+                    frequency={frequency}
+                    amplitude={amplitude}
+                    progress={progress}
+                  >
+                    {points => <Waveform width={400} height={200} points={points} />}
+                  </WaveformCalculator>
+                  <WaveformIntercept
+                    size={20}
+                    color={COLORS.primary[500]}
+                    waveformSize={300}
+                    waveformShape="sine"
+                    frequency={frequency}
+                    amplitude={amplitude}
+                    offset={convertProgressToOffset(progress)}
+                  />
+                </div>
+                <Spacer size={40} />
+                <AirGrid
+                  shape="sine"
+                  width={400}
+                  height={200}
+                  numOfCols={13}
+                  numOfRows={13}
+                  waveformAmplitude={
+                    // HACK: For some reason, the numOfRows/numOfCols affects
+                    // how tightly-bound they are
+                    amplitude * 0.5
+                  }
+                  waveformFrequency={frequency}
+                  waveformProgress={progress}
+                />
+              </Row>
+            )}
+          </AmplitudeFrequencyManager>
         </Slide>
 
         <Slide>
@@ -219,3 +292,7 @@ export default class Presentation extends React.Component {
     );
   }
 }
+
+const Row = styled.div`
+  display: flex;
+`

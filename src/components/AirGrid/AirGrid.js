@@ -50,7 +50,15 @@ class AirGrid extends PureComponent<Props> {
     highlightColumnIndex: null,
   };
 
+  componentDidMount() {
+    this.draw();
+  }
+
   componentDidUpdate() {
+    this.draw();
+  }
+
+  draw = () => {
     const {
       width,
       height,
@@ -149,9 +157,13 @@ class AirGrid extends PureComponent<Props> {
     );
   };
 
-  captureRefs = (canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) => {
+  captureRefs = (canvas: HTMLCanvasElement) => {
+    if (!canvas) {
+      return;
+    }
+
     this.canvas = canvas;
-    this.ctx = ctx;
+    this.ctx = canvas.getContext('2d');
   };
 
   render() {

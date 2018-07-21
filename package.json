@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "hoist-non-react-statics": "2.5.5",
+    "rc-slider": "^8.6.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-motion": "^0.5.2",

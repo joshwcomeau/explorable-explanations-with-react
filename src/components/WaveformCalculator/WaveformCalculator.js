@@ -24,10 +24,8 @@ type Props = {
   // Amplitude is the strength of the waveform (AKA loudness, volume).
   // it can range from 0 to 1, and affects how 'tall' the waveform is.
   amplitude: number,
-  // timeElapsed is the number of seconds that have passed since the animation
-  // started. It can be used to derive the "offset", a value from 0 to 99
-  // that represents where in the phase this wave starts from.
-  timeElapsed?: number,
+  // progress is the number of cycles, based on `frequency`, that have elapsed
+  progress?: number,
   children: (points: Array<WaveformPoint>) => any,
 };
 
@@ -46,7 +44,7 @@ class WaveformCalculator extends PureComponent {
     shape: 'sine',
     frequency: 1,
     amplitude: 1,
-    timeElapsed: 0,
+    progress: 0,
   };
 
   componentWillReceiveProps(nextProps: Props) {
@@ -65,7 +63,6 @@ class WaveformCalculator extends PureComponent {
       shape,
       frequency,
       amplitude,
-      timeElapsed,
       children,
     } = this.props;
     const { isTweening, tweenFromPoints, tweenToShape } = this.state;
