@@ -1,25 +1,31 @@
 // Import React
 import React from 'react';
 import { injectGlobal } from 'styled-components';
-import {
-  BlockQuote,
-  Cite,
-  Deck,
-  Heading,
-  ListItem,
-  List,
-  Quote,
-  Slide,
-  Text,
-} from 'spectacle';
+import { Cite, Deck, Heading, ListItem, List, Slide, Text } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
+import preloader from 'spectacle/lib/utils/preloader';
 
 import { COLORS } from './constants';
 
-import TitleSlide from './slides/Title';
+import spacerSrc from './assets/spacer.png';
+import unlikelyAnimalFriendships1Src from './assets/unlikely-animal-friendships-1.gif';
+import unlikelyAnimalFriendships2Src from './assets/unlikely-animal-friendships-2.mp4';
+import telloDemoSrc from './assets/tello-demo.mp4';
+import guppyDemoSrc from './assets/guppy-demo.mp4';
 
+import TitleSlide from './slides/Title';
+import IntroSlide from './slides/Intro';
+
+import Highlighted from './components/Highlighted';
+import Quote from './components/Quote';
 import Waveform from './components/Waveform';
 import WaveformCalculator from './components/WaveformCalculator';
+
+preloader({
+  spacerSrc,
+  unlikelyAnimalFriendships1Src,
+  unlikelyAnimalFriendships2Src,
+});
 
 // Require CSS
 require('normalize.css');
@@ -33,6 +39,10 @@ require('normalize.css');
 injectGlobal`
   .spectacle-content {
     transform: none !important;
+  }
+
+  a {
+    color: ${COLORS.blue[700]}
   }
 `;
 
@@ -59,6 +69,77 @@ export default class Presentation extends React.Component {
       <Deck transition={['fade']} transitionDuration={500} theme={theme}>
         <Slide>
           <TitleSlide />
+        </Slide>
+
+        <Slide>
+          <IntroSlide />
+        </Slide>
+
+        <Slide>
+          <Heading size={3}>Things I Like:</Heading>
+          <img src={spacerSrc} height={500} />
+        </Slide>
+
+        <Slide transition={['none']}>
+          <Heading size={3}>Things I Like:</Heading>
+          <img src={unlikelyAnimalFriendships1Src} height={500} />
+        </Slide>
+
+        <Slide transition={['none']}>
+          <Heading size={3}>Things I Like:</Heading>
+          <video
+            autoPlay
+            loop
+            src={unlikelyAnimalFriendships2Src}
+            style={{
+              height: 500,
+              margin: 'auto',
+            }}
+          />
+        </Slide>
+
+        <Slide transition={['none']}>
+          <Heading size={3}>Things I Like:</Heading>
+          <video
+            autoPlay
+            loop
+            src={telloDemoSrc}
+            style={{
+              height: 500,
+              margin: 'auto',
+            }}
+          />
+        </Slide>
+
+        <Slide transition={['none']}>
+          <Heading size={3}>Things I Like:</Heading>
+          <video
+            autoPlay
+            loop
+            src={guppyDemoSrc}
+            style={{
+              height: 500,
+              margin: 'auto',
+            }}
+          />
+        </Slide>
+
+        <Slide>
+          <Quote>
+            "...I'm in my third year studying sound engineering for film, and
+            after reading this{' '}
+            <Highlighted>
+              I finally understand how harmonics and waveforms work.
+            </Highlighted>{' '}
+            I've known what harmonics and waveforms are, as well as their
+            different applications. But they way it has always been taught to
+            me,{' '}
+            <Highlighted>
+              I could just never understand <em>why</em> they are.
+            </Highlighted>{' '}
+            Thank you for explaining this to me in a way no one else has been
+            able to."
+          </Quote>
         </Slide>
 
         <Slide>
