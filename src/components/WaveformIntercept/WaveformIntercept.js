@@ -60,8 +60,8 @@ const WaveformInterceptElem = styled.div.attrs({
   border-radius: 50%;
   background: ${props => props.color};
   position: absolute;
-  top: ${props => -1 * props.size / 2 + 'px'};
-  left: ${props => -1 * props.size / 2 + 'px'};
+  top: ${props => (-1 * props.size) / 2 + 'px'};
+  left: ${props => (-1 * props.size) / 2 + 'px'};
   will-change: transform;
 `;
 

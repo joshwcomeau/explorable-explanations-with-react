@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import styled, {injectGlobal} from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 import RcSlider, { createSliderWithTooltip } from 'rc-slider';
 
 import { COLORS } from '../../constants';
@@ -64,7 +64,7 @@ injectGlobal`
   .rc-slider .rc-slider-handle {
     position: absolute;
     top: ${SLIDER_HEIGHT / 2 + SLIDER_BAR_HEIGHT / 2 + 'px'};
-    background: ${COLORS.primary[500]};
+    background: ${COLORS.gray[700]};
     width: ${SLIDER_HEIGHT + 'px'};
     height: ${SLIDER_HEIGHT + 'px'};
     transform: translate(-50%, -50%);
