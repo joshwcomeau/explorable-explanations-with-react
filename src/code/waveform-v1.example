@@ -1,0 +1,22 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+class Waveform extends Component {
+  static propTypes = {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    shape: PropTypes.oneOf(['sine', 'triangle', 'square', 'sawtooth']),
+    frequency: PropTypes.number.isRequired,
+    amplitude: PropTypes.number.isRequired,
+  };
+
+  render() {
+    const { width, height, shape, frequency, amplitude } = this.props;
+
+    return (
+      <svg width={width} height={height} style={{ overflow: 'visible' }}>
+        <path d={''} stroke="black" fill="none" />
+      </svg>
+    );
+  }
+}
