@@ -24,6 +24,16 @@ class Waveform extends Component {
       amplitude,
     } = this.props;
 
+    const points = getPointsForWaveform({
+      shape,
+      frequency,
+      amplitude,
+      width,
+      height,
+    });
+
+    const svgPath = convertPointsToPath(points);
+
     return (
       <svg
         width={width}
@@ -31,8 +41,7 @@ class Waveform extends Component {
         style={{ overflow: 'visible' }}
       >
         <path
-          // Come up with a path somehow?!
-          d={'something here'}
+          d={svgPath}
           stroke="black"
           fill="none"
         />

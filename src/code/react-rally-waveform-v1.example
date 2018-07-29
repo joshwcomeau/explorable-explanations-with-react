@@ -1,0 +1,49 @@
+import React, { Component, Fragment } from 'react';
+
+import WaveformCalculator from '../WaveformCalculator';
+import Waveform from '../Waveform';
+import WaveformAxis from '../WaveformAxis';
+
+class ReactRallyWaveformV1 extends Component {
+  state = {
+    frequency: 1,
+    amplitude: 1,
+  };
+
+  render() {
+    const { width, height } = this.props;
+    const { frequency, amplitude } = this.state;
+
+    return (
+      <WaveformCalculator
+        shape="sine"
+        frequency={frequency}
+        amplitude={amplitude}
+        width={width}
+        height={height}
+      >
+        {points => (
+          <Fragment>
+            <Waveform
+              width={width}
+              height={height}
+              points={points}
+            />
+            <WaveformAxis
+              axis="x"
+              width={width}
+              height={height}
+            />
+            <WaveformAxis
+              axis="y"
+              width={width}
+              height={height}
+            />
+          </Fragment>
+        )}
+      </WaveformCalculator>
+    );
+  }
+}
+
+export default ReactRallyWaveformV1;

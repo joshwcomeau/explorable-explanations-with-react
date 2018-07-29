@@ -1,0 +1,29 @@
+<WaveformCalculator
+  shape="sine"
+  frequency={1}
+  amplitude={0.5}
+  width={width}
+  height={height}
+>
+  {points => (
+    <>
+      <Waveform
+        width={width}
+        height={height}
+        points={points}
+        color={COLORS.blue}
+        strokeWidth={4}
+      />
+      <WaveformAxis
+        axis={y}
+        width={width}
+        height={height}
+      />
+      <WaveformAxis
+        axis={x}
+        width={width}
+        height={height}
+      />
+    </>
+  )}
+</WaveformCalculator>;
