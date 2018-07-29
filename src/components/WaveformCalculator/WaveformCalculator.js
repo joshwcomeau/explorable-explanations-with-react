@@ -11,7 +11,10 @@ import {
   translateAxisRelativeYValue,
 } from '../../helpers/waveform.helpers';
 
-import type { WaveformPoint, WaveformShape } from '../../types';
+import type {
+  WaveformPoint,
+  WaveformShape,
+} from '../../types';
 
 type Props = {
   shape: WaveformShape,
@@ -65,9 +68,15 @@ class WaveformCalculator extends PureComponent {
       amplitude,
       children,
     } = this.props;
-    const { isTweening, tweenFromPoints, tweenToShape } = this.state;
+    const {
+      isTweening,
+      tweenFromPoints,
+      tweenToShape,
+    } = this.state;
 
-    const tweenAmount = isTweening ? spring(1, SPRING_SETTINGS) : 0;
+    const tweenAmount = isTweening
+      ? spring(1, SPRING_SETTINGS)
+      : 0;
 
     return (
       <Motion

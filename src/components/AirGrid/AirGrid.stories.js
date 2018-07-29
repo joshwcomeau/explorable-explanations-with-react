@@ -18,7 +18,7 @@ storiesOf('AirGrid', module)
   ))
   .add('Default (1Hz, 1dB, 8x4)', () => (
     <WaveformStopwatch isRunning>
-      {(progress) => (
+      {progress => (
         <AirGrid
           shape="sine"
           numOfRows={4}
@@ -32,7 +32,7 @@ storiesOf('AirGrid', module)
   ))
   .add('Quiet (1Hz, 0.5dB, 8x4)', () => (
     <WaveformStopwatch isRunning amplitude={0.5}>
-      {(progress) => (
+      {progress => (
         <AirGrid
           shape="sine"
           numOfRows={4}
@@ -43,4 +43,4 @@ storiesOf('AirGrid', module)
         />
       )}
     </WaveformStopwatch>
-  ))
+  ));
