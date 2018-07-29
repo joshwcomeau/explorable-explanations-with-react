@@ -3,6 +3,7 @@ import styled, { injectGlobal } from 'styled-components';
 import { Cite, Deck, Heading, ListItem, List, Slide, Text } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 import preloader from 'spectacle/lib/utils/preloader';
+import CodeSlide from 'spectacle-code-slide';
 
 import { COLORS } from './constants';
 import { convertProgressToOffset } from './helpers/waveform.helpers';
@@ -24,6 +25,7 @@ import WaveformCalculator from './components/WaveformCalculator';
 import WaveformIntercept from './components/WaveformIntercept';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave/GridVsWave';
+import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 
 preloader({
   spacerSrc,
@@ -239,31 +241,6 @@ export default class Presentation extends React.Component {
           understanding complex ideas"
         </Slide>
 
-        <Slide />
-
-        <Slide
-          notes={`
-            After releasing this project, I got a ton of really nice feedback
-            like this. This wasn't an outlier. I also heard from college professors who said they'd use it, which is amazing.
-          `}
-        >
-          <Quote>
-            "...I'm in my third year studying sound engineering for film, and
-            after reading this{' '}
-            <Highlighted>
-              I finally understand how harmonics and waveforms work.
-            </Highlighted>{' '}
-            I've known what harmonics and waveforms are, as well as their
-            different applications. But they way it has always been taught to
-            me,{' '}
-            <Highlighted>
-              I could just never understand <em>why</em> they are.
-            </Highlighted>{' '}
-            Thank you for explaining this to me in a way no one else has been
-            able to."
-          </Quote>
-        </Slide>
-
         <Slide
           notes={`
             I did not come up with this idea, for interactive learning experiences. The common term used is "Explorable Explanations".
@@ -322,11 +299,18 @@ export default class Presentation extends React.Component {
           Canvas SVG (Winner!)
         </Slide>
 
-        <Slide>
-          Early version of SVG Waveform. Have it take `shape` as a prop, either
-          sine or triangle or w/e Maybe have a bunch of `???` where the actual
-          "calculate path" goes.
-        </Slide>
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-v1.example')}
+          ranges={[
+            { loc: [0], title: '<Waveform /> v1' },
+            { loc: [0, 20] },
+            { loc: [20, 40] },
+          ]}
+        />
+
+        <Slide>Maybe a quick word about how SVG paths work?</Slide>
 
         <Slide
           notes={`
@@ -349,10 +333,16 @@ export default class Presentation extends React.Component {
           </WaveformCalculator>
         </Slide>
 
-        <Slide>
-          Show simplest-possible version of calculating points, done inline in
-          the component
-        </Slide>
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-v2.example')}
+          ranges={[
+            { loc: [0], title: '<Waveform /> v2' },
+            { loc: [0, 20] },
+            { loc: [20, 40] },
+          ]}
+        />
 
         <Slide
           notes={`
@@ -371,41 +361,61 @@ export default class Presentation extends React.Component {
           Problem GIF?
         </Slide>
 
-        <Slide
-          notes={`
-            What if instead of taking a shape prop, the waveform took
-            an array of points?
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-consumption-v1.example')}
+          ranges={[
+            {
+              loc: [0],
+              title: 'Waveform consumption',
+            },
+            { loc: [0, 14] },
+          ]}
+        />
 
-            Then, our Waveform component is only responsible for translating
-            the point values into an SVG path.
-          `}
-        >
-          Waveform consumption, with shape replaced by points
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-consumption-v2.example')}
+          ranges={[{ loc: [0, 17] }]}
+        />
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-calculator-v1.example')}
+          ranges={[{ loc: [0, 21] }]}
+        />
+
+        <Slide>
+          Side-by-side code/live that shows the WaveformCalculator outputting
+          JSON
         </Slide>
 
-        <Slide
-          notes={`
-            Then, we can create a new component, WaveformCalculator, which
-            computes the points for a given shape.
-
-          `}
-        >
-          Waveform consumption with WaveformCalculator
+        <Slide>
+          Side-by-side code/live that shows the WaveformCalculator outputting a
+          waveform, using Waveform
         </Slide>
 
-        <Slide
+        <Slide>Screenshot of Waveforms project, showing the axes</Slide>
+
+        <CodeSlide
           notes={`
-            In the demo, we had a lot of additional adornments, like having axes that fade in when needed.
+            This pattern of creating new components instead of bundling logic
+            within existing components is useful for all kinds of things.
 
-            An instinct might be to add a prop to the <Waveform> component, like 'showYAxis' and 'showXAxis', but we don't need to do that; we can just create a separate component.
+            For example, you may have noticed that the final version of
+            our waveform has an X axis and a Y axis. While we could have a
+            'showXAxis'
           `}
-        >
-          Lego blocks image
-        </Slide>
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-consumption-v3.example')}
+          ranges={[{ loc: [0, 17] }]}
+        />
 
-        <Slide>WaveformAxis component</Slide>
-
-        <Slide
+        <CodeSlide
           notes={`
             I'm a fan of creating wrappers that combine simpler blocks in specific ways.
 
@@ -415,8 +425,14 @@ export default class Presentation extends React.Component {
 
             It'll also hold the state for our waveform.
           `}
-        >
-          ReactRallyWaveform component definition, consuming the others.
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-v1.example')}
+          ranges={[{ loc: [0, 17] }]}
+        />
+
+        <Slide>
+          <ReactRallyWaveformV1 />
         </Slide>
 
         <Slide
@@ -440,10 +456,81 @@ export default class Presentation extends React.Component {
             Let's create a new component, WaveformStopwatch.
           `}
         >
-          ReactRallyWaveform with WaveformStopwatch added
+          ReactRallyWaveform with WaveformStopwatch added, consumer viewpoint
         </Slide>
 
-        <Slide>WaveformStopwatch code</Slide>
+        <Slide
+          notes={`
+            Cut to React Storybook, to show the stories for testing Stopwatch with.
+          `}
+        >
+          Go to storybook
+        </Slide>
+
+        <Slide
+          notes={`
+            Simple stopwatch implementation, no animation
+          `}
+        >
+          Code
+        </Slide>
+
+        <Slide
+          notes={`
+            Something that has been said to the point of cliché is that react
+            components are like lego blocks. You can build complete UIs by
+            assembling a bunch of small, simple blocks.
+
+            A criticism I've heard of this metaphor is that it's overly
+            simplistic. React components can do much more than simply render
+            UI, they can generate values, or make server requests, etc.
+
+            I think a better metaphor is...
+          `}
+        >
+          Lego blocks image
+        </Slide>
+
+        <Slide
+          notes={`
+            ...modular synthesizers. For those who aren't familiar, modular synthesizers are tools used to produce electronic sounds, like the waves we've been looking at... but a modular synthesizer is combined out of many smaller modules. Each module has inputs and outputs, so a module on its own might not produce any sound, but
+            it might modulate sound that is passed through it.
+
+            I think React components are like synth modules.
+          `}
+        >
+          Modular synth image
+        </Slide>
+
+        <Slide
+          notes={`
+            I built this project on the side, over several months. As it
+            neared completion, as happens with many side-projects, I start
+            to worry that it's not useful, or good enough to release. I know
+            Ives from Codesandbox has talked about this as well; when you're
+            so close to a project, you lose perspective about how it'll seem
+            to others, you can't see it with fresh eyes anymore.
+
+            After releasing this project, I got a ton of really nice feedback
+            like this. This wasn't an outlier. I also heard from college professors who said they'd use it, which is amazing.
+          `}
+        >
+          <Quote>
+            "...I'm in my third year studying sound engineering for film, and
+            after reading this{' '}
+            <Highlighted>
+              I finally understand how harmonics and waveforms work.
+            </Highlighted>{' '}
+            I've known what harmonics and waveforms are, as well as their
+            different applications. But they way it has always been taught to
+            me,{' '}
+            <Highlighted>
+              I could just never understand <em>why</em> they are.
+            </Highlighted>{' '}
+            Thank you for explaining this to me in a way no one else has been
+            able to."
+          </Quote>
+        </Slide>
       </Deck>
     );
   }
