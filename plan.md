@@ -50,10 +50,8 @@ STRETCH GOALS:
 - Use context to pass width/height/frequency/amplitude around the tree?
 - Show off <AudioCtx> and <Oscillator> components?
 
-
-
 NOTES:
 
 - Find a text definition about frequency, amplitude, and compare it with the version I built with sliders.
 
-Learning with books, lossy medium, because I have this concept in my head, and I have to transmit it into yours.
+- Maybe start with "Learning is hard", talk about how I want to make it easier?

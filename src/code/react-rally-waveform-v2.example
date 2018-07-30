@@ -2,41 +2,61 @@ class ReactRallyWaveform extends Component {
   state = {
     frequency: 1,
     amplitude: 1,
-    stopwatchRunning: false,
+    shape: 'sine',
   };
 
-  toggleRunning = () => {
-    this.setState(state => ({
-      stopwatchRunning: !state.stopwatchRunning,
-    }));
+  updateAmplitude = amplitude => {
+    this.setState({ amplitude });
+  };
+
+  updateFrequency = frequency => {
+    this.setState({ frequency });
+  };
+
+  updateShape = shape => {
+    this.setState({ shape });
   };
 
   render() {
-    const { width, height, stopwatchRunning } = this.props;
-    const { frequency, amplitude } = this.state;
+    const { width, height } = this.props;
+    const { frequency, amplitude, shape } = this.state;
 
     return (
       <Fragment>
-        <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
-          {progress => (
-            <WaveformCalculator
-              shape="sine"
-              frequency={frequency}
-              amplitude={amplitude}
-              width={width}
-              height={height}
-            >
-              {points => (
-                <Waveform width={width} height={height} points={points} />
-              )}
-            </WaveformCalculator>
-          )}
-        </WaveformStopwatch>
+        <WaveformCalculator
+          shape={shape}
+          frequency={frequency}
+          amplitude={amplitude}
+          width={width}
+          height={height}
+        >
+          {points => <Waveform width={width} height={height} points={points} />}
+        </WaveformCalculator>
+
         <WaveformAxis axis="x" width={width} height={height} />
         <WaveformAxis axis="y" width={width} height={height} />
+
+        <div>
+          <Slider
+            label="amplitude"
+            value={amplitude}
+            onChange={this.updateAmplitude}
+          />
+
+          <Slider
+            label="frequency"
+            value={frequency}
+            onChange={this.updateFrequency}
+          />
+
+          <ButtonGroup
+            options={['sine', 'triangle', 'square', 'sawtooth']}
+            onChange={this.updateShape}
+          />
+        </div>
       </Fragment>
     );
   }
 }
 
-export default ReactRallyWaveform;
+export default ReactRallyWaveformV1;

@@ -11,10 +11,7 @@ import {
   translateAxisRelativeYValue,
 } from '../../helpers/waveform.helpers';
 
-import type {
-  WaveformPoint,
-  WaveformShape,
-} from '../../types';
+import type { WaveformPoint, WaveformShape } from '../../types';
 
 type Props = {
   shape: WaveformShape,
@@ -32,17 +29,7 @@ type Props = {
   children: (points: Array<WaveformPoint>) => any,
 };
 
-type State = {
-  isTweening: boolean,
-  tweenFromShape: WaveformShape,
-};
-
 class WaveformCalculator extends PureComponent {
-  state = {
-    isTweening: false,
-    tweenFromShape: this.props.shape,
-  };
-
   static defaultProps = {
     shape: 'sine',
     frequency: 1,
@@ -50,54 +37,40 @@ class WaveformCalculator extends PureComponent {
     progress: 0,
   };
 
-  componentWillReceiveProps(nextProps: Props) {
-    if (this.props.shape !== nextProps.shape) {
-      this.setState({
-        isTweening: true,
-        tweenFromShape: this.props.shape,
-      });
-    }
-  }
-
   render() {
-    const {
-      width,
-      height,
-      shape,
-      frequency,
-      amplitude,
-      children,
-    } = this.props;
-    const {
-      isTweening,
-      tweenFromPoints,
-      tweenToShape,
-    } = this.state;
+    const { children, ...waveformData } = this.props;
 
-    const tweenAmount = isTweening
-      ? spring(1, SPRING_SETTINGS)
-      : 0;
+    const points = getPointsForWaveform(waveformData);
+
+    // React Motion takes a map-like object:
+    // { opacity: 10, translate: -10 }
+    //
+    // In our case, we have an array of coordinates:
+    // [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
+    //
+    // We need to transform our array of data into something that
+    // React Motion can understand:
+    // { '0': 100, '2': 110, ...}
+    const motionInput = points.reduce((acc, { x, y }) => {
+      acc[x] = spring(y, SPRING_SETTINGS);
+      return acc;
+    }, {});
 
     return (
-      <Motion
-        style={{ tweenAmount }}
-        onRest={() =>
-          this.setState({
-            isTweening: false,
-          })
-        }
-      >
-        {({ tweenAmount }) => {
-          const points = applyWaveformAddition(
-            getPointsForWaveform({
-              ...this.props,
-              shape: this.state.tweenFromShape,
-            }),
-            [getPointsForWaveform(this.props)],
-            tweenAmount
+      <Motion style={motionInput}>
+        {pointsObject => {
+          // Now, we need to undo the transformation that was required to
+          // satisfy React Motion. The reverse of before.
+          // from: { '0': 100, '2': 110, ...}
+          // back to: [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
+          const reconstitutedPoints = Object.entries(pointsObject).map(
+            ([x, y]) => ({
+              x,
+              y,
+            })
           );
 
-          return children(points);
+          return children(reconstitutedPoints);
         }}
       </Motion>
     );

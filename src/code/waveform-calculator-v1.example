@@ -9,13 +9,9 @@ class WaveformCalculator extends Component {
   };
 
   render() {
-    const points = getPointsForWaveform({
-      shape,
-      frequency,
-      amplitude,
-      width,
-      height,
-    });
+    const {children, ...waveformData} = this.props;
+
+    const points = getPointsForWaveform(waveformData);
 
     return children(points);
   }

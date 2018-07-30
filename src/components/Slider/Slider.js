@@ -5,6 +5,8 @@ import RcSlider, { createSliderWithTooltip } from 'rc-slider';
 
 import { COLORS } from '../../constants';
 
+import Label from '../Label';
+
 type Props = {
   width: number,
   label: string,
@@ -113,12 +115,6 @@ injectGlobal`
   .rc-slider-tooltip-hidden {
     opacity: 0;
   }
-`;
-
-const Label = styled.div`
-  font-size: 24px;
-  font-weight: 500;
-  margin-bottom: ${SLIDER_HEIGHT * 0.75 + 'px'};
 `;
 
 export default Slider;

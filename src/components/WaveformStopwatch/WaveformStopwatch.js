@@ -6,7 +6,6 @@ import { SPRING_SETTINGS } from '../../constants';
 
 type Props = {
   isRunning: boolean,
-  amplitude: number,
   frequency: number,
   children: (progress: number) => React$Node,
 };

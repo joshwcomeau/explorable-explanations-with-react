@@ -1,6 +1,15 @@
 import React, { Fragment } from 'react';
 import styled, { injectGlobal } from 'styled-components';
-import { Cite, Deck, Heading, ListItem, List, Slide, Text } from 'spectacle';
+import {
+  Cite,
+  Deck,
+  Heading,
+  ListItem,
+  List,
+  Slide,
+  Text,
+  ComponentPlayground,
+} from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 import preloader from 'spectacle/lib/utils/preloader';
 import CodeSlide from 'spectacle-code-slide';
@@ -26,6 +35,8 @@ import WaveformIntercept from './components/WaveformIntercept';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave/GridVsWave';
 import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
+import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
+import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
 
 preloader({
   spacerSrc,
@@ -76,7 +87,11 @@ export default class Presentation extends React.Component {
           <TitleSlide />
         </Slide>
 
-        <Slide>
+        <Slide
+          notes={`
+            Hello! My name is Josh, and I work for Khan Academy. Today I'd like to talk about an exciting new form of media.
+          `}
+        >
           <IntroSlide />
         </Slide>
 
@@ -112,15 +127,15 @@ export default class Presentation extends React.Component {
 
         <Slide
           notes={`
-            I usually have a side project going, and earlier this year I wanted
-            to try something different. Before I got into programming, I was
-            an audio engineer. I've always been fascinated by how
-            sound works, the physics of sound are really interesting.
+            So before becoming a software developer, I was studying to become
+            an audio engineer. One of the things you learn, when becoming an
+            audio engineer, is how sound works, the physics of sound.
 
-            And yet, it's specialized, institutional knowledge for audio
-            engineers and other folks who work with sound. It's not common
-            knowledge. And I think the reason for that is that sound is a
-            complex system, and it's hard to learn through traditional methods.
+            It turns out that this is surprisingly tricky, I remember we spent quite a bit of time learning about sound waves, waveforms, frequency, amplitude... sound is a complex system, and what I mean by that is that there are multiple variables, and rules about how those variables interact.
+
+            And understanding complex systems is traditionally quite difficult.
+
+            When you google "How sound works", you get a page that looks like...
           `}
         >
           <Heading size={1}>🔊</Heading>
@@ -128,8 +143,7 @@ export default class Presentation extends React.Component {
 
         <Slide
           notes={`
-            For example, when you search for this stuff on Google, you get
-            articles like this. I don't want to denigrate this page, or others
+            ...this. I don't want to denigrate this page, or others
             like it, because the authors clearly put a lot of time and care
             into creating something helpful, but it's a tall order for someone
             without an audio background to be presented with words and pictures,
@@ -389,16 +403,18 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          Side-by-side code/live that shows the WaveformCalculator outputting
-          JSON
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/live/waveform-calculator-json.example')}
+              theme="external"
+              scope={{ WaveformCalculator, Waveform }}
+            />
+          </div>
         </Slide>
 
         <Slide>
-          Side-by-side code/live that shows the WaveformCalculator outputting a
-          waveform, using Waveform
+          <ReactRallyWaveformV1 showControls={false} />
         </Slide>
-
-        <Slide>Screenshot of Waveforms project, showing the axes</Slide>
 
         <CodeSlide
           notes={`
@@ -435,6 +451,46 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformV1 />
         </Slide>
 
+        <Slide>
+          <Heading size={2}>Shifting Between Waveforms</Heading>
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV2 />
+        </Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-v2.example')}
+          ranges={[{ loc: [0, 17] }]}
+        />
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-calculator-v2.example')}
+          ranges={[{ loc: [0, 17] }]}
+        />
+
+        <Slide
+          notes={`
+            Ok, so truthfully, I'm not the happiest with this implementation.
+
+            There's definitely room for improvement.
+
+            Happily, though, the ugly bit is sequestered within a component.
+
+            I'm happy with the API, the inputs and outputs... so I can refactor this later, without breaking anything else. This kind of component encapsulation is great for maintainability.
+          `}
+        >
+          <Heading size={2}>To be honest...</Heading>
+        </Slide>
+
+        <Slide>
+          <Heading size={2}>Playing The Waveform</Heading>
+        </Slide>
+
         <Slide
           notes={`
             This is looking pretty good... but our waveform doesn't move yet!
@@ -444,36 +500,62 @@ export default class Presentation extends React.Component {
             It would also be nice if when we toggle it to stop, it doesn't just stop immediately, it stops when it hits the next cycle.
           `}
         >
-          Waveform with a start/stop toggle
+          <ReactRallyWaveformV3 />
         </Slide>
 
-        <Slide
+        <CodeSlide
           notes={`
-            So the first thing we need is to know how much time has passed...
-            if we know our frequency, and how much time has passed, we'll know
-            where to draw it from.
-
-            Let's create a new component, WaveformStopwatch.
+            Here's what our updated ReactRallyWaveform component looks like:
           `}
-        >
-          ReactRallyWaveform with WaveformStopwatch added, consumer viewpoint
-        </Slide>
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-v3.example')}
+          ranges={[{ loc: [0, 17] }]}
+        />
 
-        <Slide
+        <Slide>Waveform Stopwatch number generator example, split code</Slide>
+
+        <Slide>Waveform Stopwatch progress bar example, split code</Slide>
+
+        <CodeSlide
           notes={`
-            Cut to React Storybook, to show the stories for testing Stopwatch with.
+            The WaveformStopwatch code, without easing or rounding
           `}
-        >
-          Go to storybook
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-stopwatch-v1.example')}
+          ranges={[
+            { loc: [0, 17] },
+            { loc: [17, 34] },
+            { loc: [34, 51] },
+            { loc: [51, 76] },
+          ]}
+        />
+
+        <CodeSlide
+          notes={`
+            The Updated Waveform calculator
+          `}
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-calculator-v2.example')}
+          ranges={[
+            { loc: [0, 17] },
+            { loc: [17, 34] },
+            { loc: [34, 51] },
+            { loc: [51, 76] },
+          ]}
+        />
+
+        <Slide>
+          <ReactRallyWaveformV3 />
         </Slide>
 
-        <Slide
-          notes={`
-            Simple stopwatch implementation, no animation
-          `}
-        >
-          Code
-        </Slide>
+        {/*
+
+        Conclusion
+
+        */}
 
         <Slide
           notes={`

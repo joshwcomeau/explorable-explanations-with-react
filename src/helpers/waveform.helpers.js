@@ -66,10 +66,10 @@ export const getPointsForWaveform = ({
     return { x, y };
   });
 
-  if (shape === 'triangle') {
-    // Find the peak points in the wave, and set it to max amplitude.
-    fixPeaks(amplitude, rawValues);
-  }
+  // if (shape === 'triangle') {
+  //   // Find the peak points in the wave, and set it to max amplitude.
+  //   fixPeaks(frequency, amplitude, rawValues);
+  // }
 
   return rawValues;
 };
@@ -79,7 +79,11 @@ export const getPointsForWaveform = ({
 // The proper solution eludes me, but I did find this mathy way of fixing it.
 // I'll go through and find those 'peak' values, and adjust their coordinates to
 // actually sit at the peak.
-const fixPeaks = (amplitude, values) => {
+const fixPeaks = (frequency, amplitude, values) => {
+  if (frequency > 1) {
+    return;
+  }
+
   return values.forEach((value, index) => {
     if (index <= 2 || index === values.length - 1) {
       return;

@@ -12,21 +12,33 @@ class ReactRallyWaveform extends Component {
     this.setState({ frequency });
   };
 
+  toggleRunning = () => {
+    this.setState(state => ({
+      stopwatchRunning: !state.stopwatchRunning,
+    }));
+  };
+
   render() {
     const { width, height } = this.props;
     const { frequency, amplitude } = this.state;
 
     return (
       <Fragment>
-        <WaveformCalculator
-          shape="sine"
-          frequency={frequency}
-          amplitude={amplitude}
-          width={width}
-          height={height}
-        >
-          {points => <Waveform width={width} height={height} points={points} />}
-        </WaveformCalculator>
+        <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
+          {progress => (
+            <WaveformCalculator
+              shape="sine"
+              frequency={frequency}
+              amplitude={amplitude}
+              width={width}
+              height={height}
+            >
+              {points => (
+                <Waveform width={width} height={height} points={points} />
+              )}
+            </WaveformCalculator>
+          )}
+        </WaveformStopwatch>
 
         <WaveformAxis axis="x" width={width} height={height} />
         <WaveformAxis axis="y" width={width} height={height} />
@@ -43,6 +55,8 @@ class ReactRallyWaveform extends Component {
             value={frequency}
             onChange={this.updateFrequency}
           />
+
+          <button onClick={this.toggleRunning}>Toggle</button>
         </div>
       </Fragment>
     );

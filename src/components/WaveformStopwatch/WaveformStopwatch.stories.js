@@ -8,12 +8,16 @@ import { SHAPES } from '../../constants';
 import Waveform from '../Waveform';
 import WaveformCalculator from '../WaveformCalculator';
 import WaveformStopwatch from './WaveformStopwatch';
+import WaveformStopwatchSimple from './WaveformStopwatchSimple';
 
 storiesOf('WaveformStopwatch', module)
-  .add('Basic count, default frequency-snap', () => (
-    <StopwatchManager>
+  .add('Simple, no animation', () => (
+    <StopwatchManager WaveformComponent={WaveformStopwatchSimple}>
       {progress => <span>{progress}</span>}
     </StopwatchManager>
+  ))
+  .add('Basic count, default frequency-snap', () => (
+    <StopwatchManager>{progress => <span>{progress}</span>}</StopwatchManager>
   ))
   .add('Snap to 2Hz', () => (
     <StopwatchManager frequency={2}>
@@ -45,6 +49,10 @@ class StopwatchManager extends Component {
     isRunning: false,
   };
 
+  static defaultProps = {
+    WaveformComponent: WaveformStopwatch,
+  };
+
   componentDidMount() {
     window.addEventListener('keypress', this.handleKeypress);
   }
@@ -63,16 +71,16 @@ class StopwatchManager extends Component {
   toggle = shape => this.setState(state => ({ isRunning: !state.isRunning }));
 
   render() {
-    const { children, frequency } = this.props;
+    const { children, frequency, WaveformComponent } = this.props;
 
     return (
       <Fragment>
-        <WaveformStopwatch
+        <WaveformComponent
           frequency={frequency}
           isRunning={this.state.isRunning}
         >
           {children}
-        </WaveformStopwatch>
+        </WaveformComponent>
         <br />
         <button onClick={this.toggle}>Toggle</button>
       </Fragment>

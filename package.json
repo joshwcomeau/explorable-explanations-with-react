@@ -39,7 +39,7 @@
     "react-dev-utils": "^4.2.1",
     "react-dom": "^16.4.1",
     "react-motion": "^0.5.2",
-    "react-spring": "5.3.18",
+    "react-spring": "^5.5.1",
     "react-transition-group": "^2.4.0",
     "spectacle": "^4.0.0",
     "spectacle-code-slide": "^0.5.2",

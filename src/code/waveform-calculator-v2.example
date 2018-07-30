@@ -1,0 +1,50 @@
+class WaveformCalculator extends PureComponent {
+  static propTypes = {
+    shape: PropTypes.oneOf(VALID_SHAPES),
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    frequency: PropTypes.number.isRequired,
+    amplitude: PropTypes.number.isRequired,
+    children: PropTypes.func.isRequired,
+  };
+
+  render() {
+    const { children, ...waveformData } = this.props;
+
+    const points = getPointsForWaveform(waveformData);
+
+    // React Motion takes a map-like object:
+    // { opacity: spring(0.4), translate: spring(-10) }
+    //
+    // In our case, we have an array of coordinates:
+    // [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
+    //
+    // We need to transform our array of data into something that
+    // React Motion can understand:
+    // { '0': spring(100), '2': spring(110), ...}
+
+    const motionInput = points.reduce((acc, { x, y }) => {
+      acc[x] = spring(y, SPRING_SETTINGS);
+      return acc;
+    }, {});
+
+    return (
+      <Motion style={motionInput}>
+        {pointsObject => {
+          // Now, we need to undo the transformation that was required to
+          // satisfy React Motion.
+          // from: { '0': 100, '2': 110, ...}
+          // to:   [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
+          const reconstitutedPoints = Object.entries(pointsObject).map(
+            ([x, y]) => ({
+              x,
+              y,
+            })
+          );
+
+          return children(reconstitutedPoints);
+        }}
+      </Motion>
+    );
+  }
+}
