@@ -8,41 +8,39 @@ class WaveformCalculator extends PureComponent {
     children: PropTypes.func.isRequired,
   };
 
+  state = {
+    tweenCount: 0,
+    tweenFromShape: this.props.shape,
+  };
+
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+    if (this.props.shape !== nextProps.shape) {
+      this.setState({
+        tweenCount: this.state.tweenCount + 1,
+        tweenFromShape: this.props.shape,
+      });
+    }
+  }
+
   render() {
     const { children, ...waveformData } = this.props;
+    const { tweenCount, tweenFromShape } = this.state;
 
-    const points = getPointsForWaveform(waveformData);
-
-    // React Motion takes a map-like object:
-    // { opacity: spring(0.4), translate: spring(-10) }
-    //
-    // In our case, we have an array of coordinates:
-    // [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
-    //
-    // We need to transform our array of data into something that
-    // React Motion can understand:
-    // { '0': spring(100), '2': spring(110), ...}
-
-    const motionInput = points.reduce((acc, { x, y }) => {
-      acc[x] = spring(y, SPRING_SETTINGS);
-      return acc;
-    }, {});
+    const tweenAmount = spring(tweenCount % 2, SPRING_SETTINGS);
 
     return (
-      <Motion style={motionInput}>
-        {pointsObject => {
-          // Now, we need to undo the transformation that was required to
-          // satisfy React Motion.
-          // from: { '0': 100, '2': 110, ...}
-          // to:   [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
-          const reconstitutedPoints = Object.entries(pointsObject).map(
-            ([x, y]) => ({
-              x,
-              y,
-            })
-          );
+      <Motion style={{ tweenAmount }}>
+        {({ tweenAmount }) => {
+          const fromPoints = getPointsForWaveform({
+            ...waveformData,
+            shape: tweenFromShape,
+          });
+          const toPoints = getPointsForWaveform(waveformData);
+          const ratio = tweenCount % 2 !== 0 ? tweenAmount : 1 - tweenAmount;
 
-          return children(reconstitutedPoints);
+          const points = applyWaveformAddition(fromPoints, toPoints, ratio);
+
+          return children(points);
         }}
       </Motion>
     );

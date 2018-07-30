@@ -29,7 +29,17 @@ type Props = {
   children: (points: Array<WaveformPoint>) => any,
 };
 
+type State = {
+  tweenCount: number,
+  tweenFromShape: WaveformShape,
+};
+
 class WaveformCalculator extends PureComponent {
+  state = {
+    tweenCount: 0,
+    tweenFromShape: this.props.shape,
+  };
+
   static defaultProps = {
     shape: 'sine',
     frequency: 1,
@@ -37,40 +47,34 @@ class WaveformCalculator extends PureComponent {
     progress: 0,
   };
 
+  UNSAFE_componentWillReceiveProps(nextProps: Props) {
+    if (this.props.shape !== nextProps.shape) {
+      this.setState({
+        tweenCount: this.state.tweenCount + 1,
+        tweenFromShape: this.props.shape,
+      });
+    }
+  }
+
   render() {
     const { children, ...waveformData } = this.props;
+    const { tweenCount, tweenFromShape } = this.state;
 
-    const points = getPointsForWaveform(waveformData);
-
-    // React Motion takes a map-like object:
-    // { opacity: 10, translate: -10 }
-    //
-    // In our case, we have an array of coordinates:
-    // [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
-    //
-    // We need to transform our array of data into something that
-    // React Motion can understand:
-    // { '0': 100, '2': 110, ...}
-    const motionInput = points.reduce((acc, { x, y }) => {
-      acc[x] = spring(y, SPRING_SETTINGS);
-      return acc;
-    }, {});
+    const tweenAmount = spring(tweenCount % 2, SPRING_SETTINGS);
 
     return (
-      <Motion style={motionInput}>
-        {pointsObject => {
-          // Now, we need to undo the transformation that was required to
-          // satisfy React Motion. The reverse of before.
-          // from: { '0': 100, '2': 110, ...}
-          // back to: [{ x: 0, y: 100 }, { x: 2, y: 110 }, ...]
-          const reconstitutedPoints = Object.entries(pointsObject).map(
-            ([x, y]) => ({
-              x,
-              y,
-            })
+      <Motion style={{ tweenAmount }}>
+        {({ tweenAmount }) => {
+          const points = applyWaveformAddition(
+            getPointsForWaveform({
+              ...waveformData,
+              shape: tweenFromShape,
+            }),
+            [getPointsForWaveform(waveformData)],
+            tweenCount % 2 !== 0 ? tweenAmount : 1 - tweenAmount
           );
 
-          return children(reconstitutedPoints);
+          return children(points);
         }}
       </Motion>
     );
