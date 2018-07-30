@@ -2,6 +2,8 @@ class ReactRallyWaveform extends Component {
   state = {
     frequency: 1,
     amplitude: 1,
+    shape: 'sine',
+    stopwatchRunning: false,
   };
 
   updateAmplitude = amplitude => {
@@ -12,6 +14,10 @@ class ReactRallyWaveform extends Component {
     this.setState({ frequency });
   };
 
+  updateShape = shape => {
+    this.setState({ shape });
+  };
+
   toggleRunning = () => {
     this.setState(state => ({
       stopwatchRunning: !state.stopwatchRunning,
@@ -20,14 +26,14 @@ class ReactRallyWaveform extends Component {
 
   render() {
     const { width, height } = this.props;
-    const { frequency, amplitude } = this.state;
+    const { frequency, amplitude, shape, stopwatchRunning } = this.state;
 
     return (
       <Fragment>
         <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
           {progress => (
             <WaveformCalculator
-              shape="sine"
+              shape={shape}
               frequency={frequency}
               amplitude={amplitude}
               width={width}
@@ -54,6 +60,11 @@ class ReactRallyWaveform extends Component {
             label="frequency"
             value={frequency}
             onChange={this.updateFrequency}
+          />
+
+          <ButtonGroup
+            options={['sine', 'triangle', 'square', 'sawtooth']}
+            onChange={this.updateShape}
           />
 
           <button onClick={this.toggleRunning}>Toggle</button>

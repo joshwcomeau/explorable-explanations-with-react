@@ -1,0 +1,14 @@
+const Demo = () => (
+  <WaveformStopwatch
+    frequency={1}
+    isRunning={true}
+  >
+    {progress => (
+      <pre>
+        {progress}
+      </pre>
+    )}
+  </WaveformStopwatch>
+);
+
+render(<Demo />);

@@ -4,11 +4,8 @@ import { Motion, spring } from 'react-motion';
 
 import { SPRING_SETTINGS } from '../../constants';
 import {
-  convertTimeElapsedToCycle,
   getPointsForWaveform,
   applyWaveformAddition,
-  createSVGPathFromWaveformPoints,
-  translateAxisRelativeYValue,
 } from '../../helpers/waveform.helpers';
 
 import type { WaveformPoint, WaveformShape } from '../../types';
@@ -27,6 +24,7 @@ type Props = {
   // progress is the number of cycles, based on `frequency`, that have elapsed
   progress?: number,
   children: (points: Array<WaveformPoint>) => any,
+  animateAmplitudeAndFrequency: boolean,
 };
 
 type State = {
@@ -57,20 +55,25 @@ class WaveformCalculator extends PureComponent {
   }
 
   render() {
-    const { children, ...waveformData } = this.props;
+    const { children, animateAmplitudeAndFrequency, ...waveformData } = this.props;
     const { tweenCount, tweenFromShape } = this.state;
 
     const tweenAmount = spring(tweenCount % 2, SPRING_SETTINGS);
 
+    const amplitude = animateAmplitudeAndFrequency ? spring(waveformData.amplitude) : waveformData.amplitude;
+    const frequency = animateAmplitudeAndFrequency ? spring(waveformData.frequency) : waveformData.frequency;
+
     return (
-      <Motion style={{ tweenAmount }}>
-        {({ tweenAmount }) => {
+      <Motion style={{ tweenAmount, amplitude, frequency }}>
+        {({ tweenAmount, amplitude, frequency }) => {
           const points = applyWaveformAddition(
             getPointsForWaveform({
               ...waveformData,
+              amplitude,
+              frequency,
               shape: tweenFromShape,
             }),
-            [getPointsForWaveform(waveformData)],
+            [getPointsForWaveform({...waveformData, amplitude, frequency})],
             tweenCount % 2 !== 0 ? tweenAmount : 1 - tweenAmount
           );
 

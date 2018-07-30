@@ -32,11 +32,13 @@ import AirGrid from './components/AirGrid';
 import Spacer from './components/Spacer';
 import WaveformCalculator from './components/WaveformCalculator';
 import WaveformIntercept from './components/WaveformIntercept';
+import WaveformStopwatch from './components/WaveformStopwatch';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave/GridVsWave';
 import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
 import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
+import ReactRallyWaveformV4 from './components/ReactRallyWaveformV4';
 
 preloader({
   spacerSrc,
@@ -513,9 +515,21 @@ export default class Presentation extends React.Component {
           ranges={[{ loc: [0, 17] }]}
         />
 
-        <Slide>Waveform Stopwatch number generator example, split code</Slide>
+        <Slide>
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/live/waveform-stopwatch-json.example')}
+              theme="external"
+              scope={{ WaveformStopwatch }}
+            />
+          </div>
+        </Slide>
 
-        <Slide>Waveform Stopwatch progress bar example, split code</Slide>
+        <Slide>
+          Waveform Stopwatch progress bar example, split code
+          <br /><br />
+          If there's time.
+        </Slide>
 
         <CodeSlide
           notes={`
@@ -532,23 +546,16 @@ export default class Presentation extends React.Component {
           ]}
         />
 
-        <CodeSlide
-          notes={`
-            The Updated Waveform calculator
-          `}
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-calculator-v2.example')}
-          ranges={[
-            { loc: [0, 17] },
-            { loc: [17, 34] },
-            { loc: [34, 51] },
-            { loc: [51, 76] },
-          ]}
-        />
+        <Slide>
+          <Heading size={2}>Smoothing Everything Out</Heading>
+        </Slide>
 
         <Slide>
           <ReactRallyWaveformV3 />
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV4 />
         </Slide>
 
         {/*
