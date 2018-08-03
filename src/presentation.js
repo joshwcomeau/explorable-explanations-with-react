@@ -21,6 +21,7 @@ import spacerSrc from './assets/spacer.png';
 import basketballSrc from './assets/basketball.gif';
 import telloDemoSrc from './assets/tello-demo.mp4';
 import guppyDemoSrc from './assets/guppy-demo.mp4';
+import districtSrc from './assets/district-v2.mp4';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -39,10 +40,12 @@ import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
 import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
 import ReactRallyWaveformV4 from './components/ReactRallyWaveformV4';
+import FullscreenConfetti from './components/FullscreenConfetti/FullscreenConfetti';
 
 preloader({
   spacerSrc,
   basketballSrc,
+  districtSrc,
 });
 
 // Require CSS
@@ -258,13 +261,34 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide
+          bgColor="secondary"
           notes={`
             I did not come up with this idea, for interactive learning experiences. The common term used is "Explorable Explanations".
 
             There's a whole community of people building these things.
           `}
         >
-          Explorable Explanations
+          <Heading size={1} style={{ fontWeight: 900 }}>
+            Explorable Explanations
+          </Heading>
+          <FullscreenConfetti />
+        </Slide>
+
+        <Slide bgColor="secondary">
+          <Heading textColor="primary" size={6}>
+            <a
+              href="http://polytrope.com/district/"
+              style={{ color: COLORS.white }}
+            >
+              District
+            </a>{' '}
+            By{' '}
+            <a href="EnDimensions" style={{ color: COLORS.white }}>
+              Christopher Walker
+            </a>
+          </Heading>
+
+          <video autoPlay loop src={districtSrc} style={{ width: '100%' }} />
         </Slide>
 
         <Slide
@@ -527,7 +551,8 @@ export default class Presentation extends React.Component {
 
         <Slide>
           Waveform Stopwatch progress bar example, split code
-          <br /><br />
+          <br />
+          <br />
           If there's time.
         </Slide>
 

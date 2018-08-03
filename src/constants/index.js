@@ -38,6 +38,13 @@ export const COLORS: Colors = {
     '700': '#FFA000',
     '900': '#ee7314',
   },
+  yellow: {
+    '100': '#FFF9C4',
+    '300': '#FFF176',
+    '500': '#FFEB3B',
+    '700': '#FBC02D',
+    '900': '#F57F17',
+  },
   green: {
     '100': '#DCEDC8',
     '300': '#AED581',
