@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
-import styled, { injectGlobal } from 'styled-components';
+import styled, {
+  injectGlobal,
+} from 'styled-components';
 import {
   Cite,
   Deck,
@@ -25,6 +27,7 @@ import districtSrc from './assets/district-v2.mp4';
 import traditionalSoundArticleSrc from './assets/traditional-sound-article.png';
 import convergingSquareSrc from './assets/converging-square.gif';
 import bananaPathSrc from './assets/banana-path.png';
+import stopwatchSrc from './assets/stopwatch.jpg';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -45,6 +48,7 @@ import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
 import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
 import ReactRallyWaveformV4 from './components/ReactRallyWaveformV4';
 import FullscreenConfetti from './components/FullscreenConfetti/FullscreenConfetti';
+import UnsplashCredit from './components/UnsplashCredit/UnsplashCredit';
 
 preloader({
   spacerSrc,
@@ -52,6 +56,7 @@ preloader({
   districtSrc,
   convergingSquareSrc,
   bananaPathSrc,
+  stopwatchSrc,
 });
 
 // Require CSS
@@ -80,7 +85,7 @@ const theme = createTheme(
     pink: COLORS.pink[500],
     red: COLORS.red[500],
     green: COLORS.green[700],
-    blue: COLORS.blue[500],
+    blue: COLORS.blue[700],
     indigo: COLORS.indigo[700],
     purple: COLORS.purple[500],
   },
@@ -93,7 +98,11 @@ const theme = createTheme(
 export default class Presentation extends React.Component {
   render() {
     return (
-      <Deck transition={['fade']} transitionDuration={500} theme={theme}>
+      <Deck
+        transition={['fade']}
+        transitionDuration={500}
+        theme={theme}
+      >
         <Slide>
           <TitleSlide />
         </Slide>
@@ -164,7 +173,10 @@ export default class Presentation extends React.Component {
             There's a couple things that make this tough.
           `}
         >
-          <img src={traditionalSoundArticleSrc} width="100%" />
+          <img
+            src={traditionalSoundArticleSrc}
+            width="100%"
+          />
         </Slide>
 
         <Slide
@@ -179,7 +191,9 @@ export default class Presentation extends React.Component {
             And, it still wouldn't be sufficient, because...
           `}
         >
-          <Heading size={3}>Language is lossy</Heading>
+          <Heading size={3}>
+            Language is lossy
+          </Heading>
         </Slide>
 
         <Slide
@@ -191,7 +205,9 @@ export default class Presentation extends React.Component {
             understanding
           `}
         >
-          <Heading size={3}>Learning is active</Heading>
+          <Heading size={3}>
+            Learning is active
+          </Heading>
         </Slide>
 
         <Slide
@@ -225,7 +241,11 @@ export default class Presentation extends React.Component {
           `}
         >
           <AmplitudeFrequencyManager>
-            {({ amplitude, frequency, progress }) => (
+            {({
+              amplitude,
+              frequency,
+              progress,
+            }) => (
               <AirGrid
                 shape="sine"
                 width={600}
@@ -245,7 +265,13 @@ export default class Presentation extends React.Component {
             frequency={1}
             amplitude={1}
           >
-            {points => <Waveform width={500} height={250} points={points} />}
+            {points => (
+              <Waveform
+                width={500}
+                height={250}
+                points={points}
+              />
+            )}
           </WaveformCalculator>
         </Slide>
 
@@ -259,10 +285,13 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          Go do a demo Should show the controls, look at how concepts are
-          explained. Get to the harmonics / different shapes, and say "We don't
-          have to understand how sound works, not a good use of time, but
-          hopefully it's clear how this kind of stuff is incredibly useful in
+          Go do a demo Should show the controls,
+          look at how concepts are explained. Get to
+          the harmonics / different shapes, and say
+          "We don't have to understand how sound
+          works, not a good use of time, but
+          hopefully it's clear how this kind of
+          stuff is incredibly useful in
           understanding complex ideas"
         </Slide>
 
@@ -274,7 +303,10 @@ export default class Presentation extends React.Component {
             There's a whole community of people building these things.
           `}
         >
-          <Heading size={1} style={{ fontWeight: 900 }}>
+          <Heading
+            size={1}
+            style={{ fontWeight: 900 }}
+          >
             Explorable Explanations
           </Heading>
           <FullscreenConfetti />
@@ -289,12 +321,20 @@ export default class Presentation extends React.Component {
               District
             </a>{' '}
             By{' '}
-            <a href="EnDimensions" style={{ color: COLORS.white }}>
+            <a
+              href="EnDimensions"
+              style={{ color: COLORS.white }}
+            >
               Christopher Walker
             </a>
           </Heading>
 
-          <video autoPlay loop src={districtSrc} style={{ width: '100%' }} />
+          <video
+            autoPlay
+            loop
+            src={districtSrc}
+            style={{ width: '100%' }}
+          />
         </Slide>
 
         <Slide
@@ -302,7 +342,8 @@ export default class Presentation extends React.Component {
             But not a lot of people building these kinds of experiences are using React. It's this separate community with very little overlap.
           `}
         >
-          Explorable Explanations :broken-heart: React
+          Explorable Explanations :broken-heart:
+          React
         </Slide>
 
         <Slide
@@ -386,12 +427,21 @@ export default class Presentation extends React.Component {
             frequency={1}
             amplitude={1}
           >
-            {points => <Waveform width={500} height={250} points={points} />}
+            {points => (
+              <Waveform
+                width={500}
+                height={250}
+                points={points}
+              />
+            )}
           </WaveformCalculator>
         </Slide>
 
         <Slide>
-          <img src={convergingSquareSrc} style={{ margin: 'auto' }} />
+          <img
+            src={convergingSquareSrc}
+            style={{ margin: 'auto' }}
+          />
         </Slide>
 
         <Slide>
@@ -432,7 +482,9 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <ReactRallyWaveformV1 showControls={false} />
+          <ReactRallyWaveformV1
+            showControls={false}
+          />
         </Slide>
 
         {/* <Slide
@@ -508,14 +560,23 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           lang="jsx"
           code={require('./code/waveform-axes.example')}
-          ranges={[{ loc: [1, 10] }, { loc: [10, 20] }]}
+          ranges={[
+            { loc: [1, 10] },
+            { loc: [10, 20] },
+          ]}
         />
 
         <Slide>
-          <Heading size={3}>We need two things:</Heading>
+          <Heading size={3}>
+            We need two things:
+          </Heading>
           <List>
-            <ListItem>A place to assemble these pieces</ListItem>
-            <ListItem>A source of truth for the state</ListItem>
+            <ListItem>
+              A place to assemble these pieces
+            </ListItem>
+            <ListItem>
+              A source of truth for the state
+            </ListItem>
           </List>
         </Slide>
 
@@ -533,7 +594,10 @@ export default class Presentation extends React.Component {
           lang="jsx"
           code={require('./code/react-rally-waveform-with-axes.example')}
           ranges={[
-            { loc: [0], title: '<ReactRallyWaveform /> v1' },
+            {
+              loc: [0],
+              title: '<ReactRallyWaveform> v1',
+            },
             { loc: [0, 5] },
             { loc: [6, 13] },
             { loc: [14, 15] },
@@ -547,8 +611,10 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformV1 />
         </Slide>
 
-        <Slide>
-          <Heading size={2}>Shifting Between Waveforms</Heading>
+        <Slide bgColor="blue">
+          <Heading size={2} textColor="primary">
+            Shifting Between Waveforms
+          </Heading>
         </Slide>
 
         <Slide>
@@ -556,38 +622,101 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <CodeSlide
+          notes={`
+            Looking at the current API, we could embed this tweening within
+            Waveform... but it's already doing quite a bit. I don't like when
+            any of my components get too complex. Let's instead create a new
+            component to deal with this.
+          `}
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-v2.example')}
-          ranges={[{ loc: [0, 17] }]}
+          code={require('./code/react-rally-waveform-with-axes.example')}
+          ranges={[{ loc: [23, 32] }]}
+        />
+
+        <CodeSlide
+          notes={`
+            I'm a fan of creating wrappers that combine simpler blocks in specific ways.
+
+            We have a number of these pieces, so let's construct a ready-to-use wrapper, I'll call it ReactRallyWaveform.
+
+            It'll have our WaveformCalculator, a Waveform, and then a couple axes.
+
+            It'll also hold the state for our waveform.
+          `}
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-calc.example')}
+          ranges={[
+            {
+              loc: [0],
+              title: '<ReactRallyWaveform> v2',
+            },
+            { loc: [0, 13] },
+            { loc: [18, 27] },
+            { loc: [27, 36] },
+            { loc: [38, 63] },
+          ]}
         />
 
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-calculator-v2.example')}
-          ranges={[{ loc: [0, 17] }]}
+          code={require('./code/waveform-calculator-tween.example')}
+          ranges={[
+            {
+              loc: [0],
+              title: '<WaveformCalculator>',
+            },
+            { loc: [0, 7] },
+            { loc: [7, 8] },
+            { loc: [10, 11] },
+            { loc: [11, 13] },
+            { loc: [13, 14], title: '🤔' },
+            { loc: [16, 20] },
+            { loc: [20, 29] },
+            { loc: [24, 25] },
+            { loc: [25, 26] },
+            { loc: [26, 27] },
+            { loc: [31, 32] },
+            { loc: [32, 41] },
+            { loc: [42, 48] },
+            { loc: [48, 49] },
+            { loc: [49, 57] },
+            { loc: [57, 60] },
+            { loc: [61, 66] },
+            { loc: [67, 68] },
+          ]}
         />
 
         <Slide
           notes={`
-            Ok, so truthfully, I'm not the happiest with this implementation.
-
-            There's definitely room for improvement.
-
-            Happily, though, the ugly bit is sequestered within a component.
-
-            I'm happy with the API, the inputs and outputs... so I can refactor this later, without breaking anything else. This kind of component encapsulation is great for maintainability.
-
-            This wouldn't be possible without the function-as-child pattern,
-            if I was just calling methosd from within ReactRallyWaveform.
+            Ok, so truthfully, I'm not the happiest with this implementation. There's definitely room for improvement, I just ran out of time.
           `}
+          bgColor="secondary"
         >
-          <Heading size={2}>To be honest...</Heading>
+          <Heading size={2} textColor="primary">
+            This implementation is not great...
+          </Heading>
         </Slide>
 
-        <Slide>
-          <Heading size={2}>Playing The Waveform</Heading>
+        <Slide
+          notes={`
+            But you know what? It's OK that it's not great.
+
+            I'm happy with the inputs and outputs. It gives me the data I want, and it's OK if the inner workings of this black box aren't great. The beautiful thing about this being its own component is that it's sequestered; a bit of hackiness here doesn't affect the maintainability of our ReactRallyWaveform component.
+          `}
+          bgColor="secondary"
+        >
+          <Heading size={2} textColor="primary">
+            ...but that's OK!
+          </Heading>
+        </Slide>
+
+        <Slide bgColor="blue">
+          <Heading size={2} textColor="primary">
+            Playing The Waveform
+          </Heading>
         </Slide>
 
         <Slide
@@ -602,7 +731,17 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformV3 />
         </Slide>
 
-        <Slide>Stopwatch image</Slide>
+        <Slide>
+          The animation is just about redrawing the
+          waveform at 60fps.
+        </Slide>
+
+        <Slide bgImage={stopwatchSrc}>
+          <UnsplashCredit
+            username="veri_ivanova"
+            fullName="Veri Ivanova"
+          />
+        </Slide>
 
         <CodeSlide
           notes={`
@@ -625,7 +764,8 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          Waveform Stopwatch progress bar example, split code
+          Waveform Stopwatch progress bar example,
+          split code
           <br />
           <br />
           If there's time.
@@ -647,7 +787,9 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          <Heading size={2}>Smoothing Everything Out</Heading>
+          <Heading size={2}>
+            Smoothing Everything Out
+          </Heading>
         </Slide>
 
         <Slide>
@@ -705,19 +847,23 @@ export default class Presentation extends React.Component {
           `}
         >
           <Quote>
-            "...I'm in my third year studying sound engineering for film, and
-            after reading this{' '}
+            "...I'm in my third year studying sound
+            engineering for film, and after reading
+            this{' '}
             <Highlighted>
-              I finally understand how harmonics and waveforms work.
+              I finally understand how harmonics and
+              waveforms work.
             </Highlighted>{' '}
-            I've known what harmonics and waveforms are, as well as their
-            different applications. But they way it has always been taught to
-            me,{' '}
+            I've known what harmonics and waveforms
+            are, as well as their different
+            applications. But they way it has always
+            been taught to me,{' '}
             <Highlighted>
-              I could just never understand <em>why</em> they are.
+              I could just never understand{' '}
+              <em>why</em> they are.
             </Highlighted>{' '}
-            Thank you for explaining this to me in a way no one else has been
-            able to."
+            Thank you for explaining this to me in a
+            way no one else has been able to."
           </Quote>
         </Slide>
       </Deck>

@@ -17,7 +17,7 @@ class ReactRallyWaveform extends Component {
     const { frequency, amplitude } = this.state;
 
     return (
-      <Fragment>
+      <>
         <WaveformCalculator
           shape="sine"
           frequency={frequency}
@@ -25,13 +25,29 @@ class ReactRallyWaveform extends Component {
           width={width}
           height={height}
         >
-          {points => <Waveform width={width} height={height} points={points} />}
+          {points => (
+            <Waveform
+              points={points}
+              width={width}
+              height={height}
+              color={COLORS.blue}
+              strokeWidth={4}
+            />
+          }
         </WaveformCalculator>
 
-        <WaveformAxis axis="x" width={width} height={height} />
-        <WaveformAxis axis="y" width={width} height={height} />
+        <WaveformAxis
+          axis="x"
+          width={width}
+          height={height}
+        />
+        <WaveformAxis
+          axis="y"
+          width={width}
+          height={height}
+        />
 
-        <div>
+       <div>
           <Slider
             label="amplitude"
             value={amplitude}
@@ -44,7 +60,7 @@ class ReactRallyWaveform extends Component {
             onChange={this.updateFrequency}
           />
         </div>
-      </Fragment>
+      </>
     );
   }
 }

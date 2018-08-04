@@ -8,7 +8,10 @@ import {
   applyWaveformAddition,
 } from '../../helpers/waveform.helpers';
 
-import type { WaveformPoint, WaveformShape } from '../../types';
+import type {
+  WaveformPoint,
+  WaveformShape,
+} from '../../types';
 
 type Props = {
   shape: WaveformShape,
@@ -31,13 +34,17 @@ type Props = {
 
 type State = {
   tweenCount: number,
-  tweenFromShape: WaveformShape,
+  tweenFrom: WaveformShape,
+  tweenTo: WaveformShape,
 };
+
+const SHAPE_MAP = {};
 
 class WaveformCalculator extends PureComponent {
   state = {
     tweenCount: 0,
-    tweenFromShape: this.props.shape,
+    tweenFrom: this.props.shape,
+    tweenTo: this.props.shape,
   };
 
   static defaultProps = {
@@ -48,12 +55,16 @@ class WaveformCalculator extends PureComponent {
     pixelRatio: 5,
   };
 
-  UNSAFE_componentWillReceiveProps(nextProps: Props) {
-    if (this.props.shape !== nextProps.shape) {
-      this.setState({
-        tweenCount: this.state.tweenCount + 1,
-        tweenFromShape: this.props.shape,
-      });
+  static getDerivedStateFromProps(
+    nextProps,
+    prevState
+  ) {
+    if (nextProps.shape !== prevState.tweenTo) {
+      return {
+        tweenCount: prevState.tweenCount + 1,
+        tweenFrom: prevState.tweenTo,
+        tweenTo: nextProps.shape,
+      };
     }
   }
 
@@ -63,9 +74,16 @@ class WaveformCalculator extends PureComponent {
       animateAmplitudeAndFrequency,
       ...waveformData
     } = this.props;
-    const { tweenCount, tweenFromShape } = this.state;
+    const {
+      tweenCount,
+      tweenFrom,
+      tweenTo,
+    } = this.state;
 
-    const tweenAmount = spring(tweenCount % 2, SPRING_SETTINGS);
+    const tweenAmount = spring(
+      tweenCount % 2,
+      SPRING_SETTINGS
+    );
 
     const amplitude = animateAmplitudeAndFrequency
       ? spring(waveformData.amplitude)
@@ -75,17 +93,36 @@ class WaveformCalculator extends PureComponent {
       : waveformData.frequency;
 
     return (
-      <Motion style={{ tweenAmount, amplitude, frequency }}>
-        {({ tweenAmount, amplitude, frequency }) => {
+      <Motion
+        style={{
+          tweenAmount,
+          amplitude,
+          frequency,
+        }}
+      >
+        {({
+          tweenAmount,
+          amplitude,
+          frequency,
+        }) => {
           const points = applyWaveformAddition(
             getPointsForWaveform({
               ...waveformData,
               amplitude,
               frequency,
-              shape: tweenFromShape,
+              shape: tweenFrom,
             }),
-            [getPointsForWaveform({ ...waveformData, amplitude, frequency })],
-            tweenCount % 2 !== 0 ? tweenAmount : 1 - tweenAmount
+            [
+              getPointsForWaveform({
+                ...waveformData,
+                amplitude,
+                frequency,
+                shape: tweenTo,
+              }),
+            ],
+            tweenCount % 2 !== 0
+              ? tweenAmount
+              : 1 - tweenAmount
           );
 
           return children(points);

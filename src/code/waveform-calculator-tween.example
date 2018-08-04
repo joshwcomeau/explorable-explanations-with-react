@@ -1,0 +1,73 @@
+class WaveformCalculator extends PureComponent {
+  static propTypes = {
+    shape: PropTypes.oneOf(VALID_SHAPES),
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    frequency: PropTypes.number.isRequired,
+    amplitude: PropTypes.number.isRequired,
+    children: PropTypes.func.isRequired,
+  };
+
+  state = {
+    tweenFrom: this.props.shape,
+    tweenTo: this.props.shape,
+    tweenCount: 0,
+  };
+
+  static getDerivedStateFromProps(
+    nextProps,
+    prevState
+  ) {
+    if (
+      nextProps.shape !== prevState.tweenTo
+    ) {
+      return {
+        tweenCount: prevState.tweenCount + 1,
+        tweenFrom: prevState.tweenTo,
+        tweenTo: nextProps.shape,
+      };
+    }
+  }
+
+  render() {
+    const {
+      children,
+      ...waveformData,
+    } = this.props;
+    const {
+      tweenCount,
+      tweenFrom,
+      tweenTo,
+    } = this.state;
+
+    return (
+      <Motion
+        style={{
+          tweenAmount: spring(tweenCount % 2),
+        }}
+      >
+        {({ tweenAmount }) => {
+          const from = getPointsForWaveform({
+            ...waveformData,
+            shape: tweenFrom,
+          });
+          const to = getPointsForWaveform({
+            ...waveformData,
+            shape: tweenTo,
+          });
+          const ratio = tweenCount % 2 !== 0
+            ? tweenAmount
+            : 1 - tweenAmount;
+
+          const points = addWaveformPoints(
+            from,
+            to,
+            ratio
+          );
+
+          return children(points);
+        }}
+      </Motion>
+    );
+  }
+}
