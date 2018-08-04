@@ -24,7 +24,9 @@ type Props = {
   // progress is the number of cycles, based on `frequency`, that have elapsed
   progress?: number,
   children: (points: Array<WaveformPoint>) => any,
+  // Props specifically for this demo
   animateAmplitudeAndFrequency: boolean,
+  pixelRatio: number,
 };
 
 type State = {
@@ -43,6 +45,7 @@ class WaveformCalculator extends PureComponent {
     frequency: 1,
     amplitude: 1,
     progress: 0,
+    pixelRatio: 5,
   };
 
   UNSAFE_componentWillReceiveProps(nextProps: Props) {
@@ -55,13 +58,21 @@ class WaveformCalculator extends PureComponent {
   }
 
   render() {
-    const { children, animateAmplitudeAndFrequency, ...waveformData } = this.props;
+    const {
+      children,
+      animateAmplitudeAndFrequency,
+      ...waveformData
+    } = this.props;
     const { tweenCount, tweenFromShape } = this.state;
 
     const tweenAmount = spring(tweenCount % 2, SPRING_SETTINGS);
 
-    const amplitude = animateAmplitudeAndFrequency ? spring(waveformData.amplitude) : waveformData.amplitude;
-    const frequency = animateAmplitudeAndFrequency ? spring(waveformData.frequency) : waveformData.frequency;
+    const amplitude = animateAmplitudeAndFrequency
+      ? spring(waveformData.amplitude)
+      : waveformData.amplitude;
+    const frequency = animateAmplitudeAndFrequency
+      ? spring(waveformData.frequency)
+      : waveformData.frequency;
 
     return (
       <Motion style={{ tweenAmount, amplitude, frequency }}>
@@ -73,7 +84,7 @@ class WaveformCalculator extends PureComponent {
               frequency,
               shape: tweenFromShape,
             }),
-            [getPointsForWaveform({...waveformData, amplitude, frequency})],
+            [getPointsForWaveform({ ...waveformData, amplitude, frequency })],
             tweenCount % 2 !== 0 ? tweenAmount : 1 - tweenAmount
           );
 

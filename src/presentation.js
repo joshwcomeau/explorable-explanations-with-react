@@ -22,6 +22,9 @@ import basketballSrc from './assets/basketball.gif';
 import telloDemoSrc from './assets/tello-demo.mp4';
 import guppyDemoSrc from './assets/guppy-demo.mp4';
 import districtSrc from './assets/district-v2.mp4';
+import traditionalSoundArticleSrc from './assets/traditional-sound-article.png';
+import convergingSquareSrc from './assets/converging-square.gif';
+import bananaPathSrc from './assets/banana-path.png';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -34,6 +37,7 @@ import Spacer from './components/Spacer';
 import WaveformCalculator from './components/WaveformCalculator';
 import WaveformIntercept from './components/WaveformIntercept';
 import WaveformStopwatch from './components/WaveformStopwatch';
+import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave/GridVsWave';
 import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
@@ -46,6 +50,8 @@ preloader({
   spacerSrc,
   basketballSrc,
   districtSrc,
+  convergingSquareSrc,
+  bananaPathSrc,
 });
 
 // Require CSS
@@ -158,7 +164,7 @@ export default class Presentation extends React.Component {
             There's a couple things that make this tough.
           `}
         >
-          Screenshot of https://method-behind-the-music.com/mechanics/physics/
+          <img src={traditionalSoundArticleSrc} width="100%" />
         </Slide>
 
         <Slide
@@ -345,12 +351,23 @@ export default class Presentation extends React.Component {
           code={require('./code/waveform-v1.example')}
           ranges={[
             { loc: [0], title: '<Waveform /> v1' },
-            { loc: [0, 20] },
-            { loc: [20, 40] },
+            { loc: [1, 4] },
+            { loc: [4, 10] },
+            { loc: [10, 12] },
+            { loc: [14, 15] },
+            { loc: [23, 28] },
+            { loc: [28, 34] },
           ]}
         />
 
-        <Slide>Maybe a quick word about how SVG paths work?</Slide>
+        <Slide>
+          <img src={bananaPathSrc} width="100%" />
+          <br />
+          <br />
+          <a href="https://codepen.io/SitePoint/pen/scIdq">
+            https://codepen.io/SitePoint/pen/scIdq
+          </a>
+        </Slide>
 
         <Slide
           notes={`
@@ -373,18 +390,52 @@ export default class Presentation extends React.Component {
           </WaveformCalculator>
         </Slide>
 
+        <Slide>
+          <img src={convergingSquareSrc} style={{ margin: 'auto' }} />
+        </Slide>
+
+        <Slide>
+          <WaveformPointManager />
+        </Slide>
+
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
           code={require('./code/waveform-v2.example')}
           ranges={[
             { loc: [0], title: '<Waveform /> v2' },
-            { loc: [0, 20] },
-            { loc: [20, 40] },
+            { loc: [1, 13] },
+            { loc: [14, 15] },
+            { loc: [23, 30] },
+            { loc: [30, 38] },
+            { loc: [39, 45] },
+            { loc: [46, 58] },
           ]}
         />
 
-        <Slide
+        <Slide>
+          <WaveformCalculator
+            width={500}
+            height={250}
+            frequency={1}
+            amplitude={1}
+          >
+            {points => (
+              <Waveform
+                width={500}
+                height={250}
+                color={COLORS.blue[700]}
+                points={points}
+              />
+            )}
+          </WaveformCalculator>
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV1 showControls={false} />
+        </Slide>
+
+        {/* <Slide
           notes={`
             There's a problem with this, though.
 
@@ -436,26 +487,37 @@ export default class Presentation extends React.Component {
               scope={{ WaveformCalculator, Waveform }}
             />
           </div>
-        </Slide>
-
-        <Slide>
-          <ReactRallyWaveformV1 showControls={false} />
-        </Slide>
+        </Slide> */}
 
         <CodeSlide
           notes={`
-            This pattern of creating new components instead of bundling logic
-            within existing components is useful for all kinds of things.
-
-            For example, you may have noticed that the final version of
-            our waveform has an X axis and a Y axis. While we could have a
-            'showXAxis'
+            One possible way to do this would be through a couple of boolean props.
           `}
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-consumption-v3.example')}
-          ranges={[{ loc: [0, 17] }]}
+          code={require('./code/waveform-axes-alt-universe.example')}
+          ranges={[{ loc: [0, 11] }]}
         />
+
+        <CodeSlide
+          notes={`
+            I don't love that, though. As we keep building stuff, this
+            Waveform component is going to become overburdened. It's much
+            nicer, I believe, to create lots of simple, reusable components.
+          `}
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-axes.example')}
+          ranges={[{ loc: [1, 10] }, { loc: [10, 20] }]}
+        />
+
+        <Slide>
+          <Heading size={3}>We need two things:</Heading>
+          <List>
+            <ListItem>A place to assemble these pieces</ListItem>
+            <ListItem>A source of truth for the state</ListItem>
+          </List>
+        </Slide>
 
         <CodeSlide
           notes={`
@@ -469,8 +531,16 @@ export default class Presentation extends React.Component {
           `}
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-v1.example')}
-          ranges={[{ loc: [0, 17] }]}
+          code={require('./code/react-rally-waveform-with-axes.example')}
+          ranges={[
+            { loc: [0], title: '<ReactRallyWaveform /> v1' },
+            { loc: [0, 5] },
+            { loc: [6, 13] },
+            { loc: [14, 15] },
+            { loc: [23, 32] },
+            { loc: [33, 43] },
+            { loc: [45, 56] },
+          ]}
         />
 
         <Slide>
@@ -508,6 +578,9 @@ export default class Presentation extends React.Component {
             Happily, though, the ugly bit is sequestered within a component.
 
             I'm happy with the API, the inputs and outputs... so I can refactor this later, without breaking anything else. This kind of component encapsulation is great for maintainability.
+
+            This wouldn't be possible without the function-as-child pattern,
+            if I was just calling methosd from within ReactRallyWaveform.
           `}
         >
           <Heading size={2}>To be honest...</Heading>
@@ -528,6 +601,8 @@ export default class Presentation extends React.Component {
         >
           <ReactRallyWaveformV3 />
         </Slide>
+
+        <Slide>Stopwatch image</Slide>
 
         <CodeSlide
           notes={`

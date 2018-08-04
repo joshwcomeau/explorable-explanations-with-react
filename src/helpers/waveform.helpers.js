@@ -17,14 +17,11 @@ export const getPointsForWaveform = ({
   width,
   height,
   progress = 0,
+  pixelRatio = 5,
 }: WaveformProps): Array<WaveformPoint> => {
   const offset = convertProgressToOffset(progress);
 
-  // Get an array of `x` values.
-  // For now, we're drawing lines at every second point, for performance.
-  // After experimentation, this may change.
-  const ratioBetweenPointsAndPixels = 2;
-  const xValues = range(0, width + 1, ratioBetweenPointsAndPixels);
+  const xValues = range(0, width + 1, pixelRatio);
 
   // Convert each X value to a proper coordinate system, relative to the axis
   // (so, Y values will be from -1 to 1)

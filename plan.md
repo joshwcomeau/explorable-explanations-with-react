@@ -1,3 +1,8 @@
+NOTES:
+
+- Ditch WaveformCalculator V1. Instead, just have it be a method in the parent
+  component
+
 Intro
 
 0.  Anecdote about the theme music maybe? Crossroads?

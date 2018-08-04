@@ -17,13 +17,13 @@ export type Props = {
 
 class Waveform extends Component<Props> {
   static defaultProps = {
+    points: [],
     width: 200,
     height: 100,
     color: 'black',
     strokeWidth: 5,
     strokeLinecap: 'round',
     opacity: 1,
-    points: [],
   };
 
   render() {
@@ -37,17 +37,10 @@ class Waveform extends Component<Props> {
       opacity,
     } = this.props;
 
-    const svgPath = createSVGPathFromWaveformPoints(
-      points,
-      height
-    );
+    const svgPath = createSVGPathFromWaveformPoints(points, height);
 
     return (
-      <svg
-        width={width}
-        height={height}
-        style={{ overflow: 'visible' }}
-      >
+      <svg width={width} height={height} style={{ overflow: 'visible' }}>
         <path
           d={svgPath}
           stroke={color}

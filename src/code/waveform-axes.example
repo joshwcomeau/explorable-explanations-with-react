@@ -1,0 +1,21 @@
+<>
+  <Waveform
+    width={width}
+    height={height}
+    shape="sine"
+    frequency={1}
+    amplitude={1}
+    color={COLORS.blue}
+    strokeWidth={4}
+  />
+  <WaveformAxis
+    axis="x"
+    width={width}
+    height={height}
+  />
+  <WaveformAxis
+    axis="y"
+    width={width}
+    height={height}
+  />
+</>

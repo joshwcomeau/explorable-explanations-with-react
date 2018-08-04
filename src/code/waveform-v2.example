@@ -1,6 +1,3 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
 class Waveform extends Component {
   static propTypes = {
     width: PropTypes.number.isRequired,
@@ -31,14 +28,26 @@ class Waveform extends Component {
       width,
       height,
     });
+    /*
+      [
+        { x: 0, y: 0 },
+        { x: 2, y: 22 },
+        ...
+        { x: 500, y: 0 },
+      ]
+    */
 
-    const svgPath = convertPointsToPath(points);
+    const svgPath = convertPointsToPath(
+      points
+    );
+    /*
+      "M0,0 L2,22 L4,33 ... L500,0"
+    */
 
     return (
       <svg
         width={width}
         height={height}
-        style={{ overflow: 'visible' }}
       >
         <path
           d={svgPath}
