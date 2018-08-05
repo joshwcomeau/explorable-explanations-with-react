@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import {Motion, spring} from 'react-motion';
 import styled from 'styled-components';
 
 import WaveformStopwatch from '../WaveformStopwatch';
@@ -7,9 +8,14 @@ import Slider from '../Slider';
 import Spacer from '../Spacer';
 
 class AirGridManager extends Component {
+  static defaultProps = {
+    initialAmplitude: 1,
+    initialFrequency: 1,
+  }
+
   state = {
-    amplitude: 1,
-    frequency: 1,
+    amplitude: this.props.initialAmplitude,
+    frequency: this.props.initialFrequency,
   };
 
   updateAmplitude = amplitude => {
@@ -26,33 +32,39 @@ class AirGridManager extends Component {
 
     return (
       <Wrapper>
-        <WaveformStopwatch isRunning frequency={frequency}>
-          {progress => children({ amplitude, frequency, progress })}
-        </WaveformStopwatch>
+        <Motion style={{ amplitude: spring(amplitude), frequency: spring(frequency) }}>
+          {({ amplitude, frequency }) => (
+            <Fragment>
+              <WaveformStopwatch isRunning frequency={frequency}>
+                {progress => children({ amplitude, frequency, progress })}
+              </WaveformStopwatch>
 
-        <Sliders>
-          <SliderWrapper>
-            <Slider
-              label="amplitude"
-              min={0}
-              max={1}
-              step={0.01}
-              value={amplitude}
-              onChange={this.updateAmplitude}
-            />
-          </SliderWrapper>
-          <Spacer size={70} />
-          <SliderWrapper>
-            <Slider
-              label="frequency"
-              min={0.05}
-              max={2}
-              step={0.01}
-              value={frequency}
-              onChange={this.updateFrequency}
-            />
-          </SliderWrapper>
-        </Sliders>
+              <Sliders>
+                <SliderWrapper>
+                  <Slider
+                    label="amplitude"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    value={amplitude}
+                    onChange={this.updateAmplitude}
+                  />
+                </SliderWrapper>
+                <Spacer size={70} />
+                <SliderWrapper>
+                  <Slider
+                    label="frequency"
+                    min={0.05}
+                    max={2}
+                    step={0.01}
+                    value={frequency}
+                    onChange={this.updateFrequency}
+                  />
+                </SliderWrapper>
+              </Sliders>
+            </Fragment>
+          )}
+        </Motion>
       </Wrapper>
     );
   }

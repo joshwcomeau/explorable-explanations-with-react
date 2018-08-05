@@ -77,7 +77,7 @@ class GridVsWave extends Component {
                             points={points}
                             color={
                               highlightMolecule
-                                ? COLORS.gray[300]
+                                ? COLORS.gray[200]
                                 : COLORS.gray[900]
                             }
                           />

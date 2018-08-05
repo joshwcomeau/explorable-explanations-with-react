@@ -116,7 +116,7 @@ class AirGrid extends PureComponent<Props> {
         // soften all un-highlighted columns to a lighter gray.
         // prettier-ignore
         const baseColor = typeof highlightColumnIndex === 'number'
-          ? COLORS.gray[300]
+          ? COLORS.gray[200]
           : COLORS.gray[500];
 
         // prettier-ignore

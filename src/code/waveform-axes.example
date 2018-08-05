@@ -1,4 +1,4 @@
-<>
+<Fragment>
   <Waveform
     width={width}
     height={height}
@@ -18,4 +18,4 @@
     width={width}
     height={height}
   />
-</>
+</Fragment>

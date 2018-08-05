@@ -10,126 +10,105 @@ import WaveformAxis from '../WaveformAxis';
 import Label from '../Label';
 import WaveformCalculator from '../WaveformCalculator';
 import WaveformStopwatch from '../WaveformStopwatch';
+import WaveformState from '../WaveformState';
 
 class ReactRallyWaveform extends Component {
-  state = {
-    frequency: 1,
-    amplitude: 1,
-    shape: 'sine',
-    stopwatchRunning: false,
-  };
-
   static defaultProps = {
     width: 500,
     height: 250,
   };
 
-  updateAmplitude = amplitude => {
-    this.setState({ amplitude });
-  };
-
-  updateFrequency = frequency => {
-    this.setState({ frequency });
-  };
-
-  updateShape = shape => {
-    this.setState({ shape });
-  };
-
-  toggleRunning = () => {
-    this.setState(state => ({
-      stopwatchRunning: !state.stopwatchRunning,
-    }));
-  };
-
   render() {
     const { width, height } = this.props;
-    const { frequency, amplitude, shape, stopwatchRunning } = this.state;
 
     return (
-      <Wrapper>
-        <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
-          {progress => (
-            <WaveformCalculator
-              animateAmplitudeAndFrequency
-              shape={shape}
-              frequency={frequency}
-              amplitude={amplitude}
-              progress={progress}
-              width={width}
-              height={height}
-            >
-              {points => (
-                <Waveform
+      <WaveformState>
+        {({frequency, amplitude, shape, stopwatchRunning, updateAmplitude, updateFrequency, updateShape, toggleRunning}) => (
+          <Wrapper>
+            <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
+              {progress => (
+                <WaveformCalculator
+                  animateAmplitudeAndFrequency
+                  shape={shape}
+                  frequency={frequency}
+                  amplitude={amplitude}
+                  progress={progress}
                   width={width}
                   height={height}
-                  points={points}
-                  color={COLORS.blue[700]}
-                  strokeWidth={4}
-                />
+                >
+                  {points => (
+                    <Waveform
+                      width={width}
+                      height={height}
+                      points={points}
+                      color={COLORS.blue[700]}
+                      strokeWidth={4}
+                    />
+                  )}
+                </WaveformCalculator>
               )}
-            </WaveformCalculator>
-          )}
-        </WaveformStopwatch>
+            </WaveformStopwatch>
 
-        <WaveformAxis
-          x
-          waveformSize={width}
-          strokeWidth={4}
-          strokeLinecap="round"
-        />
-        <WaveformAxis
-          y
-          waveformSize={width}
-          strokeWidth={4}
-          strokeLinecap="round"
-        />
+            <WaveformAxis
+              x
+              waveformSize={width}
+              strokeWidth={4}
+              strokeLinecap="round"
+            />
+            <WaveformAxis
+              y
+              waveformSize={width}
+              strokeWidth={4}
+              strokeLinecap="round"
+            />
 
-        <Controls>
-          <Row>
-            <Column>
-              <Slider
-                label="amplitude"
-                min={0}
-                max={1}
-                step={0.01}
-                value={amplitude}
-                onChange={this.updateAmplitude}
-              />
-            </Column>
-            <Spacer size={70} />
-            <Column>
-              <Slider
-                label="frequency"
-                min={0.05}
-                max={2}
-                step={0.01}
-                value={frequency}
-                onChange={this.updateFrequency}
-              />
-            </Column>
-          </Row>
+            <Controls>
+              <Row>
+                <Column>
+                  <Slider
+                    label="amplitude"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    value={amplitude}
+                    onChange={updateAmplitude}
+                  />
+                </Column>
+                <Spacer size={70} />
+                <Column>
+                  <Slider
+                    label="frequency"
+                    min={0.05}
+                    max={2}
+                    step={0.01}
+                    value={frequency}
+                    onChange={updateFrequency}
+                  />
+                </Column>
+              </Row>
 
-          <Row>
-            <Column>
-              <Label>Shape</Label>
-              <button onClick={() => this.updateShape('sine')}>Sine</button>
-              <button onClick={() => this.updateShape('triangle')}>
-                Triangle
-              </button>
-              <button onClick={() => this.updateShape('square')}>Square</button>
-              <button onClick={() => this.updateShape('sawtooth')}>
-                Sawtooth
-              </button>
-            </Column>
-            <Spacer size={70} />
-            <Column>
-              <Label>Play</Label>
-              <button onClick={this.toggleRunning}>Toggle</button>
-            </Column>
-          </Row>
-        </Controls>
-      </Wrapper>
+              <Row>
+                <Column>
+                  <Label>Shape</Label>
+                  <button onClick={() => updateShape('sine')}>Sine</button>
+                  <button onClick={() => updateShape('triangle')}>
+                    Triangle
+                  </button>
+                  <button onClick={() => updateShape('square')}>Square</button>
+                  <button onClick={() => updateShape('sawtooth')}>
+                    Sawtooth
+                  </button>
+                </Column>
+                <Spacer size={70} />
+                <Column>
+                  <Label>Play</Label>
+                  <button onClick={toggleRunning}>Toggle</button>
+                </Column>
+              </Row>
+            </Controls>
+          </Wrapper>
+        )}
+      </WaveformState>
     );
   }
 }

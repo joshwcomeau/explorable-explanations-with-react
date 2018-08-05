@@ -1,15 +1,13 @@
-import React, { Fragment } from 'react';
-import styled, {
+import React from 'react';
+import {
   injectGlobal,
 } from 'styled-components';
 import {
-  Cite,
   Deck,
   Heading,
   ListItem,
   List,
   Slide,
-  Text,
   ComponentPlayground,
 } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
@@ -17,12 +15,9 @@ import preloader from 'spectacle/lib/utils/preloader';
 import CodeSlide from 'spectacle-code-slide';
 
 import { COLORS } from './constants';
-import { convertProgressToOffset } from './helpers/waveform.helpers';
 
 import spacerSrc from './assets/spacer.png';
 import basketballSrc from './assets/basketball.gif';
-import telloDemoSrc from './assets/tello-demo.mp4';
-import guppyDemoSrc from './assets/guppy-demo.mp4';
 import districtSrc from './assets/district-v2.mp4';
 import traditionalSoundArticleSrc from './assets/traditional-sound-article.png';
 import convergingSquareSrc from './assets/converging-square.gif';
@@ -31,6 +26,8 @@ import stopwatchSrc from './assets/stopwatch.jpg';
 import phaseSrc from './assets/phase-4.gif';
 import legoSrc from './assets/lego.jpeg';
 import modularSynthSrc from './assets/modular-synth.jpg';
+import allTheThingsFastSrc from './assets/all-the-things-fast.mp4';
+import howItsMadeSrc from './assets/how-its-made.jpg';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -41,7 +38,6 @@ import Waveform from './components/Waveform';
 import AirGrid from './components/AirGrid';
 import Spacer from './components/Spacer';
 import WaveformCalculator from './components/WaveformCalculator';
-import WaveformIntercept from './components/WaveformIntercept';
 import WaveformStopwatch from './components/WaveformStopwatch';
 import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
@@ -52,6 +48,7 @@ import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
 import ReactRallyWaveformV4 from './components/ReactRallyWaveformV4';
 import FullscreenConfetti from './components/FullscreenConfetti/FullscreenConfetti';
 import UnsplashCredit from './components/UnsplashCredit/UnsplashCredit';
+import VennDiagram from './components/VennDiagram/VennDiagram';
 
 preloader({
   spacerSrc,
@@ -61,6 +58,9 @@ preloader({
   bananaPathSrc,
   stopwatchSrc,
   phaseSrc,
+  legoSrc,
+  modularSynthSrc,
+  howItsMadeSrc,
 });
 
 // Require CSS
@@ -105,6 +105,7 @@ export default class Presentation extends React.Component {
       <Deck
         transition={['fade']}
         transitionDuration={500}
+        progress={null}
         theme={theme}
       >
         <Slide>
@@ -118,36 +119,6 @@ export default class Presentation extends React.Component {
         >
           <IntroSlide />
         </Slide>
-
-        {/* <Slide>
-          <Heading size={3}>I like building things</Heading>
-        </Slide>
-
-        <Slide>
-          <Heading size={3}>Tello</Heading>
-          <video
-            autoPlay
-            loop
-            src={telloDemoSrc}
-            style={{
-              height: 500,
-              margin: 'auto',
-            }}
-          />
-        </Slide>
-
-        <Slide>
-          <Heading size={3}>Guppy</Heading>
-          <video
-            autoPlay
-            loop
-            src={guppyDemoSrc}
-            style={{
-              height: 500,
-              margin: 'auto',
-            }}
-          />
-        </Slide> */}
 
         <Slide
           notes={`
@@ -244,7 +215,7 @@ export default class Presentation extends React.Component {
             sound by experimenting.
           `}
         >
-          <AmplitudeFrequencyManager>
+          <AmplitudeFrequencyManager initialAmplitude={0}>
             {({
               amplitude,
               frequency,
@@ -289,14 +260,9 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          Go do a demo Should show the controls,
-          look at how concepts are explained. Get to
-          the harmonics / different shapes, and say
-          "We don't have to understand how sound
-          works, not a good use of time, but
-          hopefully it's clear how this kind of
-          stuff is incredibly useful in
-          understanding complex ideas"
+          <a href="https://pudding.cool/2018/02/waveforms/">
+          pudding.cool/2018/02/waveforms/
+          </a>
         </Slide>
 
         <Slide
@@ -346,11 +312,15 @@ export default class Presentation extends React.Component {
             But not a lot of people building these kinds of experiences are using React. It's this separate community with very little overlap.
           `}
         >
-          Explorable Explanations :broken-heart:
-          React
+          <VennDiagram
+            set1="Explorable Explanations"
+            set2="React.js"
+            overlap={10}
+          />
         </Slide>
 
         <Slide
+          bgColor="#FAFAFA"
           notes={`
             And React is a great tool for building these kinds of things!
 
@@ -359,18 +329,27 @@ export default class Presentation extends React.Component {
             With React, I was able to build small, simple components and compose them together as needed to build a complex experience. If I wasn't using React for this, it would have been a lot buggier.
           `}
         >
-          Video clip of waveforms project
+          {/* HACK: Video has some weird borders in it. Hiding it this way rather than re-recording the video */}
+          <div style={{ overflow: 'hidden', display: 'inline-block' }}>
+            <div style={{ transform: 'translate(-2px, -2px)'}}>
+              <video
+                autoPlay
+                loop
+                src={allTheThingsFastSrc}
+              />
+            </div>
+          </div>
         </Slide>
 
         <Slide
+          bgImage={howItsMadeSrc}
           notes={`
             Let's take a look at how I used React to build this thing.
           `}
-        >
-          How It's Made screen grab?
-        </Slide>
+        />
 
         <Slide
+          bgColor="secondary"
           notes={`
             The first thing I needed was a Waveform component, and the first step was figuring out if I wanted to use Canvas or SVG.
 
@@ -379,15 +358,42 @@ export default class Presentation extends React.Component {
             So I built it using both technologies, a task that is surprisingly easy, since both technologies have very similar drawing APIs.
           `}
         >
-          Canvas SVG
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <Heading size={3} textColor="primary">
+              Canvas
+            </Heading>
+
+            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">VS</Heading>
+
+            <Heading size={3} textColor="primary">
+              SVG
+            </Heading>
+          </div>
         </Slide>
 
         <Slide
+          bgColor="secondary"
+          transition={[null]}
           notes={`
             And it turns out that there was no measurable difference in performance, so SVG it was!
           `}
         >
-          Canvas SVG (Winner!)
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+            <Heading size={3} style={{ position: 'absolute', top: -110, right: 100}}>
+              🎉
+            </Heading>
+
+
+            <Heading size={3} textColor="rgba(255, 255, 255, 0.5)">
+              Canvas
+            </Heading>
+
+            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">VS</Heading>
+
+            <Heading size={3} textColor="#1cff8d">
+              SVG
+            </Heading>
+          </div>
         </Slide>
 
         <CodeSlide
@@ -480,6 +486,7 @@ export default class Presentation extends React.Component {
                 height={250}
                 color={COLORS.blue[700]}
                 points={points}
+                strokeWidth={4}
               />
             )}
           </WaveformCalculator>
@@ -552,7 +559,7 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           lang="jsx"
           code={require('./code/waveform-axes-alt-universe.example')}
-          ranges={[{ loc: [0, 11] }]}
+          ranges={[{ loc: [0, 11], title: 'One possible way...' }]}
         />
 
         <CodeSlide
@@ -565,7 +572,7 @@ export default class Presentation extends React.Component {
           lang="jsx"
           code={require('./code/waveform-axes.example')}
           ranges={[
-            { loc: [1, 10] },
+            { loc: [1, 10], title: 'But I prefer this way' },
             { loc: [10, 20] },
           ]}
         />
@@ -586,6 +593,28 @@ export default class Presentation extends React.Component {
 
         <CodeSlide
           notes={`
+            First, the state management bit. This could be done through redux,
+            but for now we'll just use React state.
+          `}
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-state.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<WaveformState>',
+            },
+            { loc: [1, 4] },
+            { loc: [5, 9] },
+            { loc: [10, 17] },
+            { loc: [18, 24] },
+            { loc: [24, 28] },
+            { loc: [29, 35] },
+          ]}
+        />
+
+        <CodeSlide
+          notes={`
             I'm a fan of creating wrappers that combine simpler blocks in specific ways.
 
             We have a number of these pieces, so let's construct a ready-to-use wrapper, I'll call it ReactRallyWaveform.
@@ -599,21 +628,34 @@ export default class Presentation extends React.Component {
           code={require('./code/react-rally-waveform-with-axes.example')}
           ranges={[
             {
-              loc: [0],
+              loc: [0, 1],
               title: '<ReactRallyWaveform> v1',
             },
-            { loc: [0, 5] },
-            { loc: [6, 13] },
-            { loc: [14, 15] },
-            { loc: [23, 32] },
-            { loc: [33, 43] },
-            { loc: [45, 56] },
+            { loc: [1, 3] },
+            { loc: [4, 12] },
+            { loc: [13, 22] },
+            { loc: [23, 33] },
+            { loc: [35, 46] },
           ]}
         />
+
+        <Slide bgColor="secondary">
+          <Heading size={3} textColor="primary">
+            Why a separate state component?
+          </Heading>
+          <br /><br />
+          <List textColor="primary">
+            <ListItem>Keeps complexity down</ListItem>
+            <ListItem>Easier migration (Redux, Context)</ListItem>
+            <ListItem>Reusable</ListItem>
+          </List>
+        </Slide>
+
 
         <Slide>
           <ReactRallyWaveformV1 />
         </Slide>
+
 
         <Slide bgColor="blue">
           <Heading size={2} textColor="primary">
@@ -635,19 +677,10 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           lang="jsx"
           code={require('./code/react-rally-waveform-with-axes.example')}
-          ranges={[{ loc: [23, 32] }]}
+          ranges={[{ loc: [13, 22] }]}
         />
 
         <CodeSlide
-          notes={`
-            I'm a fan of creating wrappers that combine simpler blocks in specific ways.
-
-            We have a number of these pieces, so let's construct a ready-to-use wrapper, I'll call it ReactRallyWaveform.
-
-            It'll have our WaveformCalculator, a Waveform, and then a couple axes.
-
-            It'll also hold the state for our waveform.
-          `}
           bgColor="secondary"
           lang="jsx"
           code={require('./code/react-rally-waveform-calc.example')}
@@ -815,6 +848,7 @@ export default class Presentation extends React.Component {
         */}
 
         <Slide
+        bgImage={legoSrc}
           notes={`
             Something that has been said to the point of cliché is that react
             components are like lego blocks. You can build complete UIs by
@@ -826,20 +860,18 @@ export default class Presentation extends React.Component {
 
             I think a better metaphor is...
           `}
-        >
-          Lego blocks image
-        </Slide>
+        />
+
 
         <Slide
+          bgImage={modularSynthSrc}
           notes={`
             ...modular synthesizers. For those who aren't familiar, modular synthesizers are tools used to produce electronic sounds, like the waves we've been looking at... but a modular synthesizer is combined out of many smaller modules. Each module has inputs and outputs, so a module on its own might not produce any sound, but
             it might modulate sound that is passed through it.
 
             I think React components are like synth modules.
           `}
-        >
-          Modular synth image
-        </Slide>
+        />
 
         <Slide
           notes={`

@@ -1,0 +1,37 @@
+class WaveformState extends Component {
+  static propTypes = {
+    children: PropTypes.func.isRequired,
+  }
+
+  state = {
+    amplitude: 1,
+    frequency: 1,
+  };
+
+  updateAmplitude = amplitude => {
+    this.setState({ amplitude });
+  };
+
+  updateFrequency = frequency => {
+    this.setState({ frequency });
+  };
+
+  render() {
+    const { children } = this.props;
+    const {
+      amplitude,
+      frequency,
+    } = this.state;
+    const {
+      updateAmplitude,
+      updateFrequency,
+    } = this;
+
+    return children({
+      amplitude,
+      frequency,
+      updateAmplitude,
+      updateFrequency,
+    });
+  }
+}
