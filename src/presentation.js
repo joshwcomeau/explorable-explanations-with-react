@@ -28,6 +28,9 @@ import traditionalSoundArticleSrc from './assets/traditional-sound-article.png';
 import convergingSquareSrc from './assets/converging-square.gif';
 import bananaPathSrc from './assets/banana-path.png';
 import stopwatchSrc from './assets/stopwatch.jpg';
+import phaseSrc from './assets/phase-4.gif';
+import legoSrc from './assets/lego.jpeg';
+import modularSynthSrc from './assets/modular-synth.jpg';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -57,6 +60,7 @@ preloader({
   convergingSquareSrc,
   bananaPathSrc,
   stopwatchSrc,
+  phaseSrc,
 });
 
 // Require CSS
@@ -678,14 +682,14 @@ export default class Presentation extends React.Component {
             { loc: [24, 25] },
             { loc: [25, 26] },
             { loc: [26, 27] },
-            { loc: [31, 32] },
-            { loc: [32, 41] },
-            { loc: [42, 48] },
-            { loc: [48, 49] },
-            { loc: [49, 57] },
-            { loc: [57, 60] },
-            { loc: [61, 66] },
-            { loc: [67, 68] },
+            { loc: [33, 34] },
+            { loc: [34, 43] },
+            { loc: [44, 50] },
+            { loc: [50, 51] },
+            { loc: [51, 59] },
+            { loc: [59, 62] },
+            { loc: [63, 68] },
+            { loc: [69, 70] },
           ]}
         />
 
@@ -729,6 +733,10 @@ export default class Presentation extends React.Component {
           `}
         >
           <ReactRallyWaveformV3 />
+        </Slide>
+
+        <Slide>
+          <img src={phaseSrc} />
         </Slide>
 
         <Slide>

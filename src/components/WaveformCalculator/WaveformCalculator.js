@@ -66,6 +66,8 @@ class WaveformCalculator extends PureComponent {
         tweenTo: nextProps.shape,
       };
     }
+
+    return null;
   }
 
   render() {
