@@ -12,6 +12,7 @@ import WaveformCalculator from '../WaveformCalculator';
 import WaveformIntercept from '../WaveformIntercept';
 import AmplitudeFrequencyManager from '../AmplitudeFrequencyManager';
 import Toggle from '../Toggle';
+import WaveformAxis from '../WaveformAxis';
 
 class GridVsWave extends Component {
   state = {
@@ -20,7 +21,10 @@ class GridVsWave extends Component {
   };
 
   render() {
-    const { highlightMolecule, rotateWaveform } = this.state;
+    const {
+      highlightMolecule,
+      rotateWaveform,
+    } = this.state;
 
     return (
       <Fragment>
@@ -48,7 +52,11 @@ class GridVsWave extends Component {
                       }
                       waveformFrequency={frequency}
                       waveformProgress={progress}
-                      highlightColumnIndex={highlightMolecule ? 0 : undefined}
+                      highlightColumnIndex={
+                        highlightMolecule
+                          ? 0
+                          : undefined
+                      }
                     />
 
                     <Spacer size={70} />
@@ -56,11 +64,13 @@ class GridVsWave extends Component {
                     <div
                       style={{
                         position: 'relative',
-                        transformOrigin: 'center center',
+                        transformOrigin:
+                          'center center',
                         transform: rotateWaveform
                           ? 'rotate(90deg) translateX(-5%)'
                           : 'rotate(0deg) translateX(0)',
-                        transition: 'transform 1000ms',
+                        transition:
+                          'transform 1000ms',
                       }}
                     >
                       <WaveformCalculator
@@ -71,27 +81,53 @@ class GridVsWave extends Component {
                         progress={progress}
                       >
                         {points => (
-                          <Waveform
-                            width={350}
-                            height={175}
-                            points={points}
-                            color={
-                              highlightMolecule
-                                ? COLORS.gray[200]
-                                : COLORS.gray[900]
-                            }
-                          />
+                          <Fragment>
+                            <Waveform
+                              width={350}
+                              height={175}
+                              points={points}
+                              color={
+                                highlightMolecule
+                                  ? COLORS.gray[200]
+                                  : COLORS.gray[900]
+                              }
+                            />
+                            <WaveformAxis
+                              x
+                              waveformSize={350}
+                              color={
+                                highlightMolecule
+                                  ? COLORS.gray[200]
+                                  : COLORS.gray[700]
+                              }
+                              strokeWidth={3}
+                            />
+                            <WaveformAxis
+                              y
+                              waveformSize={350}
+                              color={
+                                highlightMolecule
+                                  ? COLORS.gray[200]
+                                  : COLORS.gray[700]
+                              }
+                              strokeWidth={3}
+                            />
+                          </Fragment>
                         )}
                       </WaveformCalculator>
                       {highlightMolecule && (
                         <WaveformIntercept
                           size={20}
-                          color={COLORS.primary[500]}
+                          color={
+                            COLORS.primary[500]
+                          }
                           waveformSize={350}
                           waveformShape="sine"
                           frequency={frequency}
                           amplitude={amplitude}
-                          offset={convertProgressToOffset(progress)}
+                          offset={convertProgressToOffset(
+                            progress
+                          )}
                         />
                       )}
                     </div>
@@ -107,7 +143,8 @@ class GridVsWave extends Component {
               isToggled={highlightMolecule}
               onToggle={() =>
                 this.setState({
-                  highlightMolecule: !this.state.highlightMolecule,
+                  highlightMolecule: !this.state
+                    .highlightMolecule,
                 })
               }
             />
@@ -121,7 +158,8 @@ class GridVsWave extends Component {
               isToggled={rotateWaveform}
               onToggle={() =>
                 this.setState({
-                  rotateWaveform: !this.state.rotateWaveform,
+                  rotateWaveform: !this.state
+                    .rotateWaveform,
                 })
               }
             />

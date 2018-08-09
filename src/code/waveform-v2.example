@@ -10,6 +10,8 @@ class Waveform extends Component {
     ]),
     frequency: PropTypes.number.isRequired,
     amplitude: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired,
+    strokeWidth: PropTypes.number.isRequired,
   };
 
   render() {
@@ -19,6 +21,8 @@ class Waveform extends Component {
       shape,
       frequency,
       amplitude,
+      color,
+      strokeWidth,
     } = this.props;
 
     const points = getPointsForWaveform({
@@ -41,7 +45,7 @@ class Waveform extends Component {
       points
     );
     /*
-      "M0,0 L2,22 L4,33 ... L500,0"
+      "M0,0 L2,22 ... L500,0"
     */
 
     return (
@@ -51,8 +55,9 @@ class Waveform extends Component {
       >
         <path
           d={svgPath}
-          stroke="black"
           fill="none"
+          stroke={color}
+          strokeWidth={strokeWidth}
         />
       </svg>
     );

@@ -1,0 +1,57 @@
+class WaveformState extends Component {
+  static propTypes = {
+    children: PropTypes.func.isRequired,
+  }
+
+  state = {
+    amplitude: 1,
+    frequency: 1,
+    shape: 'sine',
+    isRunning: false,
+  };
+
+  updateAmplitude = amplitude => {
+    this.setState({ amplitude });
+  };
+
+  updateFrequency = frequency => {
+    this.setState({ frequency });
+  };
+
+  updateShape = shape => {
+    this.setState({ shape });
+  };
+
+  toggleRunning = () => {
+    this.setState(state => ({
+      isRunning: !state.isRunning,
+    }));
+  }
+
+  render() {
+    const { children } = this.props;
+    const {
+      amplitude,
+      frequency,
+      shape,
+      isRunning,
+    } = this.state;
+    const {
+      updateAmplitude,
+      updateFrequency,
+      updateShape,
+      toggleRunning,
+    } = this;
+
+    return children({
+      amplitude,
+      frequency,
+      shape,
+      isRunning,
+      updateAmplitude,
+      updateFrequency,
+      updateShape,
+      toggleRunning,
+    });
+  }
+}

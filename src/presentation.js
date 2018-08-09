@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  injectGlobal,
-} from 'styled-components';
+import { injectGlobal } from 'styled-components';
 import {
   Deck,
   Heading,
@@ -28,6 +26,7 @@ import legoSrc from './assets/lego.jpeg';
 import modularSynthSrc from './assets/modular-synth.jpg';
 import allTheThingsFastSrc from './assets/all-the-things-fast.mp4';
 import howItsMadeSrc from './assets/how-its-made.jpg';
+import hadoukenSrc from './assets/hadouken.jpeg';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -61,6 +60,7 @@ preloader({
   legoSrc,
   modularSynthSrc,
   howItsMadeSrc,
+  hadoukenSrc,
 });
 
 // Require CSS
@@ -154,7 +154,7 @@ export default class Presentation extends React.Component {
           />
         </Slide>
 
-        <Slide
+        {/* <Slide
           notes={`
             The first is that language is lossy.
 
@@ -183,7 +183,7 @@ export default class Presentation extends React.Component {
           <Heading size={3}>
             Learning is active
           </Heading>
-        </Slide>
+        </Slide> */}
 
         <Slide
           notes={`
@@ -215,7 +215,9 @@ export default class Presentation extends React.Component {
             sound by experimenting.
           `}
         >
-          <AmplitudeFrequencyManager initialAmplitude={0}>
+          <AmplitudeFrequencyManager
+            initialAmplitude={0}
+          >
             {({
               amplitude,
               frequency,
@@ -261,7 +263,7 @@ export default class Presentation extends React.Component {
 
         <Slide>
           <a href="https://pudding.cool/2018/02/waveforms/">
-          pudding.cool/2018/02/waveforms/
+            pudding.cool/2018/02/waveforms/
           </a>
         </Slide>
 
@@ -283,7 +285,10 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide bgColor="secondary">
-          <Heading textColor="primary" size={6}>
+          <Heading
+            textColor="primary"
+            size={6}
+          >
             <a
               href="http://polytrope.com/district/"
               style={{ color: COLORS.white }}
@@ -330,8 +335,18 @@ export default class Presentation extends React.Component {
           `}
         >
           {/* HACK: Video has some weird borders in it. Hiding it this way rather than re-recording the video */}
-          <div style={{ overflow: 'hidden', display: 'inline-block' }}>
-            <div style={{ transform: 'translate(-2px, -2px)'}}>
+          <div
+            style={{
+              overflow: 'hidden',
+              display: 'inline-block',
+            }}
+          >
+            <div
+              style={{
+                transform:
+                  'translate(-2px, -2px)',
+              }}
+            >
               <video
                 autoPlay
                 loop
@@ -358,14 +373,31 @@ export default class Presentation extends React.Component {
             So I built it using both technologies, a task that is surprisingly easy, since both technologies have very similar drawing APIs.
           `}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <Heading size={3} textColor="primary">
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+            }}
+          >
+            <Heading
+              size={3}
+              textColor="primary"
+            >
               Canvas
             </Heading>
 
-            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">VS</Heading>
+            <Heading
+              size={5}
+              textColor="rgba(255, 255, 255, 0.5)"
+            >
+              VS
+            </Heading>
 
-            <Heading size={3} textColor="primary">
+            <Heading
+              size={3}
+              textColor="primary"
+            >
               SVG
             </Heading>
           </div>
@@ -378,19 +410,43 @@ export default class Presentation extends React.Component {
             And it turns out that there was no measurable difference in performance, so SVG it was!
           `}
         >
-          <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <Heading size={3} style={{ position: 'absolute', top: -110, right: 100}}>
+          <div
+            style={{
+              position: 'relative',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+            }}
+          >
+            <Heading
+              size={3}
+              style={{
+                position: 'absolute',
+                top: -110,
+                right: 100,
+              }}
+            >
               🎉
             </Heading>
 
-
-            <Heading size={3} textColor="rgba(255, 255, 255, 0.5)">
+            <Heading
+              size={3}
+              textColor="rgba(255, 255, 255, 0.5)"
+            >
               Canvas
             </Heading>
 
-            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">VS</Heading>
+            <Heading
+              size={5}
+              textColor="rgba(255, 255, 255, 0.5)"
+            >
+              VS
+            </Heading>
 
-            <Heading size={3} textColor="#1cff8d">
+            <Heading
+              size={3}
+              textColor="#1cff8d"
+            >
               SVG
             </Heading>
           </div>
@@ -401,18 +457,26 @@ export default class Presentation extends React.Component {
           lang="jsx"
           code={require('./code/waveform-v1.example')}
           ranges={[
-            { loc: [0], title: '<Waveform /> v1' },
+            {
+              loc: [0],
+              title: '<Waveform /> v1',
+            },
             { loc: [1, 4] },
             { loc: [4, 10] },
             { loc: [10, 12] },
-            { loc: [14, 15] },
-            { loc: [23, 28] },
-            { loc: [28, 34] },
+            { loc: [12, 14] },
+            { loc: [16, 17] },
+            { loc: [27, 32] },
+            { loc: [32, 39] },
+            { loc: [33, 35] },
           ]}
         />
 
         <Slide>
-          <img src={bananaPathSrc} width="100%" />
+          <img
+            src={bananaPathSrc}
+            width="100%"
+          />
           <br />
           <br />
           <a href="https://codepen.io/SitePoint/pen/scIdq">
@@ -463,13 +527,16 @@ export default class Presentation extends React.Component {
           lang="jsx"
           code={require('./code/waveform-v2.example')}
           ranges={[
-            { loc: [0], title: '<Waveform /> v2' },
-            { loc: [1, 13] },
-            { loc: [14, 15] },
-            { loc: [23, 30] },
-            { loc: [30, 38] },
-            { loc: [39, 45] },
-            { loc: [46, 58] },
+            {
+              loc: [0],
+              title: '<Waveform /> v2',
+            },
+            { loc: [1, 15] },
+            { loc: [16, 17] },
+            { loc: [27, 34] },
+            { loc: [34, 42] },
+            { loc: [43, 49] },
+            { loc: [50, 63] },
           ]}
         />
 
@@ -559,7 +626,12 @@ export default class Presentation extends React.Component {
           bgColor="secondary"
           lang="jsx"
           code={require('./code/waveform-axes-alt-universe.example')}
-          ranges={[{ loc: [0, 11], title: 'One possible way...' }]}
+          ranges={[
+            {
+              loc: [0, 11],
+              title: 'One possible way...',
+            },
+          ]}
         />
 
         <CodeSlide
@@ -572,12 +644,19 @@ export default class Presentation extends React.Component {
           lang="jsx"
           code={require('./code/waveform-axes.example')}
           ranges={[
-            { loc: [1, 10], title: 'But I prefer this way' },
+            {
+              loc: [1, 10],
+              title: 'But I prefer this way',
+            },
             { loc: [10, 20] },
           ]}
         />
 
-        <Slide>
+        <Slide
+          notes={`
+            In order to make an explorable explanation with these building blocks, we need a couple more things.
+          `}
+        >
           <Heading size={3}>
             We need two things:
           </Heading>
@@ -629,7 +708,8 @@ export default class Presentation extends React.Component {
           ranges={[
             {
               loc: [0, 1],
-              title: '<ReactRallyWaveform> v1',
+              title:
+                '<ReactRallyWaveform> v1',
             },
             { loc: [1, 3] },
             { loc: [4, 12] },
@@ -640,25 +720,35 @@ export default class Presentation extends React.Component {
         />
 
         <Slide bgColor="secondary">
-          <Heading size={3} textColor="primary">
+          <Heading
+            size={3}
+            textColor="primary"
+          >
             Why a separate state component?
           </Heading>
-          <br /><br />
+          <br />
+          <br />
           <List textColor="primary">
-            <ListItem>Keeps complexity down</ListItem>
-            <ListItem>Easier migration (Redux, Context)</ListItem>
+            <ListItem>
+              Keeps complexity down
+            </ListItem>
+            <ListItem>
+              Easier migration (Redux,
+              Context)
+            </ListItem>
             <ListItem>Reusable</ListItem>
           </List>
         </Slide>
-
 
         <Slide>
           <ReactRallyWaveformV1 />
         </Slide>
 
-
         <Slide bgColor="blue">
-          <Heading size={2} textColor="primary">
+          <Heading
+            size={2}
+            textColor="primary"
+          >
             Shifting Between Waveforms
           </Heading>
         </Slide>
@@ -666,6 +756,21 @@ export default class Presentation extends React.Component {
         <Slide>
           <ReactRallyWaveformV2 />
         </Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-state-with-shape.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<WaveformState> v2',
+            },
+            { loc: [8, 9] },
+            { loc: [19, 22] },
+            { loc: [36, 44] },
+          ]}
+        />
 
         <CodeSlide
           notes={`
@@ -676,23 +781,34 @@ export default class Presentation extends React.Component {
           `}
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-with-axes.example')}
-          ranges={[{ loc: [13, 22] }]}
+          code={require('./code/react-rally-waveform-before-conversion.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: 'ReactRallyWaveform',
+            },
+            { loc: [5, 14] },
+            { loc: [15, 19] },
+          ]}
         />
+
+        <Slide bgColor="secondary">
+          <Heading>⚠️ 🛣</Heading>
+        </Slide>
 
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-calc.example')}
+          code={require('./code/waveform-calculator-first-look.example')}
           ranges={[
             {
-              loc: [0],
-              title: '<ReactRallyWaveform> v2',
+              loc: [0, 7],
+              title:
+                'Using a Calculator component',
             },
-            { loc: [0, 13] },
-            { loc: [18, 27] },
-            { loc: [27, 36] },
-            { loc: [38, 63] },
+            { loc: [7, 8] },
+            { loc: [9, 16] },
+            { loc: [16, 26] },
           ]}
         />
 
@@ -732,8 +848,12 @@ export default class Presentation extends React.Component {
           `}
           bgColor="secondary"
         >
-          <Heading size={2} textColor="primary">
-            This implementation is not great...
+          <Heading
+            size={2}
+            textColor="primary"
+          >
+            This implementation is not
+            great...
           </Heading>
         </Slide>
 
@@ -745,13 +865,19 @@ export default class Presentation extends React.Component {
           `}
           bgColor="secondary"
         >
-          <Heading size={2} textColor="primary">
+          <Heading
+            size={2}
+            textColor="primary"
+          >
             ...but that's OK!
           </Heading>
         </Slide>
 
         <Slide bgColor="blue">
-          <Heading size={2} textColor="primary">
+          <Heading
+            size={2}
+            textColor="primary"
+          >
             Playing The Waveform
           </Heading>
         </Slide>
@@ -772,11 +898,6 @@ export default class Presentation extends React.Component {
           <img src={phaseSrc} />
         </Slide>
 
-        <Slide>
-          The animation is just about redrawing the
-          waveform at 60fps.
-        </Slide>
-
         <Slide bgImage={stopwatchSrc}>
           <UnsplashCredit
             username="veri_ivanova"
@@ -785,13 +906,82 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <CodeSlide
-          notes={`
-            Here's what our updated ReactRallyWaveform component looks like:
-          `}
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-v3.example')}
-          ranges={[{ loc: [0, 17] }]}
+          code={require('./code/waveform-state-with-running.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title:
+                'Updated <WaveformState />',
+            },
+            { loc: [9, 10] },
+            { loc: [24, 29] },
+            { loc: [49, 50] },
+            { loc: [53, 54] },
+          ]}
+        />
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-stopwatch.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title:
+                'Updated <ReactRallyWaveform>',
+            },
+            { loc: [4, 16] },
+            { loc: [16, 18] },
+            { loc: [18, 27] },
+            { loc: [27, 34] },
+          ]}
+        />
+
+        <Slide
+          bgColor="secondary"
+          notes={`
+            This looks familiar, and not in a good way...
+
+            We're 10 levels of indentation in before getting to the
+            components that render UI!
+          `}
+        >
+          <img
+            src={hadoukenSrc}
+            width="100%"
+          />
+        </Slide>
+
+        <Slide>There are solutions 👼🏻</Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-hoc.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<ReactRallyWaveform>',
+            },
+            { loc: [1, 14] },
+            { loc: [15, 27] },
+            { loc: [28, 29] },
+            { loc: [30, 37] },
+            { loc: [37, 47] },
+            { loc: [49, 60] },
+            { loc: [61, 70] },
+            { loc: [71, 74] },
+            { loc: [80, 81] },
+            { loc: [82, 83] },
+            { loc: [83, 94] },
+            { loc: [94, 96] },
+            { loc: [96, 105] },
+            { loc: [105, 120] },
+            { loc: [0, 1] },
+            { loc: [105, 120] },
+          ]}
         />
 
         <Slide>
@@ -805,8 +995,8 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          Waveform Stopwatch progress bar example,
-          split code
+          Waveform Stopwatch progress bar
+          example, split code
           <br />
           <br />
           If there's time.
@@ -848,7 +1038,7 @@ export default class Presentation extends React.Component {
         */}
 
         <Slide
-        bgImage={legoSrc}
+          bgImage={legoSrc}
           notes={`
             Something that has been said to the point of cliché is that react
             components are like lego blocks. You can build complete UIs by
@@ -862,7 +1052,6 @@ export default class Presentation extends React.Component {
           `}
         />
 
-
         <Slide
           bgImage={modularSynthSrc}
           notes={`
@@ -872,6 +1061,10 @@ export default class Presentation extends React.Component {
             I think React components are like synth modules.
           `}
         />
+
+        <Slide>
+          <Heading>Did it work?</Heading>
+        </Slide>
 
         <Slide
           notes={`
@@ -887,23 +1080,25 @@ export default class Presentation extends React.Component {
           `}
         >
           <Quote>
-            "...I'm in my third year studying sound
-            engineering for film, and after reading
-            this{' '}
+            "...I'm in my third year studying
+            sound engineering for film, and
+            after reading this{' '}
             <Highlighted>
-              I finally understand how harmonics and
-              waveforms work.
+              I finally understand how
+              harmonics and waveforms work.
             </Highlighted>{' '}
-            I've known what harmonics and waveforms
-            are, as well as their different
-            applications. But they way it has always
-            been taught to me,{' '}
+            I've known what harmonics and
+            waveforms are, as well as their
+            different applications. But the
+            way it has always been taught to
+            me,{' '}
             <Highlighted>
               I could just never understand{' '}
               <em>why</em> they are.
             </Highlighted>{' '}
-            Thank you for explaining this to me in a
-            way no one else has been able to."
+            Thank you for explaining this to
+            me in a way no one else has been
+            able to."
           </Quote>
         </Slide>
       </Deck>
