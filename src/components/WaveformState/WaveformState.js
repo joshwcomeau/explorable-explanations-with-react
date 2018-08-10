@@ -5,13 +5,13 @@ class WaveformState extends Component {
     initialFrequency: 1,
     initialAmplitude: 1,
     initialShape: 'sine',
-    initialStopwatchRunning: false,
-  }
+    initialisRunning: false,
+  };
   state = {
     frequency: this.props.initialFrequency,
     amplitude: this.props.initialAmplitude,
     shape: this.props.initialShape,
-    stopwatchRunning: this.props.stopwatchRunning,
+    isRunning: this.props.isRunning,
   };
 
   updateAmplitude = amplitude => {
@@ -28,12 +28,12 @@ class WaveformState extends Component {
 
   toggleRunning = () => {
     this.setState(state => ({
-      stopwatchRunning: !state.stopwatchRunning,
+      isRunning: !state.isRunning,
     }));
   };
 
   render() {
-    const {children} = this.props;
+    const { children } = this.props;
 
     return children({
       ...this.state,
@@ -41,7 +41,7 @@ class WaveformState extends Component {
       updateFrequency: this.updateFrequency,
       updateShape: this.updateShape,
       toggleRunning: this.toggleRunning,
-    })
+    });
   }
 }
 

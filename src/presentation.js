@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {
+  Component,
+  Fragment,
+} from 'react';
 import { injectGlobal } from 'styled-components';
 import {
   Deck,
@@ -37,10 +40,12 @@ import Waveform from './components/Waveform';
 import AirGrid from './components/AirGrid';
 import Spacer from './components/Spacer';
 import WaveformCalculator from './components/WaveformCalculator';
-import WaveformStopwatch from './components/WaveformStopwatch';
 import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
-import GridVsWave from './components/GridVsWave/GridVsWave';
+import GridVsWave from './components/GridVsWave';
+import Stopwatch from './components/Stopwatch';
+import WaveformState from './components/WaveformState';
+import StopwatchSimple from './components/Stopwatch/Stopwatch.no-animation';
 import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
 import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
@@ -905,6 +910,62 @@ export default class Presentation extends React.Component {
           />
         </Slide>
 
+        <Slide>
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/live/stopwatch-demo-alone.example')}
+              theme="external"
+              scope={{
+                Stopwatch: StopwatchSimple,
+                WaveformState,
+                Component,
+                Fragment,
+              }}
+            />
+          </div>
+        </Slide>
+
+        <Slide>
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/live/stopwatch-demo-with-toggle.example')}
+              theme="external"
+              scope={{
+                Stopwatch: StopwatchSimple,
+                WaveformState,
+                Component,
+                Fragment,
+              }}
+            />
+          </div>
+        </Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/stopwatch.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title:
+                '<Stopwatch />',
+            },
+            { loc: [1, 4] },
+            { loc: [5, 9] },
+            { loc: [10, 19] },
+            { loc: [26, 32] },
+            { loc: [33, 34] },
+            { loc: [34, 37] },
+            { loc: [37, 42] },
+            { loc: [43, 46] },
+            { loc: [47, 48] },
+            { loc: [49, 53] },
+            { loc: [54, 61] },
+            { loc: [20, 25] },
+            { loc: [66, 72] },
+          ]}
+        />
+
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
@@ -971,54 +1032,24 @@ export default class Presentation extends React.Component {
             { loc: [30, 37] },
             { loc: [37, 47] },
             { loc: [49, 60] },
-            { loc: [61, 70] },
-            { loc: [71, 74] },
-            { loc: [80, 81] },
-            { loc: [82, 83] },
-            { loc: [83, 94] },
-            { loc: [94, 96] },
-            { loc: [96, 105] },
-            { loc: [105, 120] },
+            { loc: [61, 71] },
+            { loc: [72, 75] },
+            { loc: [81, 82] },
+            { loc: [83, 84] },
+            { loc: [84, 95] },
+            { loc: [95, 97] },
+            { loc: [97, 106] },
+            { loc: [106, 121] },
             { loc: [0, 1] },
-            { loc: [105, 120] },
+            { loc: [106, 121] },
           ]}
         />
 
-        <Slide>
-          <div style={{ textAlign: 'left' }}>
-            <ComponentPlayground
-              code={require('./code/live/waveform-stopwatch-json.example')}
-              theme="external"
-              scope={{ WaveformStopwatch }}
-            />
-          </div>
-        </Slide>
-
-        <Slide>
-          Waveform Stopwatch progress bar
-          example, split code
-          <br />
-          <br />
-          If there's time.
-        </Slide>
-
-        <CodeSlide
-          notes={`
-            The WaveformStopwatch code, without easing or rounding
-          `}
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-stopwatch-v1.example')}
-          ranges={[
-            { loc: [0, 17] },
-            { loc: [17, 34] },
-            { loc: [34, 51] },
-            { loc: [51, 76] },
-          ]}
-        />
-
-        <Slide>
-          <Heading size={2}>
+        <Slide bgColor="blue">
+          <Heading
+            size={2}
+            textColor="primary"
+          >
             Smoothing Everything Out
           </Heading>
         </Slide>

@@ -22,6 +22,12 @@ class Stopwatch extends Component {
     lastTickAt: null,
   };
 
+  componentDidMount() {
+    if (this.props.isRunning) {
+      this.start();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     const isJustStarting = !prevProps.isRunning && this.props.isRunning;
 

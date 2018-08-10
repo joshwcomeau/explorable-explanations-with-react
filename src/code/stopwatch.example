@@ -1,0 +1,75 @@
+class Stopwatch extends Component {
+  static propTypes = {
+    isRunning: PropTypes.bool.isRequired,
+  };
+
+  state = {
+    timeElapsed: 0,
+    lastTickAt: null,
+  };
+
+  componentDidUpdate(prevProps) {
+    const isJustStarting =
+      !prevProps.isRunning &&
+      this.props.isRunning;
+
+    if (isJustStarting) {
+      this.start();
+    }
+  }
+
+  componentWillUnmount() {
+    window.cancelAnimationFrame(
+      this.animationFrameId
+    );
+  }
+
+  start = () => {
+    this.setState(
+      { lastTickAt: new Date() },
+      this.tick
+    );
+  };
+
+  tick = () => {
+    this.animationFrameId = (
+      window.requestAnimationFrame(
+        () => {
+          const { isRunning } = this.props;
+          const {
+            timeElapsed,
+            lastTickAt,
+          } = this.state;
+
+          if (!isRunning) {
+            return;
+          }
+
+          const currentTime = new Date();
+
+          const timeSinceLastTick =
+            currentTime - lastTickAt;
+          const totalTimeElapsed =
+            timeElapsed + timeSinceLastTick;
+
+          this.setState(
+            {
+              lastTickAt: currentTime,
+              timeElapsed: totalTimeElapsed,
+            },
+            this.tick
+          );
+        }
+      )
+    );
+  };
+
+  render() {
+    const { children } = this.props;
+    const { timeElapsed } = this.state;
+
+    return children(timeElapsed);
+  }
+}
+
+export default Stopwatch;

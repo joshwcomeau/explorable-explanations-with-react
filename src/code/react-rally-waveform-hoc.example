@@ -66,6 +66,7 @@ class ReactRallyWaveform extends Component {
               'square',
               'sawtooth',
             ]}
+            selected={shape}
             onChange={updateShape}
           />
 

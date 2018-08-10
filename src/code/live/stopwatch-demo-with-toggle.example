@@ -1,0 +1,19 @@
+const StopwatchDemo = () => (
+  <WaveformState>
+    {({ isRunning, toggleRunning }) => (
+      <Fragment>
+        <Stopwatch isRunning={isRunning}>
+          {timeElapsed => timeElapsed}
+        </Stopwatch>
+
+        <div>
+          <button onClick={toggleRunning}>
+            Toggle
+          </button>
+        </div>
+      </Fragment>
+    )}
+  </WaveformState>
+);
+
+render(<StopwatchDemo />);
