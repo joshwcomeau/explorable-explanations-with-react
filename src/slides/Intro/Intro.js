@@ -11,11 +11,6 @@ class Intro extends Component {
         <br />
         <br />
         <Heading size={4}>I work for Khan Academy</Heading>
-        <br />
-        <br />
-        <Heading size={5}>
-          <a href="https://twitter.com/JoshWComeau">@joshwcomeau</a>
-        </Heading>
       </div>
     );
   }

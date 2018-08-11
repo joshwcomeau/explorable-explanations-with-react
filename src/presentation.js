@@ -39,6 +39,8 @@ import Quote from './components/Quote';
 import Waveform from './components/Waveform';
 import AirGrid from './components/AirGrid';
 import Spacer from './components/Spacer';
+import Oscillator from './components/Oscillator';
+import AudioOutput from './components/AudioOutput';
 import WaveformCalculator from './components/WaveformCalculator';
 import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
@@ -220,24 +222,37 @@ export default class Presentation extends React.Component {
             sound by experimenting.
           `}
         >
-          <AmplitudeFrequencyManager
-            initialAmplitude={0}
-          >
-            {({
-              amplitude,
-              frequency,
-              progress,
-            }) => (
-              <AirGrid
-                shape="sine"
-                width={600}
-                height={300}
-                waveformAmplitude={amplitude}
-                waveformFrequency={frequency}
-                waveformProgress={progress}
-              />
+          <AudioOutput masterVolume={5}>
+          {(audioCtx, masterOut) => (
+              <AmplitudeFrequencyManager
+                initialAmplitude={0}
+              >
+                {({
+                  amplitude,
+                  frequency,
+                  progress,
+                }) => (
+                  <Fragment>
+                    <AirGrid
+                      shape="sine"
+                      width={600}
+                      height={300}
+                      waveformAmplitude={amplitude}
+                      waveformFrequency={frequency}
+                      waveformProgress={progress}
+                    />
+                    <Oscillator
+                      slidePitch={false}
+                      audioCtx={audioCtx}
+                      masterOut={masterOut}
+                      frequency={frequency * 200}
+                      amplitude={amplitude / 10}
+                    />
+                  </Fragment>
+                )}
+              </AmplitudeFrequencyManager>
             )}
-          </AmplitudeFrequencyManager>
+          </AudioOutput>
         </Slide>
 
         <Slide>
