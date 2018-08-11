@@ -344,6 +344,12 @@ export default class Presentation extends React.Component {
           />
         </Slide>
 
+        <Slide>
+          <Heading size={3}>
+            React is a great tool for building these things!
+          </Heading>
+        </Slide>
+
         <Slide
           bgColor="#FAFAFA"
           notes={`
@@ -382,6 +388,12 @@ export default class Presentation extends React.Component {
             Let's take a look at how I used React to build this thing.
           `}
         />
+
+        <Slide>
+          <Heading size={4}>
+            {'<Waveform>'}
+          </Heading>
+        </Slide>
 
         <Slide
           bgColor="secondary"
@@ -585,60 +597,6 @@ export default class Presentation extends React.Component {
           />
         </Slide>
 
-        {/* <Slide
-          notes={`
-            There's a problem with this, though.
-
-            Our waveform is going to get a lot more complicatd.
-
-            For one thing, we'll need to be able to play this animation.
-
-            There's also waveform addition, where the waveform is some
-            halfway point between different shapes.
-
-            We COULD have a giant, monolithic <Waveform> component that does everything, but the beautiful thing with React is that you can compose your components so that no component ever gets that complicated.
-          `}
-        >
-          Problem GIF?
-        </Slide>
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-consumption-v1.example')}
-          ranges={[
-            {
-              loc: [0],
-              title: 'Waveform consumption',
-            },
-            { loc: [0, 14] },
-          ]}
-        />
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-consumption-v2.example')}
-          ranges={[{ loc: [0, 17] }]}
-        />
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-calculator-v1.example')}
-          ranges={[{ loc: [0, 21] }]}
-        />
-
-        <Slide>
-          <div style={{ textAlign: 'left' }}>
-            <ComponentPlayground
-              code={require('./code/live/waveform-calculator-json.example')}
-              theme="external"
-              scope={{ WaveformCalculator, Waveform }}
-            />
-          </div>
-        </Slide> */}
-
         <CodeSlide
           notes={`
             One possible way to do this would be through a couple of boolean props.
@@ -674,7 +632,9 @@ export default class Presentation extends React.Component {
 
         <Slide
           notes={`
-            In order to make an explorable explanation with these building blocks, we need a couple more things.
+            Ok, so we have a static waveform, and its axes... In order to make
+            an explorable explanation with these building blocks, we need a
+            couple more things.
           `}
         >
           <Heading size={3}>
@@ -688,6 +648,30 @@ export default class Presentation extends React.Component {
               A source of truth for the state
             </ListItem>
           </List>
+        </Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-builtin-state.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<ReactRallyWaveform>',
+            },
+            { loc: [1, 5] },
+            { loc: [6, 10] },
+            { loc: [11, 18] },
+            { loc: [19, 21] },
+            { loc: [21, 25] },
+            { loc: [28, 37] },
+            { loc: [38, 48] },
+            { loc: [50, 61] },
+          ]}
+        />
+
+        <Slide>
+          Separate state out?
         </Slide>
 
         <CodeSlide
@@ -739,7 +723,7 @@ export default class Presentation extends React.Component {
           ]}
         />
 
-        <Slide bgColor="secondary">
+        {/* <Slide bgColor="secondary">
           <Heading
             size={3}
             textColor="primary"
@@ -758,7 +742,7 @@ export default class Presentation extends React.Component {
             </ListItem>
             <ListItem>Reusable</ListItem>
           </List>
-        </Slide>
+        </Slide> */}
 
         <Slide>
           <ReactRallyWaveformV1 />
@@ -918,6 +902,17 @@ export default class Presentation extends React.Component {
           <img src={phaseSrc} />
         </Slide>
 
+        <Slide>
+          <Heading size={3}>
+            2 variables are needed:
+          </Heading>
+
+          <List>
+            <ListItem>Frequency</ListItem>
+            <ListItem>Time Elapsed</ListItem>
+          </List>
+        </Slide>
+
         <Slide bgImage={stopwatchSrc}>
           <UnsplashCredit
             username="veri_ivanova"
@@ -955,6 +950,10 @@ export default class Presentation extends React.Component {
           </div>
         </Slide>
 
+        <Slide>
+          <ReactRallyWaveformV3 />
+        </Slide>
+
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
@@ -976,7 +975,6 @@ export default class Presentation extends React.Component {
             { loc: [47, 48] },
             { loc: [49, 53] },
             { loc: [54, 61] },
-            { loc: [20, 25] },
             { loc: [66, 72] },
           ]}
         />
@@ -1084,6 +1082,15 @@ export default class Presentation extends React.Component {
         */}
 
         <Slide
+          notes={`
+            This pattern continued on for a while, adding new components and
+            trying to keep thinking in small pieces.
+          `}
+        >
+          <Heading>And on and on it went...</Heading>
+        </Slide>
+
+        <Slide
           bgImage={legoSrc}
           notes={`
             Something that has been said to the point of cliché is that react
@@ -1108,8 +1115,8 @@ export default class Presentation extends React.Component {
           `}
         />
 
-        <Slide>
-          <Heading>Did it work?</Heading>
+        <Slide bgColor="secondary">
+          <Heading textColor="primary">Did it work?</Heading>
         </Slide>
 
         <Slide
@@ -1146,6 +1153,21 @@ export default class Presentation extends React.Component {
             me in a way no one else has been
             able to."
           </Quote>
+        </Slide>
+
+        <Slide>
+          <Heading size={3}>
+            There's high demand for this kind of content.
+          </Heading>
+        </Slide>
+
+        <Slide>
+          <Heading size={1} textColor="secondary">Thank you!</Heading>
+          <br /><br />
+          <Heading size={5} textColor="secondary">Slides and code available on Twitter:</Heading>
+          <Heading size={2}>
+            <a href="https://twitter.com/JoshWComeau">@joshwcomeau</a>
+          </Heading>
         </Slide>
       </Deck>
     );
