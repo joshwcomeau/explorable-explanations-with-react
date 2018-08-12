@@ -34,7 +34,10 @@ class WaveformCalculator extends PureComponent {
   render() {
     const {
       children,
-      ...waveformData,
+      amplitude,
+      frequency,
+      width,
+      height,
     } = this.props;
     const {
       tweenCount,
@@ -45,16 +48,28 @@ class WaveformCalculator extends PureComponent {
     return (
       <Motion
         style={{
+          amplitude: spring(amplitude),
+          frequency: spring(frequency),
           tweenAmount: spring(tweenCount % 2),
         }}
       >
-        {({ tweenAmount }) => {
+        {({
+          amplitude,
+          frequency,
+          tweenAmount,
+        }) => {
           const from = getPointsForWaveform({
-            ...waveformData,
+            amplitude,
+            frequency,
+            width,
+            height,
             shape: tweenFrom,
           });
           const to = getPointsForWaveform({
-            ...waveformData,
+            amplitude,
+            frequency,
+            width,
+            height,
             shape: tweenTo,
           });
           const ratio = tweenCount % 2 !== 0

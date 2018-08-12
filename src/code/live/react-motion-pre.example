@@ -7,19 +7,6 @@ const Demo = () => (
           <strong>{amplitude}</strong>
         </div>
 
-        <Motion
-          style={{
-            amp: spring(amplitude)
-          }}
-        >
-          {({ amp }) => (
-            <div>
-              Spring Amplitude:
-              <strong>{amp}</strong>
-            </div>
-          )}
-        </Motion>
-
         <Slider
           min={0}
           max={1}

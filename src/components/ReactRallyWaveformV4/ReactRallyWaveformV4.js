@@ -23,9 +23,9 @@ class ReactRallyWaveform extends Component {
 
     return (
       <WaveformState>
-        {({frequency, amplitude, shape, stopwatchRunning, updateAmplitude, updateFrequency, updateShape, toggleRunning}) => (
+        {({frequency, amplitude, shape, isRunning, updateAmplitude, updateFrequency, updateShape, toggleRunning}) => (
           <Wrapper>
-            <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
+            <WaveformStopwatch frequency={frequency} isRunning={isRunning}>
               {progress => (
                 <WaveformCalculator
                   animateAmplitudeAndFrequency

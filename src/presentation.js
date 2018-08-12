@@ -14,6 +14,7 @@ import {
 import createTheme from 'spectacle/lib/themes/default';
 import preloader from 'spectacle/lib/utils/preloader';
 import CodeSlide from 'spectacle-code-slide';
+import {Motion, spring} from 'react-motion';
 
 import { COLORS } from './constants';
 
@@ -30,6 +31,7 @@ import modularSynthSrc from './assets/modular-synth.jpg';
 import allTheThingsFastSrc from './assets/all-the-things-fast.mp4';
 import howItsMadeSrc from './assets/how-its-made.jpg';
 import hadoukenSrc from './assets/hadouken.jpeg';
+import heavenSrc from './assets/heaven.jpg';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -38,7 +40,7 @@ import Highlighted from './components/Highlighted';
 import Quote from './components/Quote';
 import Waveform from './components/Waveform';
 import AirGrid from './components/AirGrid';
-import Spacer from './components/Spacer';
+import Slider from './components/Slider';
 import Oscillator from './components/Oscillator';
 import AudioOutput from './components/AudioOutput';
 import WaveformCalculator from './components/WaveformCalculator';
@@ -47,6 +49,7 @@ import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave';
 import Stopwatch from './components/Stopwatch';
 import WaveformState from './components/WaveformState';
+import WaveformStateWithContainer from './components/WaveformState/WaveformState.withContainer';
 import StopwatchSimple from './components/Stopwatch/Stopwatch.no-animation';
 import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
@@ -68,6 +71,7 @@ preloader({
   modularSynthSrc,
   howItsMadeSrc,
   hadoukenSrc,
+  heavenSrc,
 });
 
 // Require CSS
@@ -682,6 +686,26 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-builtin-state.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<ReactRallyWaveform>',
+            },
+            { loc: [1, 5] },
+            { loc: [6, 10] },
+            { loc: [11, 18] },
+            { loc: [19, 21] },
+            { loc: [21, 25] },
+            { loc: [28, 37] },
+            { loc: [38, 48] },
+            { loc: [50, 61] },
+          ]}
+        />
+
+        <CodeSlide
           notes={`
             First, the state management bit. This could be done through redux,
             but for now we'll just use React state.
@@ -730,27 +754,6 @@ export default class Presentation extends React.Component {
           ]}
         />
 
-        {/* <Slide bgColor="secondary">
-          <Heading
-            size={3}
-            textColor="primary"
-          >
-            Why a separate state component?
-          </Heading>
-          <br />
-          <br />
-          <List textColor="primary">
-            <ListItem>
-              Keeps complexity down
-            </ListItem>
-            <ListItem>
-              Easier migration (Redux,
-              Context)
-            </ListItem>
-            <ListItem>Reusable</ListItem>
-          </List>
-        </Slide> */}
-
         <Slide>
           <ReactRallyWaveformV1 />
         </Slide>
@@ -760,133 +763,147 @@ export default class Presentation extends React.Component {
             size={2}
             textColor="primary"
           >
-            Shifting Between Waveforms
+            Smoothing It Out
           </Heading>
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV1 />
         </Slide>
 
         <Slide>
           <ReactRallyWaveformV2 />
         </Slide>
 
+        <Slide
+          bgImage={heavenSrc}
+        >
+          <Heading
+            size={1}
+            style={{
+              color: '#FFF',
+              textShadow: '4px 4px 30px rgba(0, 0, 0, 0.4)'
+            }}
+          >React Motion</Heading>
+          <UnsplashCredit
+            username="ianstauffer"
+            fullName="
+            Ian Stauffer"
+          />
+        </Slide>
+
+        <Slide>
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/live/react-motion-pre.example')}
+              theme="external"
+              scope={{
+                Motion,
+                spring,
+                Slider,
+                WaveformState: WaveformStateWithContainer,
+                Fragment,
+              }}
+            />
+          </div>
+        </Slide>
+
+        <Slide>
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/live/react-motion.example')}
+              theme="external"
+              scope={{
+                Motion,
+                spring,
+                Slider,
+                WaveformState: WaveformStateWithContainer,
+                Fragment,
+              }}
+            />
+          </div>
+        </Slide>
+
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-state-with-shape.example')}
+          code={require('./code/waveform-with-motion-inside.example')}
           ranges={[
             {
               loc: [0, 1],
-              title: '<WaveformState> v2',
+              title: '<Waveform>',
             },
-            { loc: [8, 9] },
-            { loc: [19, 22] },
-            { loc: [36, 44] },
+            { loc: [1, 15] },
+            { loc: [27, 34] },
+            { loc: [34, 35] },
+            { loc: [35, 43] },
+            { loc: [44, 47] },
+            { loc: [48, 61] },
           ]}
         />
 
-        <CodeSlide
-          notes={`
-            Looking at the current API, we could embed this tweening within
-            Waveform... but it's already doing quite a bit. I don't like when
-            any of my components get too complex. Let's instead create a new
-            component to deal with this.
-          `}
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/react-rally-waveform-before-conversion.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title: 'ReactRallyWaveform',
-            },
-            { loc: [5, 14] },
-            { loc: [15, 19] },
-            { loc: [16, 17], title: '😬' },
-          ]}
-        />
+        <Slide>
+          <Heading size={3}>
+            Calculating the points is becoming a pretty big concern
+          </Heading>
+        </Slide>
 
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-calculator-first-look.example')}
-          ranges={[
-            {
-              loc: [0, 7],
-              title:
-                'Using a Calculator component',
-            },
-            { loc: [7, 8] },
-            { loc: [9, 16] },
-            { loc: [16, 26] },
-          ]}
-        />
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-calculator-tween.example')}
+          code={require('./code/waveform-calculator-consumption.example')}
           ranges={[
             {
               loc: [0],
-              title: '<WaveformCalculator>',
+              title: 'New data flow',
             },
-            { loc: [0, 7] },
-            { loc: [7, 8] },
+            { loc: [0, 5] },
+            { loc: [5, 10] },
             { loc: [10, 11] },
-            { loc: [11, 13] },
-            { loc: [13, 14], title: '🤔' },
-            { loc: [16, 20] },
-            { loc: [20, 29] },
-            { loc: [24, 25] },
-            { loc: [25, 26] },
-            { loc: [26, 27] },
-            { loc: [33, 34] },
-            { loc: [34, 43] },
-            { loc: [44, 50] },
-            { loc: [50, 51] },
-            { loc: [51, 59] },
-            { loc: [59, 62] },
-            { loc: [63, 68] },
-            { loc: [69, 70] },
+            { loc: [11, 16] },
           ]}
         />
 
-        <Slide
-          notes={`
-            Ok, so truthfully, I'm not the happiest with this implementation. There's definitely room for improvement, I just ran out of time.
-          `}
+        <CodeSlide
           bgColor="secondary"
-        >
-          <Heading
-            size={2}
-            textColor="primary"
-          >
-            This implementation is not
-            great...
-          </Heading>
-        </Slide>
+          lang="jsx"
+          code={require('./code/waveform-points.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<Waveform>',
+            },
+            { loc: [1, 8] },
+            { loc: [9, 10] },
+            { loc: [18, 21] },
+            { loc: [23, 35] },
+          ]}
+        />
 
-        <Slide
-          notes={`
-            But you know what? It's OK that it's not great.
-
-            I'm happy with the inputs and outputs. It gives me the data I want, and it's OK if the inner workings of this black box aren't great. The beautiful thing about this being its own component is that it's sequestered; a bit of hackiness here doesn't affect the maintainability of our ReactRallyWaveform component.
-          `}
+        <CodeSlide
           bgColor="secondary"
-        >
-          <Heading
-            size={2}
-            textColor="primary"
-          >
-            ...but that's OK!
-          </Heading>
-        </Slide>
+          lang="jsx"
+          code={require('./code/waveform-calculator-amp-freq.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<WaveformCalculator>',
+            },
+            { loc: [1, 9] },
+            { loc: [10, 11] },
+            { loc: [20, 27] },
+            { loc: [27, 28] },
+            { loc: [28, 36] },
+            { loc: [37, 38] },
+          ]}
+        />
 
         <Slide bgColor="blue">
           <Heading
             size={2}
             textColor="primary"
           >
-            Playing The Waveform
+            Playing the Wave
           </Heading>
         </Slide>
 
@@ -961,48 +978,6 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/stopwatch.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title:
-                '<Stopwatch />',
-            },
-            { loc: [1, 4] },
-            { loc: [5, 9] },
-            { loc: [10, 19] },
-            { loc: [26, 32] },
-            { loc: [33, 34] },
-            { loc: [34, 37] },
-            { loc: [37, 42] },
-            { loc: [43, 46] },
-            { loc: [47, 48] },
-            { loc: [49, 53] },
-            { loc: [54, 61] },
-            { loc: [66, 72] },
-          ]}
-        />
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-state-with-running.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title:
-                'Updated <WaveformState />',
-            },
-            { loc: [9, 10] },
-            { loc: [24, 29] },
-            { loc: [49, 50] },
-            { loc: [53, 54] },
-          ]}
-        />
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
           code={require('./code/react-rally-waveform-stopwatch.example')}
           ranges={[
             {
@@ -1032,8 +1007,6 @@ export default class Presentation extends React.Component {
           />
         </Slide>
 
-        <Slide>There are solutions 👼🏻</Slide>
-
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
@@ -1062,17 +1035,110 @@ export default class Presentation extends React.Component {
           ]}
         />
 
+        <Slide>
+          <Heading size={3}>
+            Smoothing it out
+          </Heading>
+        </Slide>
+
+        <Slide>
+          (WaveformCalculator using motion on timeElapsed as well)
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV3 />
+        </Slide>
+
         <Slide bgColor="blue">
           <Heading
             size={2}
             textColor="primary"
           >
-            Smoothing Everything Out
+            Tweening Between Shapes
           </Heading>
         </Slide>
 
         <Slide>
-          <ReactRallyWaveformV3 />
+          <ReactRallyWaveformV4 />
+        </Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/tweening-math.example')}
+          ranges={[
+            {
+              loc: [0],
+              title:
+                'Tweening between shapes',
+            },
+            { loc: [0, 7] },
+            { loc: [8, 15] },
+            { loc: [16, 17] },
+            { loc: [18, 23] },
+          ]}
+        />
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-calculator-tween.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<WaveformCalculator>',
+            },
+            { loc: [1, 9] },
+            { loc: [10, 11] },
+            { loc: [11, 13] },
+            { loc: [13, 14], title: '🤔' },
+            { loc: [16, 20] },
+            { loc: [20, 29] },
+            { loc: [24, 25] },
+            { loc: [25, 26] },
+            { loc: [26, 27] },
+            { loc: [33, 34] },
+            { loc: [34, 46] },
+            { loc: [47, 52] },
+            { loc: [52, 53], title: '🤔' },
+            { loc: [55, 60] },
+            { loc: [60, 67] },
+            { loc: [67, 74] },
+            { loc: [74, 77], title: '🤔' },
+            { loc: [78, 83] },
+            { loc: [84, 85] },
+          ]}
+        />
+
+        <Slide
+          notes={`
+            Ok, so truthfully, I'm not the happiest with this implementation. There's definitely room for improvement, I just ran out of time.
+          `}
+          bgColor="secondary"
+        >
+          <Heading
+            size={2}
+            textColor="primary"
+          >
+            This implementation is not
+            great...
+          </Heading>
+        </Slide>
+
+        <Slide
+          notes={`
+            But you know what? It's OK that it's not great.
+
+            I'm happy with the inputs and outputs. It gives me the data I want, and it's OK if the inner workings of this black box aren't great. The beautiful thing about this being its own component is that it's sequestered; a bit of hackiness here doesn't affect the maintainability of our ReactRallyWaveform component.
+          `}
+          bgColor="secondary"
+        >
+          <Heading
+            size={2}
+            textColor="primary"
+          >
+            ...but that's OK!
+          </Heading>
         </Slide>
 
         <Slide>
@@ -1091,7 +1157,7 @@ export default class Presentation extends React.Component {
             trying to keep thinking in small pieces.
           `}
         >
-          <Heading>And on and on it went...</Heading>
+          <Heading size={1} textColor="secondary">And on and on it went...</Heading>
         </Slide>
 
         <Slide

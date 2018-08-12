@@ -42,6 +42,7 @@ class ReactRallyWaveform extends Component {
     return (
       <Wrapper>
         <WaveformCalculator
+          animateAmplitudeAndFrequency
           shape={shape}
           frequency={frequency}
           amplitude={amplitude}
@@ -94,20 +95,6 @@ class ReactRallyWaveform extends Component {
                 value={frequency}
                 onChange={this.updateFrequency}
               />
-            </Column>
-          </Row>
-
-          <Row>
-            <Column>
-              <Label>Shape</Label>
-              <button onClick={() => this.updateShape('sine')}>Sine</button>
-              <button onClick={() => this.updateShape('triangle')}>
-                Triangle
-              </button>
-              <button onClick={() => this.updateShape('square')}>Square</button>
-              <button onClick={() => this.updateShape('sawtooth')}>
-                Sawtooth
-              </button>
             </Column>
           </Row>
         </Controls>

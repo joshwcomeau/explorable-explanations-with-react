@@ -7,17 +7,15 @@ class ReactRallyWaveform extends Component {
         {({
           amplitude,
           frequency,
-          shape,
           isRunning,
           updateAmplitude,
           updateFrequency,
-          updateShape,
           toggleRunning,
         }) => (
           <Stopwatch isRunning={isRunning}>
             {({ timeElapsed }) => (
               <WaveformCalculator
-                shape={shape}
+                shape="sine"
                 frequency={frequency}
                 amplitude={amplitude}
                 timeElapsed={timeElapsed}

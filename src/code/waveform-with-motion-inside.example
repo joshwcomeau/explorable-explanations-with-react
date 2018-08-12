@@ -1,0 +1,68 @@
+class Waveform extends Component {
+  static propTypes = {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    shape: PropTypes.oneOf([
+      'sine',
+      'triangle',
+      'square',
+      'sawtooth',
+    ]),
+    frequency: PropTypes.number.isRequired,
+    amplitude: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired,
+    strokeWidth: PropTypes.number.isRequired,
+  };
+
+  render() {
+    const {
+      width,
+      height,
+      shape,
+      frequency,
+      amplitude,
+      color,
+      strokeWidth,
+    } = this.props;
+
+    return (
+      <Motion
+        style={{
+          amplitude: spring(amplitude),
+          frequency: spring(frequency),
+        }}
+      >
+        {({ amplitude, frequency }) => {
+          const points =
+            getPointsForWaveform({
+              shape,
+              frequency,
+              amplitude,
+              width,
+              height,
+            });
+
+          const svgPath = convertPointsToPath(
+            points
+          );
+
+          return (
+            <svg
+              width={width}
+              height={height}
+            >
+              <path
+                d={svgPath}
+                fill="none"
+                stroke={color}
+                strokeWidth={strokeWidth}
+              />
+            </svg>
+          );
+        }}
+      </Motion>
+    );
+  }
+}
+
+export default Waveform;

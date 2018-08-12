@@ -1,0 +1,20 @@
+<WaveformState>
+  {({
+    amplitude,
+    frequency,
+  }) => (
+    <WaveformCalculator
+      shape="sine"
+      amplitude={amplitude}
+      frequency={frequency}
+    >
+      {points => (
+        <Waveform
+          points={points}
+          color={COLORS.blue}
+          strokeWidth={4}
+        />
+      )}
+    </WaveformCalculator>
+  )}
+</WaveformState>

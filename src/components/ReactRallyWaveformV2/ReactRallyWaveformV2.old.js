@@ -5,9 +5,9 @@ import { COLORS } from '../../constants';
 
 import Slider from '../Slider';
 import Spacer from '../Spacer';
+import Label from '../Label';
 import Waveform from '../Waveform';
 import WaveformAxis from '../WaveformAxis';
-import Label from '../Label';
 import WaveformCalculator from '../WaveformCalculator';
 import WaveformStopwatch from '../WaveformStopwatch/WaveformStopwatchSimple';
 
@@ -16,7 +16,6 @@ class ReactRallyWaveform extends Component {
     frequency: 1,
     amplitude: 1,
     shape: 'sine',
-    stopwatchRunning: false,
   };
 
   static defaultProps = {
@@ -36,41 +35,29 @@ class ReactRallyWaveform extends Component {
     this.setState({ shape });
   };
 
-  toggleRunning = () => {
-    this.setState(state => ({
-      stopwatchRunning: !state.stopwatchRunning,
-    }));
-  };
-
   render() {
     const { width, height } = this.props;
-    const { frequency, amplitude, shape, stopwatchRunning } = this.state;
+    const { frequency, amplitude, shape } = this.state;
 
     return (
       <Wrapper>
-        <WaveformStopwatch frequency={frequency} isRunning={stopwatchRunning}>
-          {progress => (
-            <WaveformCalculator
-              animateAmplitudeAndFrequency
-              shape={shape}
-              frequency={frequency}
-              amplitude={amplitude}
-              progress={progress}
+        <WaveformCalculator
+          shape={shape}
+          frequency={frequency}
+          amplitude={amplitude}
+          width={width}
+          height={height}
+        >
+          {points => (
+            <Waveform
               width={width}
               height={height}
-            >
-              {points => (
-                <Waveform
-                  width={width}
-                  height={height}
-                  points={points}
-                  color={COLORS.blue[700]}
-                  strokeWidth={4}
-                />
-              )}
-            </WaveformCalculator>
+              points={points}
+              color={COLORS.blue[700]}
+              strokeWidth={4}
+            />
           )}
-        </WaveformStopwatch>
+        </WaveformCalculator>
 
         <WaveformAxis
           x
@@ -111,10 +98,16 @@ class ReactRallyWaveform extends Component {
           </Row>
 
           <Row>
-
             <Column>
-              <Label>Play</Label>
-              <button onClick={this.toggleRunning}>Toggle</button>
+              <Label>Shape</Label>
+              <button onClick={() => this.updateShape('sine')}>Sine</button>
+              <button onClick={() => this.updateShape('triangle')}>
+                Triangle
+              </button>
+              <button onClick={() => this.updateShape('square')}>Square</button>
+              <button onClick={() => this.updateShape('sawtooth')}>
+                Sawtooth
+              </button>
             </Column>
           </Row>
         </Controls>
@@ -129,7 +122,6 @@ const Wrapper = styled.div`
 `;
 
 const Controls = styled.div`
-  width: 500px;
   margin-top: 30px;
 `;
 
