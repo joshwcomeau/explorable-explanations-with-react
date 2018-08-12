@@ -490,17 +490,16 @@ export default class Presentation extends React.Component {
           code={require('./code/waveform-v1.example')}
           ranges={[
             {
-              loc: [0],
+              loc: [0, 1],
               title: '<Waveform /> v1',
             },
-            { loc: [1, 4] },
-            { loc: [4, 10] },
+            { loc: [2, 8] },
+            { loc: [8, 10] },
             { loc: [10, 12] },
-            { loc: [12, 14] },
-            { loc: [16, 17] },
-            { loc: [27, 32] },
-            { loc: [32, 39] },
-            { loc: [33, 35] },
+            { loc: [14, 15] },
+            { loc: [15, 22] },
+            { loc: [23, 25] },
+            { loc: [25, 32] },
           ]}
         />
 
@@ -560,10 +559,10 @@ export default class Presentation extends React.Component {
           code={require('./code/waveform-v2.example')}
           ranges={[
             {
-              loc: [0],
+              loc: [0, 1],
               title: '<Waveform /> v2',
             },
-            { loc: [1, 15] },
+            { loc: [1, 4] },
             { loc: [16, 17] },
             { loc: [27, 34] },
             { loc: [34, 42] },
@@ -671,7 +670,15 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          Separate state out?
+          <ReactRallyWaveformV1
+            showControls={true}
+          />
+        </Slide>
+
+        <Slide>
+          <Heading size={3}>
+            Separating state out
+          </Heading>
         </Slide>
 
         <CodeSlide
@@ -793,12 +800,9 @@ export default class Presentation extends React.Component {
             },
             { loc: [5, 14] },
             { loc: [15, 19] },
+            { loc: [16, 17], title: '😬' },
           ]}
         />
-
-        <Slide bgColor="secondary">
-          <Heading>⚠️ 🛣</Heading>
-        </Slide>
 
         <CodeSlide
           bgColor="secondary"

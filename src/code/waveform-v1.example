@@ -1,7 +1,5 @@
 class Waveform extends Component {
   static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
     shape: PropTypes.oneOf([
       'sine',
       'triangle',
@@ -16,8 +14,6 @@ class Waveform extends Component {
 
   render() {
     const {
-      width,
-      height,
       shape,
       frequency,
       amplitude,
@@ -26,10 +22,7 @@ class Waveform extends Component {
     } = this.props;
 
     return (
-      <svg
-        width={width}
-        height={height}
-      >
+      <svg>
         <path
           // Come up with a path somehow
           d={'???'}
