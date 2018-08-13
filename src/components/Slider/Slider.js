@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled, { injectGlobal } from 'styled-components';
 import RcSlider, { createSliderWithTooltip } from 'rc-slider';
 
@@ -20,7 +20,7 @@ type Props = {
 
 const RcSliderWithTooltip = createSliderWithTooltip(RcSlider);
 
-class Slider extends Component<Props> {
+class Slider extends PureComponent<Props> {
   render() {
     const { width, label, onChange, ...delegatedProps } = this.props;
 

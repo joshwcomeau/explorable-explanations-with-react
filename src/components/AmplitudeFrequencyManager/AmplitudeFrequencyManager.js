@@ -33,9 +33,7 @@ class AirGridManager extends Component {
     return (
       <Wrapper>
         <Fragment>
-          <WaveformStopwatch isRunning frequency={frequency}>
-            {progress => children({ amplitude, frequency, progress })}
-          </WaveformStopwatch>
+          {children({ amplitude, frequency })}
 
           <Sliders>
             <SliderWrapper>

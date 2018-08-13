@@ -32,27 +32,21 @@ class GridVsWave extends Component {
               {({ timeElapsed }) => (
                 <Fragment>
                   <Row>
-                    <Spring to={{ timeElapsed }}>
-                      {({ timeElapsed }) => (
-                        <AirGrid
-                          shape="sine"
-                          width={400}
-                          height={200}
-                          numOfCols={13}
-                          numOfRows={13}
-                          waveformAmplitude={
-                            // HACK: For some reason, the numOfRows/numOfCols affects
-                            // how tightly-bound they are
-                            amplitude * 0.5
-                          }
-                          waveformFrequency={frequency}
-                          waveformProgress={timeElapsed / 1000}
-                          highlightColumnIndex={
-                            highlightMolecule ? 0 : undefined
-                          }
-                        />
-                      )}
-                    </Spring>
+                    <AirGrid
+                      shape="sine"
+                      width={400}
+                      height={200}
+                      numOfCols={13}
+                      numOfRows={13}
+                      waveformAmplitude={
+                        // HACK: For some reason, the numOfRows/numOfCols affects
+                        // how tightly-bound they are
+                        amplitude * 0.5
+                      }
+                      waveformFrequency={frequency}
+                      waveformProgress={timeElapsed / 1000}
+                      highlightColumnIndex={highlightMolecule ? 0 : undefined}
+                    />
 
                     <Spacer size={70} />
 
@@ -98,23 +92,17 @@ class GridVsWave extends Component {
                         }
                         strokeWidth={3}
                       />
-                      <Spring to={{ timeElapsed }}>
-                        {({ timeElapsed }) =>
-                          highlightMolecule && (
-                            <WaveformIntercept
-                              size={20}
-                              color={COLORS.primary[500]}
-                              waveformSize={350}
-                              waveformShape="sine"
-                              frequency={frequency}
-                              amplitude={amplitude}
-                              offset={convertProgressToOffset(
-                                timeElapsed / 1000
-                              )}
-                            />
-                          )
-                        }
-                      </Spring>
+                      {highlightMolecule && (
+                        <WaveformIntercept
+                          size={20}
+                          color={COLORS.primary[500]}
+                          waveformSize={350}
+                          waveformShape="sine"
+                          frequency={frequency}
+                          amplitude={amplitude}
+                          offset={convertProgressToOffset(timeElapsed / 1000)}
+                        />
+                      )}
                     </div>
                   </Row>
                 </Fragment>

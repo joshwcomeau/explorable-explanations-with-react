@@ -27,8 +27,8 @@ class Waveform extends Component {
     } = this.props;
 
     return (
-      <Spring to={{ amplitude, frequency, timeElapsed }}>
-        {({ amplitude, frequency, timeElapsed }) => {
+      <Spring to={{ amplitude, frequency }}>
+        {({ amplitude, frequency }) => {
           const points = getPointsForWaveform({
             shape,
             frequency,

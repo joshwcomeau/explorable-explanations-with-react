@@ -67,7 +67,11 @@ class Timekeeper extends Component {
     const { timeElapsed } = this.state;
     const { toggleRunning } = this;
 
-    return children({ timeElapsed, toggleRunning });
+    return (
+      <Spring to={{ timeElapsed }}>
+        {({ timeElapsed }) => children({ timeElapsed, toggleRunning })}
+      </Spring>
+    );
   }
 }
 

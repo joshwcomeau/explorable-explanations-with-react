@@ -17,7 +17,7 @@ export const getPointsForWaveform = ({
   width,
   height,
   timeElapsed = 0,
-  pixelRatio = 5,
+  pixelRatio = 2,
 }: WaveformProps): Array<WaveformPoint> => {
   const offset = (timeElapsed / 10) % 100;
 
