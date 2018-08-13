@@ -16,9 +16,10 @@ export const getPointsForWaveform = ({
   amplitude,
   width,
   height,
-  progress = 0,
+  timeElapsed = 0,
   pixelRatio = 5,
 }: WaveformProps): Array<WaveformPoint> => {
+  const progress = ((timeElapsed / 1000) * frequency) % 1;
   const offset = convertProgressToOffset(progress);
 
   const xValues = range(0, width + 1, pixelRatio);
@@ -108,7 +109,7 @@ const fixPeaks = (frequency, amplitude, values) => {
   });
 };
 
-export const createSVGPathFromWaveformPoints = (
+export const convertPointsToPath = (
   points: Array<WaveformPoint>,
   height: number
 ) =>
@@ -121,6 +122,9 @@ export const createSVGPathFromWaveformPoints = (
     // For all subsequent points, we can just draw a line to it.
     return `${acc} L ${x},${y}`;
   }, '');
+
+// TODO: Delete this
+export const createSVGPathFromWaveformPoints = convertPointsToPath;
 
 /**
  * Given progress between 0 and 100, figure out the Y position, relative

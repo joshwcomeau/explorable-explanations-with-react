@@ -26,12 +26,7 @@ class Waveform extends Component {
     } = this.props;
 
     return (
-      <Motion
-        style={{
-          amplitude: spring(amplitude),
-          frequency: spring(frequency),
-        }}
-      >
+      <Spring to={{ amplitude, frequency }}>
         {({ amplitude, frequency }) => {
           const points =
             getPointsForWaveform({
@@ -60,9 +55,7 @@ class Waveform extends Component {
             </svg>
           );
         }}
-      </Motion>
+      </Spring>
     );
   }
 }
-
-export default Waveform;

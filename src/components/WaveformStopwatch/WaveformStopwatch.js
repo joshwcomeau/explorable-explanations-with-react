@@ -1,4 +1,11 @@
 // @flow
+/*
+  NOTE: AHHH ignore this component! It's totally different from what is in
+  the presentation, AND what is in the original app. It's tech debt I didn't
+  have time to clean up.
+
+  🐲
+*/
 import React, { Component } from 'react';
 import { Motion, spring } from 'react-motion';
 
@@ -111,16 +118,12 @@ class WaveformStopwatch extends Component {
       // If this is the tick that pushes us into the next cycle, and we've
       // requested a stop, let's end this animation.
       if (typeof stopRequestedAtCycle === 'number') {
-        const nextCyclesInteger = Math.floor(nextProgressVal);
-
-        if (nextCyclesInteger > progress) {
-          this.setState({
-            progress: Math.floor(nextProgressVal),
-            lastTickAt: tickAt,
-            stopRequestedAtCycle: null,
-          });
-          return;
-        }
+        this.setState({
+          progress: Math.floor(nextProgressVal),
+          lastTickAt: tickAt,
+          stopRequestedAtCycle: null,
+        });
+        return;
       }
 
       this.setState(

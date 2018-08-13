@@ -1,0 +1,22 @@
+const Demo = () => (
+  <Value initial={0}>
+    {({ value, set }) => (
+      <>
+        <div>
+          Value:
+          <strong>{value}</strong>
+        </div>
+
+        <Slider onChange={set} />
+      </>
+    )}
+  </Value>
+);
+
+
+
+render(
+  <div style={{ padding: 35 }}>
+    <Demo />
+  </div>
+);

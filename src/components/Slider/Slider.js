@@ -22,7 +22,7 @@ const RcSliderWithTooltip = createSliderWithTooltip(RcSlider);
 
 class Slider extends Component<Props> {
   render() {
-    const { width, label, ...delegatedProps } = this.props;
+    const { width, label, onChange, ...delegatedProps } = this.props;
 
     return (
       <div style={{ width }}>
@@ -30,6 +30,7 @@ class Slider extends Component<Props> {
 
         <RcSliderWithTooltip
           {...delegatedProps}
+          onChange={val => onChange(Number(val))}
           tipProps={{ placement: 'bottom' }}
         />
       </div>

@@ -1,0 +1,32 @@
+const Demo = () => (
+  <Value initial={0}>
+    {({ value, set }) => (
+      <>
+        <div>
+          Value:
+          <strong>{value}</strong>
+        </div>
+
+        <Spring to={{ value }}>
+          {({ value }) => (
+            <div>
+              Value (spring):
+              <strong>
+                {Math.round(value)}
+              </strong>
+            </div>
+          )}
+        </Spring>
+
+        <Slider onChange={set} />
+      </>
+    )}
+  </Value>
+);
+
+render(
+  <div style={{ padding: 35 }}>
+    <Demo />
+  </div>
+);
+

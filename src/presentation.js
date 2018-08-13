@@ -1,7 +1,4 @@
-import React, {
-  Component,
-  Fragment,
-} from 'react';
+import React, { Component, Fragment } from 'react';
 import { injectGlobal } from 'styled-components';
 import {
   Deck,
@@ -14,9 +11,11 @@ import {
 import createTheme from 'spectacle/lib/themes/default';
 import preloader from 'spectacle/lib/utils/preloader';
 import CodeSlide from 'spectacle-code-slide';
-import {Motion, spring} from 'react-motion';
+import { Spring } from 'react-spring';
+import { Value } from 'react-powerplug';
 
 import { COLORS } from './constants';
+import { roundTo } from './utils';
 
 import spacerSrc from './assets/spacer.png';
 import basketballSrc from './assets/basketball.gif';
@@ -161,10 +160,7 @@ export default class Presentation extends React.Component {
             There's a couple things that make this tough.
           `}
         >
-          <img
-            src={traditionalSoundArticleSrc}
-            width="100%"
-          />
+          <img src={traditionalSoundArticleSrc} width="100%" />
         </Slide>
 
         {/* <Slide
@@ -229,15 +225,9 @@ export default class Presentation extends React.Component {
           `}
         >
           <AudioOutput masterVolume={5}>
-          {(audioCtx, masterOut) => (
-              <AmplitudeFrequencyManager
-                initialAmplitude={0}
-              >
-                {({
-                  amplitude,
-                  frequency,
-                  progress,
-                }) => (
+            {(audioCtx, masterOut) => (
+              <AmplitudeFrequencyManager initialAmplitude={0}>
+                {({ amplitude, frequency, progress }) => (
                   <Fragment>
                     <AirGrid
                       shape="sine"
@@ -268,13 +258,7 @@ export default class Presentation extends React.Component {
             frequency={1}
             amplitude={1}
           >
-            {points => (
-              <Waveform
-                width={500}
-                height={250}
-                points={points}
-              />
-            )}
+            {points => <Waveform width={500} height={250} points={points} />}
           </WaveformCalculator>
         </Slide>
 
@@ -301,20 +285,14 @@ export default class Presentation extends React.Component {
             There's a whole community of people building these things.
           `}
         >
-          <Heading
-            size={1}
-            style={{ fontWeight: 900 }}
-          >
+          <Heading size={1} style={{ fontWeight: 900 }}>
             Explorable Explanations
           </Heading>
           <FullscreenConfetti />
         </Slide>
 
         <Slide bgColor="secondary">
-          <Heading
-            textColor="primary"
-            size={6}
-          >
+          <Heading textColor="primary" size={6}>
             <a
               href="http://polytrope.com/district/"
               style={{ color: COLORS.white }}
@@ -322,20 +300,12 @@ export default class Presentation extends React.Component {
               District
             </a>{' '}
             By{' '}
-            <a
-              href="EnDimensions"
-              style={{ color: COLORS.white }}
-            >
+            <a href="EnDimensions" style={{ color: COLORS.white }}>
               Christopher Walker
             </a>
           </Heading>
 
-          <video
-            autoPlay
-            loop
-            src={districtSrc}
-            style={{ width: '100%' }}
-          />
+          <video autoPlay loop src={districtSrc} style={{ width: '100%' }} />
         </Slide>
 
         <Slide
@@ -375,15 +345,10 @@ export default class Presentation extends React.Component {
           >
             <div
               style={{
-                transform:
-                  'translate(-2px, -2px)',
+                transform: 'translate(-2px, -2px)',
               }}
             >
-              <video
-                autoPlay
-                loop
-                src={allTheThingsFastSrc}
-              />
+              <video autoPlay loop src={allTheThingsFastSrc} />
             </div>
           </div>
         </Slide>
@@ -396,9 +361,7 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          <Heading size={4}>
-            {'<Waveform>'}
-          </Heading>
+          <Heading size={4}>{'<Waveform>'}</Heading>
         </Slide>
 
         <Slide
@@ -418,24 +381,15 @@ export default class Presentation extends React.Component {
               alignItems: 'flex-end',
             }}
           >
-            <Heading
-              size={3}
-              textColor="primary"
-            >
+            <Heading size={3} textColor="primary">
               Canvas
             </Heading>
 
-            <Heading
-              size={5}
-              textColor="rgba(255, 255, 255, 0.5)"
-            >
+            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">
               VS
             </Heading>
 
-            <Heading
-              size={3}
-              textColor="primary"
-            >
+            <Heading size={3} textColor="primary">
               SVG
             </Heading>
           </div>
@@ -467,24 +421,15 @@ export default class Presentation extends React.Component {
               🎉
             </Heading>
 
-            <Heading
-              size={3}
-              textColor="rgba(255, 255, 255, 0.5)"
-            >
+            <Heading size={3} textColor="rgba(255, 255, 255, 0.5)">
               Canvas
             </Heading>
 
-            <Heading
-              size={5}
-              textColor="rgba(255, 255, 255, 0.5)"
-            >
+            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">
               VS
             </Heading>
 
-            <Heading
-              size={3}
-              textColor="#1cff8d"
-            >
+            <Heading size={3} textColor="#1cff8d">
               SVG
             </Heading>
           </div>
@@ -493,11 +438,11 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-v1.example')}
+          code={require('./code/waveform-initial.example')}
           ranges={[
             {
               loc: [0, 1],
-              title: '<Waveform /> v1',
+              title: '<Waveform />',
             },
             { loc: [2, 8] },
             { loc: [8, 10] },
@@ -509,14 +454,17 @@ export default class Presentation extends React.Component {
           ]}
         />
 
-        <Slide>
-          <img
-            src={bananaPathSrc}
-            width="100%"
-          />
+        <Slide bgColor="secondary">
+          <img src={bananaPathSrc} width="100%" />
           <br />
           <br />
-          <a href="https://codepen.io/SitePoint/pen/scIdq">
+          <a
+            href="https://codepen.io/SitePoint/pen/scIdq"
+            style={{
+              color: 'white',
+              fontSize: 15,
+            }}
+          >
             https://codepen.io/SitePoint/pen/scIdq
           </a>
         </Slide>
@@ -538,21 +486,12 @@ export default class Presentation extends React.Component {
             frequency={1}
             amplitude={1}
           >
-            {points => (
-              <Waveform
-                width={500}
-                height={250}
-                points={points}
-              />
-            )}
+            {points => <Waveform width={500} height={250} points={points} />}
           </WaveformCalculator>
         </Slide>
 
         <Slide>
-          <img
-            src={convergingSquareSrc}
-            style={{ margin: 'auto' }}
-          />
+          <img src={convergingSquareSrc} style={{ margin: 'auto' }} />
         </Slide>
 
         <Slide>
@@ -562,11 +501,11 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-v2.example')}
+          code={require('./code/waveform-with-path.example')}
           ranges={[
             {
               loc: [0, 1],
-              title: '<Waveform /> v2',
+              title: '<Waveform />',
             },
             { loc: [1, 4] },
             { loc: [16, 17] },
@@ -597,9 +536,7 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <ReactRallyWaveformV1
-            showControls={false}
-          />
+          <ReactRallyWaveformV1 showControls={false} />
         </Slide>
 
         <CodeSlide
@@ -642,10 +579,9 @@ export default class Presentation extends React.Component {
             couple more things.
           `}
         >
-          <Heading size={3}>
-            We almost have an MVP!
-          </Heading>
-          <br /><br />
+          <Heading size={3}>We almost have an MVP!</Heading>
+          <br />
+          <br />
           <Heading size={3}>
             We just need a stateful home for these pieces.
           </Heading>
@@ -654,7 +590,7 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-builtin-state.example')}
+          code={require('./code/react-rally-waveform-initial.example')}
           ranges={[
             {
               loc: [0, 1],
@@ -747,10 +683,7 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide bgColor="blue">
-          <Heading
-            size={2}
-            textColor="primary"
-          >
+          <Heading size={2} textColor="primary">
             Smoothing It Out
           </Heading>
         </Slide>
@@ -763,16 +696,17 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformV2 />
         </Slide>
 
-        <Slide
-          bgImage={heavenSrc}
-        >
+        <Slide bgImage={heavenSrc}>
           <Heading
             size={1}
             style={{
               color: '#FFF',
-              textShadow: '4px 4px 30px rgba(0, 0, 0, 0.4)'
+              textShadow: '4px 4px 30px rgba(0, 0, 0, 0.4)',
             }}
-          >Spring Physics</Heading>
+          >
+            Spring Physics
+          </Heading>
+
           <UnsplashCredit
             username="ianstauffer"
             fullName="
@@ -783,21 +717,16 @@ export default class Presentation extends React.Component {
         <Slide>
           <Heading size={3}>React Motion</Heading>
           <Heading size={6}>
-            <a
-              target="_blank"
-              href="https://github.com/chenglou/react-motion"
-            >
+            <a target="_blank" href="https://github.com/chenglou/react-motion">
               https://github.com/chenglou/react-motion
             </a>
           </Heading>
-          <br /><br />
+          <br />
+          <br />
 
           <Heading size={3}>React Spring</Heading>
           <Heading size={6}>
-            <a
-              target="_blank"
-              href="https://github.com/drcmda/react-spring"
-            >
+            <a target="_blank" href="https://github.com/drcmda/react-spring">
               https://github.com/drcmda/react-spring
             </a>
           </Heading>
@@ -806,14 +735,12 @@ export default class Presentation extends React.Component {
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
-              code={require('./code/live/react-motion-pre.example')}
+              code={require('./code/playground/react-spring-pre.example')}
               theme="external"
               scope={{
-                Motion,
-                spring,
                 Slider,
-                WaveformState: WaveformStateWithContainer,
                 Fragment,
+                Value,
               }}
             />
           </div>
@@ -822,14 +749,13 @@ export default class Presentation extends React.Component {
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
-              code={require('./code/live/react-motion.example')}
+              code={require('./code/playground/react-spring.example')}
               theme="external"
               scope={{
-                Motion,
-                spring,
+                Spring,
                 Slider,
-                WaveformState: WaveformStateWithContainer,
                 Fragment,
+                Value,
               }}
             />
           </div>
@@ -838,22 +764,23 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-with-motion-inside.example')}
+          code={require('./code/waveform-with-spring.example')}
           ranges={[
             {
               loc: [0, 1],
               title: '<Waveform>',
             },
             { loc: [1, 15] },
-            { loc: [27, 34] },
-            { loc: [34, 35] },
-            { loc: [35, 43] },
-            { loc: [44, 47] },
-            { loc: [48, 61] },
+            { loc: [16, 27] },
+            { loc: [27, 29] },
+            { loc: [29, 30] },
+            { loc: [30, 38] },
+            { loc: [39, 42] },
+            { loc: [43, 56] },
           ]}
         />
 
-        <Slide>
+        {/* <Slide>
           <Heading size={3}>
             Calculating the points is becoming a pretty big concern
           </Heading>
@@ -862,7 +789,7 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-calculator-consumption.example')}
+          code={require('./code-old/waveform-calculator-consumption.example')}
           ranges={[
             {
               loc: [0],
@@ -873,12 +800,12 @@ export default class Presentation extends React.Component {
             { loc: [10, 11] },
             { loc: [11, 16] },
           ]}
-        />
+        /> */}
 
-        <CodeSlide
+        {/* <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-points.example')}
+          code={require('./code-old/waveform-points.example')}
           ranges={[
             {
               loc: [0, 1],
@@ -894,7 +821,7 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-calculator-amp-freq.example')}
+          code={require('./code-old/waveform-calculator-amp-freq.example')}
           ranges={[
             {
               loc: [0, 1],
@@ -907,26 +834,15 @@ export default class Presentation extends React.Component {
             { loc: [28, 36] },
             { loc: [37, 38] },
           ]}
-        />
+        /> */}
 
         <Slide bgColor="blue">
-          <Heading
-            size={2}
-            textColor="primary"
-          >
+          <Heading size={2} textColor="primary">
             Playing the Wave
           </Heading>
         </Slide>
 
-        <Slide
-          notes={`
-            This is looking pretty good... but our waveform doesn't move yet!
-
-            The waveform animation for "playing" is really just about rotating the shape through its possible positions by changing where the drawing starts from. In sound terminology, we're modifying the waveform's phase.
-
-            It would also be nice if when we toggle it to stop, it doesn't just stop immediately, it stops when it hits the next cycle.
-          `}
-        >
+        <Slide>
           <ReactRallyWaveformV3 />
         </Slide>
 
@@ -935,9 +851,7 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Heading size={3}>
-            2 variables are needed:
-          </Heading>
+          <Heading size={3}>2 variables are needed:</Heading>
 
           <List>
             <ListItem>Frequency</ListItem>
@@ -946,16 +860,13 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide bgImage={stopwatchSrc}>
-          <UnsplashCredit
-            username="veri_ivanova"
-            fullName="Veri Ivanova"
-          />
+          <UnsplashCredit username="veri_ivanova" fullName="Veri Ivanova" />
         </Slide>
 
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
-              code={require('./code/live/stopwatch-demo-alone.example')}
+              code={require('./code-old/live/stopwatch-demo-alone.example')}
               theme="external"
               scope={{
                 Stopwatch: StopwatchSimple,
@@ -970,7 +881,7 @@ export default class Presentation extends React.Component {
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
-              code={require('./code/live/stopwatch-demo-with-toggle.example')}
+              code={require('./code-old/live/stopwatch-demo-with-toggle.example')}
               theme="external"
               scope={{
                 Stopwatch: StopwatchSimple,
@@ -989,12 +900,11 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-stopwatch.example')}
+          code={require('./code-old/react-rally-waveform-stopwatch.example')}
           ranges={[
             {
               loc: [0, 1],
-              title:
-                'Updated <ReactRallyWaveform>',
+              title: 'Updated <ReactRallyWaveform>',
             },
             { loc: [4, 16] },
             { loc: [16, 18] },
@@ -1012,16 +922,13 @@ export default class Presentation extends React.Component {
             components that render UI!
           `}
         >
-          <img
-            src={hadoukenSrc}
-            width="100%"
-          />
+          <img src={hadoukenSrc} width="100%" />
         </Slide>
 
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/react-rally-waveform-hoc.example')}
+          code={require('./code-old/react-rally-waveform-hoc.example')}
           ranges={[
             {
               loc: [0, 1],
@@ -1047,24 +954,17 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          <Heading size={3}>
-            Smoothing it out
-          </Heading>
+          <Heading size={3}>Smoothing it out</Heading>
         </Slide>
 
-        <Slide>
-          (WaveformCalculator using motion on timeElapsed as well)
-        </Slide>
+        <Slide>(WaveformCalculator using motion on timeElapsed as well)</Slide>
 
         <Slide>
           <ReactRallyWaveformV3 />
         </Slide>
 
         <Slide bgColor="blue">
-          <Heading
-            size={2}
-            textColor="primary"
-          >
+          <Heading size={2} textColor="primary">
             Tweening Between Shapes
           </Heading>
         </Slide>
@@ -1076,12 +976,11 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/tweening-math.example')}
+          code={require('./code-old/tweening-math.example')}
           ranges={[
             {
               loc: [0],
-              title:
-                'Tweening between shapes',
+              title: 'Tweening between shapes',
             },
             { loc: [0, 7] },
             { loc: [8, 15] },
@@ -1093,7 +992,7 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code/waveform-calculator-tween.example')}
+          code={require('./code-old/waveform-calculator-tween.example')}
           ranges={[
             {
               loc: [0, 1],
@@ -1127,12 +1026,8 @@ export default class Presentation extends React.Component {
           `}
           bgColor="secondary"
         >
-          <Heading
-            size={2}
-            textColor="primary"
-          >
-            This implementation is not
-            great...
+          <Heading size={2} textColor="primary">
+            This implementation is not great...
           </Heading>
         </Slide>
 
@@ -1144,10 +1039,7 @@ export default class Presentation extends React.Component {
           `}
           bgColor="secondary"
         >
-          <Heading
-            size={2}
-            textColor="primary"
-          >
+          <Heading size={2} textColor="primary">
             ...but that's OK!
           </Heading>
         </Slide>
@@ -1168,7 +1060,9 @@ export default class Presentation extends React.Component {
             trying to keep thinking in small pieces.
           `}
         >
-          <Heading size={1} textColor="secondary">And on and on it went...</Heading>
+          <Heading size={1} textColor="secondary">
+            And on and on it went...
+          </Heading>
         </Slide>
 
         <Slide
@@ -1214,24 +1108,17 @@ export default class Presentation extends React.Component {
           `}
         >
           <Quote>
-            "...I'm in my third year studying
-            sound engineering for film, and
+            "...I'm in my third year studying sound engineering for film, and
             after reading this{' '}
             <Highlighted>
-              I finally understand how
-              harmonics and waveforms work.
+              I finally understand how harmonics and waveforms work.
             </Highlighted>{' '}
-            I've known what harmonics and
-            waveforms are, as well as their
-            different applications. But the
-            way it has always been taught to
-            me,{' '}
+            I've known what harmonics and waveforms are, as well as their
+            different applications. But the way it has always been taught to me,{' '}
             <Highlighted>
-              I could just never understand{' '}
-              <em>why</em> they are.
+              I could just never understand <em>why</em> they are.
             </Highlighted>{' '}
-            Thank you for explaining this to
-            me in a way no one else has been
+            Thank you for explaining this to me in a way no one else has been
             able to."
           </Quote>
         </Slide>
@@ -1243,9 +1130,14 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Heading size={1} textColor="secondary">Thank you!</Heading>
-          <br /><br />
-          <Heading size={5} textColor="secondary">Slides and code available on Twitter:</Heading>
+          <Heading size={1} textColor="secondary">
+            Thank you!
+          </Heading>
+          <br />
+          <br />
+          <Heading size={5} textColor="secondary">
+            Slides and code available on Twitter:
+          </Heading>
           <Heading size={2}>
             <a href="https://twitter.com/JoshWComeau">@joshwcomeau</a>
           </Heading>

@@ -42,9 +42,8 @@ const SHAPE_MAP = {};
 
 class WaveformCalculator extends PureComponent {
   state = {
-    tweenCount: 0,
     tweenFrom: this.props.shape,
-    tweenTo: this.props.shape,
+    reset: false,
   };
 
   static defaultProps = {
@@ -55,19 +54,17 @@ class WaveformCalculator extends PureComponent {
     pixelRatio: 5,
   };
 
-  static getDerivedStateFromProps(
-    nextProps,
-    prevState
-  ) {
-    if (nextProps.shape !== prevState.tweenTo) {
-      return {
-        tweenCount: prevState.tweenCount + 1,
-        tweenFrom: prevState.tweenTo,
-        tweenTo: nextProps.shape,
-      };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.shape !== this.props.shape) {
+      this.setState({
+        tweenFrom: prevProps.shape,
+        reset: true,
+      }, () => {
+        this.setState({
+          reset: false,
+        })
+      })
     }
-
-    return null;
   }
 
   render() {
@@ -77,27 +74,26 @@ class WaveformCalculator extends PureComponent {
       ...waveformData
     } = this.props;
     const {
-      tweenCount,
       tweenFrom,
-      tweenTo,
+      reset,
     } = this.state;
 
     return (
       <Spring
+        reset={reset}
+        immediate={!animateAmplitudeAndFrequency}
+        from={{
+          amplitude: waveformData.amplitude,
+          frequency: waveformData.frequency,
+          tweenAmount: 0,
+        }}
         to={{
           amplitude: waveformData.amplitude,
           frequency: waveformData.frequency,
-          tweenAmount: tweenCount % 2,
-          opacity: tweenCount % 2,
+          tweenAmount: 1,
         }}
       >
-        {({
-          tweenAmount,
-          amplitude,
-          frequency,
-          opacity,
-        }) => {
-          console.log({tweenAmount, amplitude, frequency, opacity})
+        {({tweenAmount, amplitude, frequency}) => {
           const points = applyWaveformAddition(
             getPointsForWaveform({
               ...waveformData,
@@ -110,12 +106,10 @@ class WaveformCalculator extends PureComponent {
                 ...waveformData,
                 amplitude,
                 frequency,
-                shape: tweenTo,
+                shape: this.props.shape,
               }),
             ],
-            tweenCount % 2 !== 0
-              ? tweenAmount
-              : 1 - tweenAmount
+            tweenAmount
           );
 
           return children(points);
