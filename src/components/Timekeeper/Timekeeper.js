@@ -3,6 +3,7 @@ import { Spring } from 'react-spring';
 
 class Timekeeper extends Component {
   static defaultProps = {
+    animated: false,
     multiplier: 1,
   };
 
@@ -63,13 +64,18 @@ class Timekeeper extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { animated, children } = this.props;
     const { timeElapsed } = this.state;
     const { toggleRunning } = this;
 
     return (
-      <Spring to={{ timeElapsed }}>
-        {({ timeElapsed }) => children({ timeElapsed, toggleRunning })}
+      <Spring immediate={!animated} to={{ timeElapsed }}>
+        {({ timeElapsed }) =>
+          children({
+            timeElapsed: Math.round(timeElapsed),
+            toggleRunning,
+          })
+        }
       </Spring>
     );
   }

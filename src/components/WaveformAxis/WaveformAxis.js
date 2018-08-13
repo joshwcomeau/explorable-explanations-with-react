@@ -1,8 +1,5 @@
 // @flow
-import React, {
-  Fragment,
-  PureComponent,
-} from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import styled from 'styled-components';
 
 import {
@@ -86,12 +83,10 @@ class WaveformAxis extends PureComponent<Props> {
     // wouldn't work in most situations, but it does here.
 
     const width = waveformSize;
-    const height =
-      waveformSize * WAVEFORM_ASPECT_RATIO;
+    const height = waveformSize * WAVEFORM_ASPECT_RATIO;
 
     const axisWidth = width + SIDE_AXIS_SPACING * 2;
-    const axisHeight =
-      height + TOP_AXIS_SPACING * 2;
+    const axisHeight = height + TOP_AXIS_SPACING * 2;
 
     const halfHeight = Math.round(height / 2);
 
@@ -122,104 +117,7 @@ class WaveformAxis extends PureComponent<Props> {
       : SIDE_AXIS_SPACING;
 
     return (
-      <WaveformAxisSvg
-        width={width}
-        height={height}
-      >
-        <FadeTransition
-          isVisible={showXLabels}
-          typeName="g"
-        >
-          {range(0, 1, 0.25).map(i => {
-            return (
-              <Fragment key={i}>
-                {i > 0 && (
-                  <line
-                    x1={width * i}
-                    y1={-TOP_AXIS_SPACING}
-                    x2={width * i}
-                    y2={height + TOP_AXIS_SPACING}
-                    {...labelLineStyles}
-                  />
-                )}
-
-                <text
-                  x={width * i + 4}
-                  y={height / 2 + 16}
-                  style={{ fontSize: 14 }}
-                >
-                  {i}s
-                </text>
-              </Fragment>
-            );
-          })}
-        </FadeTransition>
-        <FadeTransition
-          isVisible={showYLabels}
-          typeName="g"
-        >
-          <Fragment>
-            <line
-              x1={-SIDE_AXIS_SPACING}
-              y1={-3}
-              x2={width + yAxisGuideSquish}
-              y2={-3}
-              {...labelLineStyles}
-            />
-            <text
-              x={axisWidth}
-              y={0}
-              dx={yAxisGuideSquish}
-              dy={4}
-              style={{
-                fontSize: 14,
-                textAnchor: 'end',
-              }}
-            >
-              +1
-            </text>
-
-            <line
-              x1={-SIDE_AXIS_SPACING}
-              y1={halfHeight}
-              x2={width + yAxisGuideSquish}
-              y2={halfHeight}
-              {...labelLineStyles}
-            />
-            <text
-              x={axisWidth}
-              y={halfHeight}
-              dx={yAxisGuideSquish}
-              dy={4}
-              style={{
-                fontSize: 14,
-                textAnchor: 'end',
-              }}
-            >
-              0
-            </text>
-
-            <line
-              x1={-SIDE_AXIS_SPACING}
-              y1={height + 3}
-              x2={width + yAxisGuideSquish}
-              y2={height + 3}
-              {...labelLineStyles}
-            />
-            <text
-              x={axisWidth}
-              dx={yAxisGuideSquish}
-              y={axisHeight}
-              dy={-16}
-              style={{
-                fontSize: 14,
-                textAnchor: 'end',
-              }}
-            >
-              -1
-            </text>
-          </Fragment>
-        </FadeTransition>
+      <WaveformAxisSvg width={width} height={height}>
         <line
           {...coordinates}
           stroke={color}
@@ -236,12 +134,15 @@ class WaveformAxis extends PureComponent<Props> {
   }
 }
 
-const WaveformAxisSvg = styled.svg`
+const WaveformAxisSvg = styled.svg.attrs({
+  style: props => ({
+    width: props.width + 'px',
+    height: props.height + 'px',
+  }),
+})`
   position: absolute;
   top: 0;
   left: 0;
-  width: ${props => props.width + 'px'};
-  height: ${props => props.height + 'px'};
   /*
     !important needed because Spectacle appears to add an overflow to all
     SVGs? x_x

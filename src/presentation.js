@@ -862,68 +862,20 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code-old/react-rally-waveform-stopwatch.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title: 'Updated <ReactRallyWaveform>',
-            },
-            { loc: [4, 16] },
-            { loc: [16, 18] },
-            { loc: [18, 27] },
-            { loc: [27, 34] },
-          ]}
-        />
-
-        <Slide
-          bgColor="secondary"
-          notes={`
-            This looks familiar, and not in a good way...
-
-            We're 10 levels of indentation in before getting to the
-            components that render UI!
-          `}
-        >
-          <img src={hadoukenSrc} width="100%" />
-        </Slide>
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code-old/react-rally-waveform-hoc.example')}
+          code={require('./code/react-rally-waveform-timekeeper.example')}
           ranges={[
             {
               loc: [0, 1],
               title: '<ReactRallyWaveform>',
             },
-            { loc: [1, 14] },
-            { loc: [15, 27] },
-            { loc: [28, 29] },
-            { loc: [30, 37] },
-            { loc: [37, 47] },
-            { loc: [49, 60] },
-            { loc: [61, 71] },
-            { loc: [72, 75] },
-            { loc: [81, 82] },
-            { loc: [83, 84] },
-            { loc: [84, 95] },
-            { loc: [95, 97] },
-            { loc: [97, 106] },
-            { loc: [106, 121] },
-            { loc: [0, 1] },
-            { loc: [106, 121] },
+            { loc: [19, 20] },
+            { loc: [26, 29] },
+            { loc: [30, 40] },
+            { loc: [34, 35] },
+            { loc: [41, 51] },
+            { loc: [69, 72] },
           ]}
         />
-
-        <Slide>
-          <Heading size={3}>Smoothing it out</Heading>
-        </Slide>
-
-        <Slide>(WaveformCalculator using motion on timeElapsed as well)</Slide>
-
-        <Slide>
-          <ReactRallyWaveformV3 />
-        </Slide>
 
         <Slide bgColor="blue">
           <Heading size={2} textColor="primary">
