@@ -6,7 +6,7 @@ import { COLORS } from '../../constants';
 import Slider from '../Slider';
 import Spacer from '../Spacer';
 import WaveformCalculator from '../WaveformCalculator';
-import Waveform from '../Waveform';
+import WaveformOld from '../WaveformOld';
 import WaveformState from '../WaveformState';
 import WaveformAxis from '../WaveformAxis';
 
@@ -24,13 +24,23 @@ class ReactRallyWaveform extends Component {
       <WaveformState>
         {({ amplitude, frequency, updateAmplitude, updateFrequency }) => (
           <Wrapper>
-            <Waveform
+            <WaveformCalculator
               shape="sine"
               frequency={frequency}
               amplitude={amplitude}
               width={width}
               height={height}
-            />
+            >
+              {points => (
+                <WaveformOld
+                  width={width}
+                  height={height}
+                  points={points}
+                  color={COLORS.blue[700]}
+                  strokeWidth={4}
+                />
+              )}
+            </WaveformCalculator>
 
             <WaveformAxis
               x

@@ -41,24 +41,13 @@ class ReactRallyWaveform extends Component {
 
     return (
       <Wrapper>
-        <WaveformCalculator
-          animateAmplitudeAndFrequency
+        <Waveform
           shape={shape}
           frequency={frequency}
           amplitude={amplitude}
           width={width}
           height={height}
-        >
-          {points => (
-            <Waveform
-              width={width}
-              height={height}
-              points={points}
-              color={COLORS.blue[700]}
-              strokeWidth={4}
-            />
-          )}
-        </WaveformCalculator>
+        />
 
         <WaveformAxis
           x

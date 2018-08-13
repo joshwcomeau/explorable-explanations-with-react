@@ -32,6 +32,7 @@ import howItsMadeSrc from './assets/how-its-made.jpg';
 import hadoukenSrc from './assets/hadouken.jpeg';
 import heavenSrc from './assets/heaven.jpg';
 import oprahSrc from './assets/oprah.gif';
+import timekeeperSrc from './assets/timekeeper.jpg';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -73,7 +74,7 @@ preloader({
   howItsMadeSrc,
   hadoukenSrc,
   heavenSrc,
-  oprahSrc,
+  timekeeperSrc,
 });
 
 // Require CSS
@@ -833,13 +834,12 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Heading size={3}>2 variables are needed:</Heading>
-
-          <List>
-            <ListItem>Frequency</ListItem>
-            <ListItem>Time Elapsed</ListItem>
-          </List>
+          <Heading size={3}>
+            I just need to know how much time has elapsed!
+          </Heading>
         </Slide>
+
+        <Slide bgImage={timekeeperSrc} />
 
         <Slide>
           <div style={{ textAlign: 'left' }}>
