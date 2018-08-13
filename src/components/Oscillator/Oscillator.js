@@ -57,8 +57,6 @@ class Oscillator extends PureComponent<Props> {
   initializeAudio = () => {
     const { audioCtx, masterOut, shape, frequency, amplitude } = this.props;
 
-    console.log(shape);
-
     this.oscillatorNode = audioCtx.createOscillator();
 
     this.amplitudeGainNode = audioCtx.createGain();

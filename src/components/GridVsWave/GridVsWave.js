@@ -21,10 +21,7 @@ class GridVsWave extends Component {
   };
 
   render() {
-    const {
-      highlightMolecule,
-      rotateWaveform,
-    } = this.state;
+    const { highlightMolecule, rotateWaveform } = this.state;
 
     return (
       <Fragment>
@@ -52,11 +49,7 @@ class GridVsWave extends Component {
                       }
                       waveformFrequency={frequency}
                       waveformProgress={progress}
-                      highlightColumnIndex={
-                        highlightMolecule
-                          ? 0
-                          : undefined
-                      }
+                      highlightColumnIndex={highlightMolecule ? 0 : undefined}
                     />
 
                     <Spacer size={70} />
@@ -64,13 +57,11 @@ class GridVsWave extends Component {
                     <div
                       style={{
                         position: 'relative',
-                        transformOrigin:
-                          'center center',
+                        transformOrigin: 'center center',
                         transform: rotateWaveform
                           ? 'rotate(90deg) translateX(-5%)'
                           : 'rotate(0deg) translateX(0)',
-                        transition:
-                          'transform 1000ms',
+                        transition: 'transform 1000ms',
                       }}
                     >
                       <WaveformCalculator
@@ -118,16 +109,12 @@ class GridVsWave extends Component {
                       {highlightMolecule && (
                         <WaveformIntercept
                           size={20}
-                          color={
-                            COLORS.primary[500]
-                          }
+                          color={COLORS.primary[500]}
                           waveformSize={350}
                           waveformShape="sine"
                           frequency={frequency}
                           amplitude={amplitude}
-                          offset={convertProgressToOffset(
-                            progress
-                          )}
+                          offset={convertProgressToOffset(progress)}
                         />
                       )}
                     </div>
@@ -143,8 +130,7 @@ class GridVsWave extends Component {
               isToggled={highlightMolecule}
               onToggle={() =>
                 this.setState({
-                  highlightMolecule: !this.state
-                    .highlightMolecule,
+                  highlightMolecule: !this.state.highlightMolecule,
                 })
               }
             />
@@ -158,8 +144,7 @@ class GridVsWave extends Component {
               isToggled={rotateWaveform}
               onToggle={() =>
                 this.setState({
-                  rotateWaveform: !this.state
-                    .rotateWaveform,
+                  rotateWaveform: !this.state.rotateWaveform,
                 })
               }
             />

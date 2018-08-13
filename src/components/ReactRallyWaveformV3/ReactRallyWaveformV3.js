@@ -41,7 +41,7 @@ class ReactRallyWaveform extends Component {
     const { frequency, amplitude, shape, stopwatchRunning } = this.state;
 
     return (
-      <Timekeeper>
+      <Timekeeper multiplier={frequency}>
         {({ timeElapsed, toggleRunning }) => (
           <Wrapper>
             <Waveform

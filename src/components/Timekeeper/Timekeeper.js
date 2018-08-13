@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Spring } from 'react-spring';
 
 class Timekeeper extends Component {
+  static defaultProps = {
+    multiplier: null,
+  };
+
   state = {
     timeElapsed: 0,
     isRunning: false,
@@ -32,6 +36,7 @@ class Timekeeper extends Component {
 
   tick = () => {
     this.animationFrameId = window.requestAnimationFrame(() => {
+      const { multiplier } = this.props;
       const { timeElapsed, isRunning, lastTickAt } = this.state;
 
       if (!isRunning) {
@@ -39,7 +44,7 @@ class Timekeeper extends Component {
       }
 
       const currentTime = new Date();
-      const timeSinceLastTick = currentTime - lastTickAt;
+      const timeSinceLastTick = (currentTime - lastTickAt) * multiplier;
 
       this.setState(
         {

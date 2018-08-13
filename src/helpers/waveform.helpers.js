@@ -19,8 +19,9 @@ export const getPointsForWaveform = ({
   timeElapsed = 0,
   pixelRatio = 5,
 }: WaveformProps): Array<WaveformPoint> => {
-  const progress = ((timeElapsed / 1000) * frequency) % 1;
-  const offset = convertProgressToOffset(progress);
+  // `timeElapsed` is the number of milliseconds that have passed.
+  // We need to turn that into a cyclical number from 1 to 100.
+  const offset = (timeElapsed / 10) % 100;
 
   const xValues = range(0, width + 1, pixelRatio);
 
