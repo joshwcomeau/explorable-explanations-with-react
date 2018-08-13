@@ -1,6 +1,6 @@
 // @flow
 import React, { PureComponent } from 'react';
-import { Motion, spring } from 'react-motion';
+import { Spring } from 'react-spring';
 
 import { SPRING_SETTINGS } from '../../constants';
 import {
@@ -82,31 +82,22 @@ class WaveformCalculator extends PureComponent {
       tweenTo,
     } = this.state;
 
-    const tweenAmount = spring(
-      tweenCount % 2,
-      SPRING_SETTINGS
-    );
-
-    const amplitude = animateAmplitudeAndFrequency
-      ? spring(waveformData.amplitude)
-      : waveformData.amplitude;
-    const frequency = animateAmplitudeAndFrequency
-      ? spring(waveformData.frequency)
-      : waveformData.frequency;
-
     return (
-      <Motion
-        style={{
-          tweenAmount,
-          amplitude,
-          frequency,
+      <Spring
+        to={{
+          amplitude: waveformData.amplitude,
+          frequency: waveformData.frequency,
+          tweenAmount: tweenCount % 2,
+          opacity: tweenCount % 2,
         }}
       >
         {({
           tweenAmount,
           amplitude,
           frequency,
+          opacity,
         }) => {
+          console.log({tweenAmount, amplitude, frequency, opacity})
           const points = applyWaveformAddition(
             getPointsForWaveform({
               ...waveformData,
@@ -129,7 +120,7 @@ class WaveformCalculator extends PureComponent {
 
           return children(points);
         }}
-      </Motion>
+      </Spring>
     );
   }
 }

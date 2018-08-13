@@ -1,10 +1,10 @@
 <Fragment>
   <Waveform
-    width={width}
-    height={height}
     shape="sine"
     frequency={1}
     amplitude={1}
+    width={width}
+    height={height}
     color={COLORS.blue}
     strokeWidth={4}
   />

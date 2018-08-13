@@ -32,6 +32,7 @@ import allTheThingsFastSrc from './assets/all-the-things-fast.mp4';
 import howItsMadeSrc from './assets/how-its-made.jpg';
 import hadoukenSrc from './assets/hadouken.jpeg';
 import heavenSrc from './assets/heaven.jpg';
+import oprahSrc from './assets/oprah.gif';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -72,6 +73,7 @@ preloader({
   howItsMadeSrc,
   hadoukenSrc,
   heavenSrc,
+  oprahSrc,
 });
 
 // Require CSS
@@ -641,47 +643,11 @@ export default class Presentation extends React.Component {
           `}
         >
           <Heading size={3}>
-            We need two things:
+            We almost have an MVP!
           </Heading>
-          <List>
-            <ListItem>
-              A place to assemble these pieces
-            </ListItem>
-            <ListItem>
-              A source of truth for the state
-            </ListItem>
-          </List>
-        </Slide>
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/react-rally-waveform-builtin-state.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title: '<ReactRallyWaveform>',
-            },
-            { loc: [1, 5] },
-            { loc: [6, 10] },
-            { loc: [11, 18] },
-            { loc: [19, 21] },
-            { loc: [21, 25] },
-            { loc: [28, 37] },
-            { loc: [38, 48] },
-            { loc: [50, 61] },
-          ]}
-        />
-
-        <Slide>
-          <ReactRallyWaveformV1
-            showControls={true}
-          />
-        </Slide>
-
-        <Slide>
+          <br /><br />
           <Heading size={3}>
-            Separating state out
+            We just need a stateful home for these pieces.
           </Heading>
         </Slide>
 
@@ -704,12 +670,48 @@ export default class Presentation extends React.Component {
             { loc: [50, 61] },
           ]}
         />
+
+        {/* <Slide
+          notes={`
+            So this works quite well! We have a top level "view"-type component, that manages the state and assembles the pieces we've built.
+
+            But, this is a side-project, and I always like to experiment with side-projects. So I thought, what if this used...
+          `}
+        >
+          <Heading size={3}>
+            A "View" component that manages state.
+          </Heading>
+        </Slide>
+
+        <Slide bgImage={oprahSrc}>
+          <Heading size={1}>Render Props!!!1</Heading>
+        </Slide>
 
         <CodeSlide
           notes={`
-            First, the state management bit. This could be done through redux,
-            but for now we'll just use React state.
+            Here's what I imagine. All of this state can live in a new
+            component, and both the state and the setters to update that
+            state can be passed down through a render prop.
           `}
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-with-axes.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title:
+                '<ReactRallyWaveform>',
+            },
+            { loc: [1, 3] },
+            { loc: [4, 12] },
+            { loc: [13, 22] },
+            { loc: [23, 33] },
+            { loc: [35, 46] },
+          ]}
+        />
+
+
+        <CodeSlide
           bgColor="secondary"
           lang="jsx"
           code={require('./code/waveform-state.example')}
@@ -721,38 +723,24 @@ export default class Presentation extends React.Component {
             { loc: [1, 4] },
             { loc: [5, 9] },
             { loc: [10, 17] },
-            { loc: [18, 24] },
-            { loc: [24, 28] },
+            { loc: [18, 19] },
             { loc: [29, 35] },
           ]}
         />
 
-        <CodeSlide
+        <Slide
           notes={`
-            I'm a fan of creating wrappers that combine simpler blocks in specific ways.
+            Is this actually better though?
 
-            We have a number of these pieces, so let's construct a ready-to-use wrapper, I'll call it ReactRallyWaveform.
+            Well, it depends.
 
-            It'll have our WaveformCalculator, a Waveform, and then a couple axes.
+            On the one hand, we've made it a bit more complicated, we've added a layer of abstraction, and so that's a real cost. Also, some people really hate render props...
 
-            It'll also hold the state for our waveform.
+            In the actual Waveforms project, I kept the state living in the view, because the waveform is persistent. In this presentation, though, I need lots of subtly-different demos.
           `}
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/react-rally-waveform-with-axes.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title:
-                '<ReactRallyWaveform> v1',
-            },
-            { loc: [1, 3] },
-            { loc: [4, 12] },
-            { loc: [13, 22] },
-            { loc: [23, 33] },
-            { loc: [35, 46] },
-          ]}
-        />
+        >
+          <Heading size={3}>Is this actually better tho?</Heading>
+        </Slide> */}
 
         <Slide>
           <ReactRallyWaveformV1 />
@@ -784,12 +772,35 @@ export default class Presentation extends React.Component {
               color: '#FFF',
               textShadow: '4px 4px 30px rgba(0, 0, 0, 0.4)'
             }}
-          >React Motion</Heading>
+          >Spring Physics</Heading>
           <UnsplashCredit
             username="ianstauffer"
             fullName="
             Ian Stauffer"
           />
+        </Slide>
+
+        <Slide>
+          <Heading size={3}>React Motion</Heading>
+          <Heading size={6}>
+            <a
+              target="_blank"
+              href="https://github.com/chenglou/react-motion"
+            >
+              https://github.com/chenglou/react-motion
+            </a>
+          </Heading>
+          <br /><br />
+
+          <Heading size={3}>React Spring</Heading>
+          <Heading size={6}>
+            <a
+              target="_blank"
+              href="https://github.com/drcmda/react-spring"
+            >
+              https://github.com/drcmda/react-spring
+            </a>
+          </Heading>
         </Slide>
 
         <Slide>

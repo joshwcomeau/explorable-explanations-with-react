@@ -5752,6 +5752,10 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+memoize-one@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-4.0.0.tgz#fc5e2f1427a216676a62ec652cf7398cfad123db"
+
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -7340,11 +7344,12 @@ react-split-pane@^0.1.77:
     react-lifecycles-compat "^3.0.4"
     react-style-proptype "^3.0.0"
 
-react-spring@^5.5.1:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-5.5.1.tgz#3c66044bd3d1a960462491c3c2728b3357781c81"
+react-spring@^5.6.6:
+  version "5.6.6"
+  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-5.6.6.tgz#681f1f1748b5a2bae99ec2ed32f3e83b1c06cb37"
   dependencies:
     "@babel/runtime" "7.0.0-beta.51"
+    memoize-one "^4.0.0"
 
 react-style-proptype@^3.0.0:
   version "3.2.1"
