@@ -8,6 +8,7 @@ import { convertProgressToOffset } from '../../helpers/waveform.helpers';
 import AirGrid from '../AirGrid';
 import Spacer from '../Spacer';
 import Waveform from '../Waveform';
+import Timekeeper from '../Timekeeper';
 import WaveformCalculator from '../WaveformCalculator';
 import WaveformIntercept from '../WaveformIntercept';
 import AmplitudeFrequencyManager from '../AmplitudeFrequencyManager';
@@ -26,86 +27,99 @@ class GridVsWave extends Component {
     return (
       <Fragment>
         <AmplitudeFrequencyManager>
-          {({ amplitude, frequency, progress }) => (
-            <Fragment>
-              <Row>
-                <Spring to={{ progress }}>
-                  {({ progress }) => (
-                    <AirGrid
-                      shape="sine"
-                      width={400}
-                      height={200}
-                      numOfCols={13}
-                      numOfRows={13}
-                      waveformAmplitude={
-                        // HACK: For some reason, the numOfRows/numOfCols affects
-                        // how tightly-bound they are
-                        amplitude * 0.5
-                      }
-                      waveformFrequency={frequency}
-                      waveformProgress={progress}
-                      highlightColumnIndex={highlightMolecule ? 0 : undefined}
-                    />
-                  )}
-                </Spring>
-
-                <Spacer size={70} />
-
-                <div
-                  style={{
-                    position: 'relative',
-                    transformOrigin: 'center center',
-                    transform: rotateWaveform
-                      ? 'rotate(90deg) translateX(-5%)'
-                      : 'rotate(0deg) translateX(0)',
-                    transition: 'transform 1000ms',
-                  }}
-                >
-                  <Waveform
-                    width={350}
-                    height={175}
-                    frequency={frequency}
-                    amplitude={amplitude}
-                    timeElapsed={progress * 1000}
-                    color={
-                      highlightMolecule ? COLORS.gray[200] : COLORS.gray[700]
-                    }
-                  />
-
-                  <WaveformAxis
-                    x
-                    waveformSize={350}
-                    color={
-                      highlightMolecule ? COLORS.gray[200] : COLORS.gray[400]
-                    }
-                    strokeWidth={3}
-                  />
-                  <WaveformAxis
-                    y
-                    waveformSize={350}
-                    color={
-                      highlightMolecule ? COLORS.gray[200] : COLORS.gray[400]
-                    }
-                    strokeWidth={3}
-                  />
-                  <Spring to={{ progress }}>
-                    {({ progress }) =>
-                      highlightMolecule && (
-                        <WaveformIntercept
-                          size={20}
-                          color={COLORS.primary[500]}
-                          waveformSize={350}
-                          waveformShape="sine"
-                          frequency={frequency}
-                          amplitude={amplitude}
-                          offset={convertProgressToOffset(progress)}
+          {({ amplitude, frequency }) => (
+            <Timekeeper runOnMount multiplier={frequency}>
+              {({ timeElapsed }) => (
+                <Fragment>
+                  <Row>
+                    <Spring to={{ timeElapsed }}>
+                      {({ timeElapsed }) => (
+                        <AirGrid
+                          shape="sine"
+                          width={400}
+                          height={200}
+                          numOfCols={13}
+                          numOfRows={13}
+                          waveformAmplitude={
+                            // HACK: For some reason, the numOfRows/numOfCols affects
+                            // how tightly-bound they are
+                            amplitude * 0.5
+                          }
+                          waveformFrequency={frequency}
+                          waveformProgress={timeElapsed / 1000}
+                          highlightColumnIndex={
+                            highlightMolecule ? 0 : undefined
+                          }
                         />
-                      )
-                    }
-                  </Spring>
-                </div>
-              </Row>
-            </Fragment>
+                      )}
+                    </Spring>
+
+                    <Spacer size={70} />
+
+                    <div
+                      style={{
+                        position: 'relative',
+                        transformOrigin: 'center center',
+                        transform: rotateWaveform
+                          ? 'rotate(90deg) translateX(-5%)'
+                          : 'rotate(0deg) translateX(0)',
+                        transition: 'transform 1000ms',
+                      }}
+                    >
+                      <Waveform
+                        width={350}
+                        height={175}
+                        frequency={frequency}
+                        amplitude={amplitude}
+                        timeElapsed={timeElapsed}
+                        color={
+                          highlightMolecule
+                            ? COLORS.gray[200]
+                            : COLORS.gray[700]
+                        }
+                      />
+                      <WaveformAxis
+                        x
+                        waveformSize={350}
+                        color={
+                          highlightMolecule
+                            ? COLORS.gray[200]
+                            : COLORS.gray[400]
+                        }
+                        strokeWidth={3}
+                      />
+                      <WaveformAxis
+                        y
+                        waveformSize={350}
+                        color={
+                          highlightMolecule
+                            ? COLORS.gray[200]
+                            : COLORS.gray[400]
+                        }
+                        strokeWidth={3}
+                      />
+                      <Spring to={{ timeElapsed }}>
+                        {({ timeElapsed }) =>
+                          highlightMolecule && (
+                            <WaveformIntercept
+                              size={20}
+                              color={COLORS.primary[500]}
+                              waveformSize={350}
+                              waveformShape="sine"
+                              frequency={frequency}
+                              amplitude={amplitude}
+                              offset={convertProgressToOffset(
+                                timeElapsed / 1000
+                              )}
+                            />
+                          )
+                        }
+                      </Spring>
+                    </div>
+                  </Row>
+                </Fragment>
+              )}
+            </Timekeeper>
           )}
         </AmplitudeFrequencyManager>
         <Row>

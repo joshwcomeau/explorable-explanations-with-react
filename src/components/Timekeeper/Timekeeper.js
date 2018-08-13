@@ -13,7 +13,7 @@ class Timekeeper extends Component {
   };
 
   componentDidMount() {
-    if (this.props.isRunning) {
+    if (this.props.runOnMount) {
       this.start();
     }
   }
