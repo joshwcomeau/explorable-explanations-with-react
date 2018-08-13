@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 import Slider from '../Slider';
-import Waveform from '../Waveform';
+import WaveformOld from '../WaveformOld';
 import WaveformCalculator from '../WaveformCalculator';
 
 class WaveformPointManager extends Component {
@@ -20,7 +20,7 @@ class WaveformPointManager extends Component {
           width={500}
           height={250}
         >
-          {points => <Waveform width={500} height={250} points={points} />}
+          {points => <WaveformOld width={500} height={250} points={points} />}
         </WaveformCalculator>
         <br />
         <br />

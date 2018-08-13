@@ -3,7 +3,7 @@ import { Spring } from 'react-spring';
 
 class Timekeeper extends Component {
   static defaultProps = {
-    multiplier: null,
+    multiplier: 1,
   };
 
   state = {

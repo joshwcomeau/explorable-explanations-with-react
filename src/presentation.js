@@ -48,6 +48,7 @@ import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave';
 import Stopwatch from './components/Stopwatch';
+import Timekeeper from './components/Timekeeper';
 import WaveformState from './components/WaveformState';
 import WaveformStateWithContainer from './components/WaveformState/WaveformState.withContainer';
 import StopwatchSimple from './components/Stopwatch/Stopwatch.no-animation';
@@ -252,14 +253,15 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <WaveformCalculator
+          <Waveform
+            shape="sine"
             width={500}
             height={250}
             frequency={1}
             amplitude={1}
-          >
-            {points => <Waveform width={500} height={250} points={points} />}
-          </WaveformCalculator>
+            color="#000"
+            strokeWidth={4}
+          />
         </Slide>
 
         <Slide
@@ -480,14 +482,13 @@ export default class Presentation extends React.Component {
         >
           <Heading size={1}>🤔</Heading>
 
-          <WaveformCalculator
+          <Waveform
             width={500}
             height={250}
             frequency={1}
             amplitude={1}
-          >
-            {points => <Waveform width={500} height={250} points={points} />}
-          </WaveformCalculator>
+            color={COLORS.gray[700]}
+          />
         </Slide>
 
         <Slide>
@@ -517,22 +518,7 @@ export default class Presentation extends React.Component {
         />
 
         <Slide>
-          <WaveformCalculator
-            width={500}
-            height={250}
-            frequency={1}
-            amplitude={1}
-          >
-            {points => (
-              <Waveform
-                width={500}
-                height={250}
-                color={COLORS.blue[700]}
-                points={points}
-                strokeWidth={4}
-              />
-            )}
-          </WaveformCalculator>
+          <Waveform width={500} height={250} frequency={1} amplitude={1} />
         </Slide>
 
         <Slide>
@@ -847,10 +833,6 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <img src={phaseSrc} />
-        </Slide>
-
-        <Slide>
           <Heading size={3}>2 variables are needed:</Heading>
 
           <List>
@@ -859,42 +841,22 @@ export default class Presentation extends React.Component {
           </List>
         </Slide>
 
-        <Slide bgImage={stopwatchSrc}>
-          <UnsplashCredit username="veri_ivanova" fullName="Veri Ivanova" />
-        </Slide>
-
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
-              code={require('./code-old/live/stopwatch-demo-alone.example')}
+              code={require('./code/playground/timekeeper.example')}
               theme="external"
-              scope={{
-                Stopwatch: StopwatchSimple,
-                WaveformState,
-                Component,
-                Fragment,
-              }}
-            />
-          </div>
-        </Slide>
-
-        <Slide>
-          <div style={{ textAlign: 'left' }}>
-            <ComponentPlayground
-              code={require('./code-old/live/stopwatch-demo-with-toggle.example')}
-              theme="external"
-              scope={{
-                Stopwatch: StopwatchSimple,
-                WaveformState,
-                Component,
-                Fragment,
-              }}
+              scope={{ Timekeeper }}
             />
           </div>
         </Slide>
 
         <Slide>
           <ReactRallyWaveformV3 />
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV3 useMultiplier />
         </Slide>
 
         <CodeSlide

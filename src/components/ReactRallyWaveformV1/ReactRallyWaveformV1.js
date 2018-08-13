@@ -22,67 +22,57 @@ class ReactRallyWaveform extends Component {
 
     return (
       <WaveformState>
-        {({ amplitude, frequency, updateAmplitude, updateFrequency}) => (
+        {({ amplitude, frequency, updateAmplitude, updateFrequency }) => (
           <Wrapper>
-          <WaveformCalculator
-            shape="sine"
-            frequency={frequency}
-            amplitude={amplitude}
-            width={width}
-            height={height}
-          >
-            {points => (
-              <Waveform
-                width={width}
-                height={height}
-                points={points}
-                color={COLORS.blue[700]}
-                strokeWidth={4}
-              />
+            <Waveform
+              shape="sine"
+              frequency={frequency}
+              amplitude={amplitude}
+              width={width}
+              height={height}
+            />
+
+            <WaveformAxis
+              x
+              waveformSize={width}
+              strokeWidth={4}
+              strokeLinecap="round"
+            />
+            <WaveformAxis
+              y
+              waveformSize={width}
+              strokeWidth={4}
+              strokeLinecap="round"
+            />
+
+            {showControls && (
+              <Controls>
+                <Sliders>
+                  <SliderWrapper>
+                    <Slider
+                      label="amplitude"
+                      min={0}
+                      max={1}
+                      step={0.01}
+                      value={amplitude}
+                      onChange={updateAmplitude}
+                    />
+                  </SliderWrapper>
+                  <Spacer size={70} />
+                  <SliderWrapper>
+                    <Slider
+                      label="frequency"
+                      min={0.05}
+                      max={2}
+                      step={0.01}
+                      value={frequency}
+                      onChange={updateFrequency}
+                    />
+                  </SliderWrapper>
+                </Sliders>
+              </Controls>
             )}
-          </WaveformCalculator>
-
-          <WaveformAxis
-            x
-            waveformSize={width}
-            strokeWidth={4}
-            strokeLinecap="round"
-          />
-          <WaveformAxis
-            y
-            waveformSize={width}
-            strokeWidth={4}
-            strokeLinecap="round"
-          />
-
-          {showControls && (
-            <Controls>
-              <Sliders>
-                <SliderWrapper>
-                  <Slider
-                    label="amplitude"
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    value={amplitude}
-                    onChange={updateAmplitude}
-                  />
-                </SliderWrapper>
-                <Spacer size={70} />
-                <SliderWrapper>
-                  <Slider
-                    label="frequency"
-                    min={0.05}
-                    max={2}
-                    step={0.01}
-                    value={frequency}
-                    onChange={updateFrequency}
-                  />
-                </SliderWrapper>
-              </Sliders>
-            </Controls>
-          )}
-        </Wrapper>
+          </Wrapper>
         )}
       </WaveformState>
     );

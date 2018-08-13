@@ -1,7 +1,0 @@
-const StopwatchDemo = () => (
-  <Stopwatch isRunning={true}>
-    {timeElapsed => timeElapsed}
-  </Stopwatch>
-);
-
-render(<StopwatchDemo />);

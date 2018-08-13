@@ -5,8 +5,15 @@ import {
   getPointsForWaveform,
   convertPointsToPath,
 } from '../../helpers/waveform.helpers';
+import { COLORS } from '../../constants';
 
 class Waveform extends Component {
+  static defaultProps = {
+    shape: 'sine',
+    strokeWidth: 4,
+    color: COLORS.blue[700],
+  };
+
   render() {
     const {
       width,

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Motion, spring } from 'react-motion';
+import { Spring } from 'react-spring';
 import styled from 'styled-components';
 
 import { COLORS } from '../../constants';
@@ -27,15 +27,10 @@ class GridVsWave extends Component {
       <Fragment>
         <AmplitudeFrequencyManager>
           {({ amplitude, frequency, progress }) => (
-            <Motion
-              style={{
-                frequency: spring(frequency),
-                amplitude: spring(amplitude),
-              }}
-            >
-              {({ frequency, amplitude }) => (
-                <Fragment>
-                  <Row>
+            <Fragment>
+              <Row>
+                <Spring to={{ progress }}>
+                  {({ progress }) => (
                     <AirGrid
                       shape="sine"
                       width={400}
@@ -51,62 +46,51 @@ class GridVsWave extends Component {
                       waveformProgress={progress}
                       highlightColumnIndex={highlightMolecule ? 0 : undefined}
                     />
+                  )}
+                </Spring>
 
-                    <Spacer size={70} />
+                <Spacer size={70} />
 
-                    <div
-                      style={{
-                        position: 'relative',
-                        transformOrigin: 'center center',
-                        transform: rotateWaveform
-                          ? 'rotate(90deg) translateX(-5%)'
-                          : 'rotate(0deg) translateX(0)',
-                        transition: 'transform 1000ms',
-                      }}
-                    >
-                      <WaveformCalculator
-                        width={350}
-                        height={175}
-                        frequency={frequency}
-                        amplitude={amplitude}
-                        progress={progress}
-                      >
-                        {points => (
-                          <Fragment>
-                            <Waveform
-                              width={350}
-                              height={175}
-                              points={points}
-                              color={
-                                highlightMolecule
-                                  ? COLORS.gray[200]
-                                  : COLORS.gray[900]
-                              }
-                            />
-                            <WaveformAxis
-                              x
-                              waveformSize={350}
-                              color={
-                                highlightMolecule
-                                  ? COLORS.gray[200]
-                                  : COLORS.gray[700]
-                              }
-                              strokeWidth={3}
-                            />
-                            <WaveformAxis
-                              y
-                              waveformSize={350}
-                              color={
-                                highlightMolecule
-                                  ? COLORS.gray[200]
-                                  : COLORS.gray[700]
-                              }
-                              strokeWidth={3}
-                            />
-                          </Fragment>
-                        )}
-                      </WaveformCalculator>
-                      {highlightMolecule && (
+                <div
+                  style={{
+                    position: 'relative',
+                    transformOrigin: 'center center',
+                    transform: rotateWaveform
+                      ? 'rotate(90deg) translateX(-5%)'
+                      : 'rotate(0deg) translateX(0)',
+                    transition: 'transform 1000ms',
+                  }}
+                >
+                  <Waveform
+                    width={350}
+                    height={175}
+                    frequency={frequency}
+                    amplitude={amplitude}
+                    timeElapsed={progress * 1000}
+                    color={
+                      highlightMolecule ? COLORS.gray[200] : COLORS.gray[700]
+                    }
+                  />
+
+                  <WaveformAxis
+                    x
+                    waveformSize={350}
+                    color={
+                      highlightMolecule ? COLORS.gray[200] : COLORS.gray[400]
+                    }
+                    strokeWidth={3}
+                  />
+                  <WaveformAxis
+                    y
+                    waveformSize={350}
+                    color={
+                      highlightMolecule ? COLORS.gray[200] : COLORS.gray[400]
+                    }
+                    strokeWidth={3}
+                  />
+                  <Spring to={{ progress }}>
+                    {({ progress }) =>
+                      highlightMolecule && (
                         <WaveformIntercept
                           size={20}
                           color={COLORS.primary[500]}
@@ -116,12 +100,12 @@ class GridVsWave extends Component {
                           amplitude={amplitude}
                           offset={convertProgressToOffset(progress)}
                         />
-                      )}
-                    </div>
-                  </Row>
-                </Fragment>
-              )}
-            </Motion>
+                      )
+                    }
+                  </Spring>
+                </div>
+              </Row>
+            </Fragment>
           )}
         </AmplitudeFrequencyManager>
         <Row>

@@ -1,0 +1,15 @@
+const Demo = () => (
+  <Timekeeper>
+    {({ timeElapsed, toggleRunning }) => (
+      <>
+        Time Elapsed: {timeElapsed}
+        <br /><br />
+        <button onClick={toggleRunning}>
+          Toggle
+        </button>
+      </>
+    )}
+  </Timekeeper>
+);
+
+render(<Demo />);
