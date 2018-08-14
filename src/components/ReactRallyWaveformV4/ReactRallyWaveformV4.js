@@ -8,46 +8,51 @@ import Spacer from '../Spacer';
 import Waveform from '../Waveform';
 import WaveformAxis from '../WaveformAxis';
 import Label from '../Label';
-import WaveformCalculator from '../WaveformCalculator';
-import WaveformStopwatch from '../WaveformStopwatch';
-import WaveformState from '../WaveformState';
+import Timekeeper from '../Timekeeper';
 
 class ReactRallyWaveform extends Component {
+  state = {
+    frequency: 1,
+    amplitude: 1,
+    shape: 'sine',
+  };
+
   static defaultProps = {
     width: 500,
     height: 250,
   };
 
+  updateAmplitude = amplitude => {
+    this.setState({ amplitude });
+  };
+
+  updateFrequency = frequency => {
+    this.setState({ frequency });
+  };
+
+  updateShape = shape => {
+    this.setState({ shape });
+  };
+
   render() {
-    const { width, height } = this.props;
+    const { width, height, useBrokenCalculator } = this.props;
+    const { frequency, amplitude, shape, stopwatchRunning } = this.state;
 
     return (
-      <WaveformState>
-        {({frequency, amplitude, shape, isRunning, updateAmplitude, updateFrequency, updateShape, toggleRunning}) => (
+      <Timekeeper eased multiplier={frequency}>
+        {({ timeElapsed, toggleRunning }) => (
           <Wrapper>
-            <WaveformStopwatch frequency={frequency} isRunning={isRunning}>
-              {progress => (
-                <WaveformCalculator
-                  animateAmplitudeAndFrequency
-                  shape={shape}
-                  frequency={frequency}
-                  amplitude={amplitude}
-                  progress={progress}
-                  width={width}
-                  height={height}
-                >
-                  {points => (
-                    <Waveform
-                      width={width}
-                      height={height}
-                      points={points}
-                      color={COLORS.blue[700]}
-                      strokeWidth={4}
-                    />
-                  )}
-                </WaveformCalculator>
-              )}
-            </WaveformStopwatch>
+            <Waveform
+              useBrokenCalculator={useBrokenCalculator}
+              width={width}
+              height={height}
+              frequency={frequency}
+              amplitude={amplitude}
+              shape={shape}
+              timeElapsed={timeElapsed}
+              color={COLORS.blue[700]}
+              strokeWidth={4}
+            />
 
             <WaveformAxis
               x
@@ -71,7 +76,7 @@ class ReactRallyWaveform extends Component {
                     max={1}
                     step={0.01}
                     value={amplitude}
-                    onChange={updateAmplitude}
+                    onChange={this.updateAmplitude}
                   />
                 </Column>
                 <Spacer size={70} />
@@ -82,7 +87,7 @@ class ReactRallyWaveform extends Component {
                     max={2}
                     step={0.01}
                     value={frequency}
-                    onChange={updateFrequency}
+                    onChange={this.updateFrequency}
                   />
                 </Column>
               </Row>
@@ -90,12 +95,14 @@ class ReactRallyWaveform extends Component {
               <Row>
                 <Column>
                   <Label>Shape</Label>
-                  <button onClick={() => updateShape('sine')}>Sine</button>
-                  <button onClick={() => updateShape('triangle')}>
+                  <button onClick={() => this.updateShape('sine')}>Sine</button>
+                  <button onClick={() => this.updateShape('triangle')}>
                     Triangle
                   </button>
-                  <button onClick={() => updateShape('square')}>Square</button>
-                  <button onClick={() => updateShape('sawtooth')}>
+                  <button onClick={() => this.updateShape('square')}>
+                    Square
+                  </button>
+                  <button onClick={() => this.updateShape('sawtooth')}>
                     Sawtooth
                   </button>
                 </Column>
@@ -108,7 +115,7 @@ class ReactRallyWaveform extends Component {
             </Controls>
           </Wrapper>
         )}
-      </WaveformState>
+      </Timekeeper>
     );
   }
 }

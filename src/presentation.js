@@ -33,6 +33,7 @@ import hadoukenSrc from './assets/hadouken.jpeg';
 import heavenSrc from './assets/heaven.jpg';
 import oprahSrc from './assets/oprah.gif';
 import timekeeperSrc from './assets/timekeeper.jpg';
+import judgeJudySrc from './assets/judge-judy.gif';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -75,6 +76,7 @@ preloader({
   hadoukenSrc,
   heavenSrc,
   timekeeperSrc,
+  judgeJudySrc,
 });
 
 // Require CSS
@@ -229,24 +231,28 @@ export default class Presentation extends React.Component {
           <AudioOutput masterVolume={5}>
             {(audioCtx, masterOut) => (
               <AmplitudeFrequencyManager initialAmplitude={0}>
-                {({ amplitude, frequency, progress }) => (
-                  <Fragment>
-                    <AirGrid
-                      shape="sine"
-                      width={600}
-                      height={300}
-                      waveformAmplitude={amplitude}
-                      waveformFrequency={frequency}
-                      waveformProgress={progress}
-                    />
-                    <Oscillator
-                      slidePitch={false}
-                      audioCtx={audioCtx}
-                      masterOut={masterOut}
-                      frequency={frequency * 200}
-                      amplitude={amplitude / 10}
-                    />
-                  </Fragment>
+                {({ amplitude, frequency }) => (
+                  <Timekeeper runOnMount multiplier={frequency}>
+                    {({ timeElapsed }) => (
+                      <Fragment>
+                        <AirGrid
+                          shape="sine"
+                          width={600}
+                          height={300}
+                          waveformAmplitude={amplitude}
+                          waveformFrequency={frequency}
+                          waveformProgress={timeElapsed / 1000}
+                        />
+                        <Oscillator
+                          slidePitch={false}
+                          audioCtx={audioCtx}
+                          masterOut={masterOut}
+                          frequency={frequency * 200}
+                          amplitude={amplitude / 10}
+                        />
+                      </Fragment>
+                    )}
+                  </Timekeeper>
                 )}
               </AmplitudeFrequencyManager>
             )}
@@ -762,8 +768,9 @@ export default class Presentation extends React.Component {
             { loc: [27, 29] },
             { loc: [29, 30] },
             { loc: [30, 38] },
-            { loc: [39, 42] },
-            { loc: [43, 56] },
+            { loc: [39, 43] },
+            { loc: [44, 57] },
+            { loc: [50, 51] },
           ]}
         />
 
@@ -841,6 +848,8 @@ export default class Presentation extends React.Component {
 
         <Slide bgImage={timekeeperSrc} />
 
+        <Slide bgImage={judgeJudySrc} />
+
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
@@ -849,14 +858,6 @@ export default class Presentation extends React.Component {
               scope={{ Timekeeper }}
             />
           </div>
-        </Slide>
-
-        <Slide>
-          <ReactRallyWaveformV3 />
-        </Slide>
-
-        <Slide>
-          <ReactRallyWaveformV3 useMultiplier />
         </Slide>
 
         <CodeSlide
@@ -877,6 +878,26 @@ export default class Presentation extends React.Component {
           ]}
         />
 
+        <Slide>
+          <Heading size={4}>There's a problem, though...</Heading>
+          <br />
+          <br />
+          <Heading size={6}>
+            TODO: update it to do the multiplication math in Waveform, to show
+            the problems
+          </Heading>
+
+          <ReactRallyWaveformV3 />
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV3 useMultiplier />
+        </Slide>
+
+        <Slide>Show multiplier prop on Timekeeper</Slide>
+
+        <Slide>Fun superhero image</Slide>
+
         <Slide bgColor="blue">
           <Heading size={2} textColor="primary">
             Tweening Between Shapes
@@ -890,47 +911,85 @@ export default class Presentation extends React.Component {
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code-old/tweening-math.example')}
+          code={require('./code/tweening.example')}
           ranges={[
             {
               loc: [0],
-              title: 'Tweening between shapes',
+              title: 'The basic idea...',
             },
-            { loc: [0, 7] },
-            { loc: [8, 15] },
-            { loc: [16, 17] },
-            { loc: [18, 23] },
+            { loc: [0, 8] },
+            { loc: [9, 17] },
+            { loc: [18, 19] },
+            { loc: [20, 25] },
+          ]}
+        />
+
+        <Slide>
+          Hm maybe show a half-hearted attempt to do this right in Waveform?
+        </Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-with-calculator.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<Waveform>',
+            },
+            { loc: [1, 11] },
+            { loc: [12, 13] },
+            { loc: [23, 32] },
+            { loc: [32, 33] },
+            { loc: [33, 44] },
           ]}
         />
 
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
-          code={require('./code-old/waveform-calculator-tween.example')}
+          code={require('./code/path-calculator-broken.example')}
           ranges={[
             {
               loc: [0, 1],
-              title: '<WaveformCalculator>',
+              title: '<PathCalculator>',
             },
-            { loc: [1, 9] },
-            { loc: [10, 11] },
-            { loc: [11, 13] },
-            { loc: [13, 14], title: '🤔' },
-            { loc: [16, 20] },
-            { loc: [20, 29] },
-            { loc: [24, 25] },
-            { loc: [25, 26] },
-            { loc: [26, 27] },
-            { loc: [33, 34] },
-            { loc: [34, 46] },
-            { loc: [47, 52] },
-            { loc: [52, 53], title: '🤔' },
-            { loc: [55, 60] },
-            { loc: [60, 67] },
-            { loc: [67, 74] },
-            { loc: [74, 77], title: '🤔' },
-            { loc: [78, 83] },
-            { loc: [84, 85] },
+            { loc: [1, 4] },
+            { loc: [5, 6] },
+            { loc: [6, 8] },
+            { loc: [9, 10] },
+            { loc: [10, 13] },
+            { loc: [16, 17] },
+            { loc: [17, 29] },
+            { loc: [30, 31] },
+            { loc: [31, 41] },
+            { loc: [31, 41], title: '*Ominous Music*' },
+            { loc: [41, 46] },
+            { loc: [46, 55] },
+            { loc: [56, 65] },
+            { loc: [66, 71] },
+            { loc: [72, 74] },
+            { loc: [75, 76] },
+          ]}
+        />
+
+        <Slide>
+          <ReactRallyWaveformV4 useBrokenCalculator />
+        </Slide>
+
+        <Slide>It don't work that way.</Slide>
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/path-calculator.example')}
+          ranges={[
+            { loc: [40, 50] },
+            { loc: [50, 51] },
+            { loc: [1, 5] },
+            { loc: [6, 9] },
+            { loc: [11, 16] },
+            { loc: [16, 21], title: '😅' },
           ]}
         />
 
@@ -1040,6 +1099,23 @@ export default class Presentation extends React.Component {
         <Slide>
           <Heading size={3}>
             There's high demand for this kind of content.
+          </Heading>
+        </Slide>
+
+        <Slide>
+          <Heading size={3}>
+            What would{' '}
+            <strong
+              style={{ fontWeight: 900, fontSize: 86, letterSpacing: -2 }}
+            >
+              <span style={{ color: COLORS.red[500] }}>y</span>
+              <span style={{ color: COLORS.yellow[700] }}>o</span>
+              <span style={{ color: COLORS.green[500] }}>u</span>
+              <span style={{ color: COLORS.blue[700] }}>r</span>
+            </strong>{' '}
+            explorable explanation
+            <br />
+            be about?
           </Heading>
         </Slide>
 

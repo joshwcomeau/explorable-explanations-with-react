@@ -1,0 +1,92 @@
+class PathCalculator extends PureComponent {
+  state = {
+    tweenFrom: this.props.shape,
+    justChangedShape: false,
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    const shapeChanged =
+      prevProps.shape !== this.props.shape
+
+    if (shapeChanged) {
+      this.setState(
+        {
+          tweenFrom: prevProps.shape,
+          justChangedShape: true,
+        },
+        () => {
+          this.setState({
+            justChangedShape: false,
+          });
+        }
+      );
+    }
+  }
+
+  render() {
+    const {
+      children,
+      shape,
+      amplitude,
+      frequency,
+      timeElapsed,
+      width,
+      height,
+    } = this.props;
+    const {
+      tweenFrom,
+      justChangedShape,
+    } = this.state;
+
+    return (
+      <Spring
+        from={{
+          ratio: 0,
+        }}
+        to={{
+          amplitude,
+          frequency,
+          ratio: 1,
+        }}
+        reset={justChangedShape}
+      >
+        {({
+          amplitude,
+          frequency,
+          ratio
+        }) => {
+          const from = getPointsForWaveform({
+            shape,
+            amplitude,
+            frequency,
+            width,
+            height,
+            timeElapsed,
+            shape: tweenFrom,
+          });
+
+          const to = getPointsForWaveform({
+            shape,
+            amplitude,
+            frequency,
+            width,
+            height,
+            timeElapsed,
+            shape: this.props.shape
+          });
+
+          const points = addWaveforms(
+            from,
+            to,
+            ratio
+          );
+
+          const definition =
+            convertPointsToPath(points);
+
+          return children(definition);
+        }}
+      </Spring>
+    );
+  }
+}

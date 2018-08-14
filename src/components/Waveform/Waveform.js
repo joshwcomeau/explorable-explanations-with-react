@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Spring } from 'react-spring';
 
-import {
-  getPointsForWaveform,
-  convertPointsToPath,
-} from '../../helpers/waveform.helpers';
 import { COLORS } from '../../constants';
+
+import PathCalculator from '../PathCalculator';
+import BrokenPathCalculator from '../PathCalculator/PathCalculator.broken';
 
 class Waveform extends Component {
   static defaultProps = {
@@ -24,34 +23,33 @@ class Waveform extends Component {
       timeElapsed,
       color,
       strokeWidth,
+      useBrokenCalculator,
     } = this.props;
 
+    const CalculatorComponent = useBrokenCalculator
+      ? BrokenPathCalculator
+      : PathCalculator;
+
     return (
-      <Spring to={{ amplitude, frequency }}>
-        {({ amplitude, frequency }) => {
-          const points = getPointsForWaveform({
-            shape,
-            frequency,
-            amplitude,
-            timeElapsed,
-            width,
-            height,
-          });
-
-          const svgPath = convertPointsToPath(points);
-
-          return (
-            <svg width={width} height={height} style={{ overflow: 'visible' }}>
-              <path
-                d={svgPath}
-                fill="none"
-                stroke={color}
-                strokeWidth={strokeWidth}
-              />
-            </svg>
-          );
-        }}
-      </Spring>
+      <CalculatorComponent
+        shape={shape}
+        amplitude={amplitude}
+        frequency={frequency}
+        timeElapsed={timeElapsed}
+        width={width}
+        height={height}
+      >
+        {definition => (
+          <svg width={width} height={height} style={{ overflow: 'visible' }}>
+            <path
+              d={definition}
+              fill="none"
+              stroke={color}
+              strokeWidth={strokeWidth}
+            />
+          </svg>
+        )}
+      </CalculatorComponent>
     );
   }
 }

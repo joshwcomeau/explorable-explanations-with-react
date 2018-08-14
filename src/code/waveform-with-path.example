@@ -41,7 +41,7 @@ class Waveform extends Component {
       ]
     */
 
-    const svgPath = convertPointsToPath(
+    const definition = convertPointsToPath(
       points
     );
     /*
@@ -54,7 +54,7 @@ class Waveform extends Component {
         height={height}
       >
         <path
-          d={svgPath}
+          d={definition}
           fill="none"
           stroke={color}
           strokeWidth={strokeWidth}

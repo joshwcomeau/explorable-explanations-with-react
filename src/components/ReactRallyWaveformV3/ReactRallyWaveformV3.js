@@ -8,8 +8,6 @@ import Spacer from '../Spacer';
 import Waveform from '../Waveform';
 import WaveformAxis from '../WaveformAxis';
 import Label from '../Label';
-import WaveformCalculator from '../WaveformCalculator';
-import WaveformStopwatch from '../WaveformStopwatch';
 import Timekeeper from '../Timekeeper/Timekeeper';
 
 class ReactRallyWaveform extends Component {

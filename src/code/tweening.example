@@ -1,6 +1,7 @@
 const from = getPointsForWaveform({
   amplitude,
   frequency,
+  timeElapsed,
   width,
   height,
   shape: tweenFromShape,
@@ -9,6 +10,7 @@ const from = getPointsForWaveform({
 const to = getPointsForWaveform({
   amplitude,
   frequency,
+  timeElapsed,
   width,
   height,
   shape: tweenToShape,
@@ -16,7 +18,7 @@ const to = getPointsForWaveform({
 
 const ratio = /* some number between 0-1 */;
 
-const points = addWaveformPoints(
+const points = addWaveforms(
   from,
   to,
   ratio

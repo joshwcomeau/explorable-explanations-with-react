@@ -1,0 +1,49 @@
+class Waveform extends Component {
+  static propTypes = {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    shape: PropTypes.oneOf(VALID_SHAPES),
+    frequency: PropTypes.number.isRequired,
+    amplitude: PropTypes.number.isRequired,
+    timeElapsed: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired,
+    strokeWidth: PropTypes.number.isRequired,
+  };
+
+  render() {
+    const {
+      width,
+      height,
+      shape,
+      frequency,
+      amplitude,
+      color,
+      strokeWidth,
+    } = this.props;
+
+    return (
+      <PathCalculator
+        shape={shape}
+        amplitude={amplitude}
+        frequency={frequency}
+        timeElapsed={timeElapsed}
+        width={width}
+        height={height}
+      >
+        {definition => (
+          <svg
+            width={width}
+            height={height}
+          >
+            <path
+              d={definition}
+              fill="none"
+              stroke={color}
+              strokeWidth={strokeWidth}
+            />
+          </svg>
+        )}
+      </PathCalculator>
+    );
+  }
+}

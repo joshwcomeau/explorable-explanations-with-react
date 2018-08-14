@@ -4,6 +4,7 @@ import { Spring } from 'react-spring';
 
 import {
   getPointsForWaveform,
+  convertPointsToPath,
   applyWaveformAddition,
 } from '../../helpers/waveform.helpers';
 
@@ -24,22 +25,22 @@ type State = {
   justChangedShape: false,
 };
 
-class PointsCalculator extends PureComponent<Props, State> {
+class PathCalculator extends PureComponent<Props, State> {
   state = {
     tweenFrom: this.props.shape,
     justChangedShape: false,
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.shape !== this.props.shape) {
       this.setState(
         {
           tweenFrom: prevProps.shape,
-          reset: true,
+          justChangedShape: true,
         },
         () => {
           this.setState({
-            reset: false,
+            justChangedShape: false,
           });
         }
       );
@@ -47,24 +48,32 @@ class PointsCalculator extends PureComponent<Props, State> {
   }
 
   render() {
-    const { children, shape, amplitude, frequency, width, height } = this.props;
+    const {
+      children,
+      shape,
+      amplitude,
+      frequency,
+      timeElapsed,
+      width,
+      height,
+    } = this.props;
     const { tweenFrom, justChangedShape } = this.state;
 
     return (
       <Spring
         reset={justChangedShape}
         from={{
-          amplitude: waveformData.amplitude,
-          frequency: waveformData.frequency,
-          tweenAmount: 0,
+          amplitude,
+          frequency,
+          ratio: 0,
         }}
         to={{
-          amplitude: waveformData.amplitude,
-          frequency: waveformData.frequency,
-          tweenAmount: 1,
+          amplitude,
+          frequency,
+          ratio: 1,
         }}
       >
-        {({ tweenAmount, amplitude, frequency }) => {
+        {({ amplitude, frequency, ratio }) => {
           const points = applyWaveformAddition(
             getPointsForWaveform({
               shape,
@@ -72,6 +81,7 @@ class PointsCalculator extends PureComponent<Props, State> {
               frequency,
               width,
               height,
+              timeElapsed,
               shape: tweenFrom,
             }),
             [
@@ -81,17 +91,20 @@ class PointsCalculator extends PureComponent<Props, State> {
                 frequency,
                 width,
                 height,
+                timeElapsed,
                 shape: this.props.shape,
               }),
             ],
-            tweenAmount
+            ratio
           );
 
-          return children(points);
+          const definition = convertPointsToPath(points);
+
+          return children(definition);
         }}
       </Spring>
     );
   }
 }
 
-export default PointsCalculator;
+export default PathCalculator;
