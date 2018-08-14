@@ -22,7 +22,7 @@ class Waveform extends Component {
     } = this.props;
 
     return (
-      <svg style={{ overflow: 'visible' }}>
+      <svg>
         <path
           // Come up with a path somehow
           d={'???'}

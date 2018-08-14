@@ -34,6 +34,7 @@ import heavenSrc from './assets/heaven.jpg';
 import oprahSrc from './assets/oprah.gif';
 import timekeeperSrc from './assets/timekeeper.jpg';
 import judgeJudySrc from './assets/judge-judy.gif';
+import explorablesSrc from './assets/explorables.gif';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -58,6 +59,7 @@ import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
 import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
 import ReactRallyWaveformV4 from './components/ReactRallyWaveformV4';
+import ReactRallyWaveformTimeSlider from './components/ReactRallyWaveformTimeSlider';
 import FullscreenConfetti from './components/FullscreenConfetti/FullscreenConfetti';
 import UnsplashCredit from './components/UnsplashCredit/UnsplashCredit';
 import VennDiagram from './components/VennDiagram/VennDiagram';
@@ -317,6 +319,24 @@ export default class Presentation extends React.Component {
           <video autoPlay loop src={districtSrc} style={{ width: '100%' }} />
         </Slide>
 
+        <Slide bgImage={explorablesSrc}>
+          <a
+            href="https://explorabl.es/"
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: '#FFF',
+              padding: 40,
+              textAlign: 'center',
+              boxShadow: '5px 5px 30px rgba(0, 0, 0, 0.4)',
+            }}
+          >
+            https://explorabl.es/
+          </a>
+        </Slide>
+
         <Slide
           notes={`
             But not a lot of people building these kinds of experiences are using React. It's this separate community with very little overlap.
@@ -373,7 +393,7 @@ export default class Presentation extends React.Component {
           <Heading size={4}>{'<Waveform>'}</Heading>
         </Slide>
 
-        <Slide
+        {/* <Slide
           bgColor="secondary"
           notes={`
             The first thing I needed was a Waveform component, and the first step was figuring out if I wanted to use Canvas or SVG.
@@ -442,7 +462,7 @@ export default class Presentation extends React.Component {
               SVG
             </Heading>
           </div>
-        </Slide>
+        </Slide> */}
 
         <CodeSlide
           bgColor="secondary"
@@ -521,6 +541,7 @@ export default class Presentation extends React.Component {
             { loc: [34, 42] },
             { loc: [43, 49] },
             { loc: [50, 63] },
+            { loc: [56, 57] },
           ]}
         />
 
@@ -770,7 +791,6 @@ export default class Presentation extends React.Component {
             { loc: [30, 38] },
             { loc: [39, 43] },
             { loc: [44, 57] },
-            { loc: [50, 51] },
           ]}
         />
 
@@ -844,6 +864,10 @@ export default class Presentation extends React.Component {
           <Heading size={3}>
             I just need to know how much time has elapsed!
           </Heading>
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformTimeSlider />
         </Slide>
 
         <Slide bgImage={timekeeperSrc} />
