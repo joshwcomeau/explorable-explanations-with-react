@@ -35,6 +35,7 @@ import oprahSrc from './assets/oprah.gif';
 import timekeeperSrc from './assets/timekeeper.jpg';
 import judgeJudySrc from './assets/judge-judy.gif';
 import explorablesSrc from './assets/explorables.gif';
+import timekeeperSuperheroSrc from './assets/timekeeper-super.png';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -78,6 +79,7 @@ preloader({
   hadoukenSrc,
   heavenSrc,
   timekeeperSrc,
+  timekeeperSuperheroSrc,
   judgeJudySrc,
 });
 
@@ -857,7 +859,7 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <ReactRallyWaveformV3 />
+          <ReactRallyWaveformV3 useMultiplier />
         </Slide>
 
         <Slide>
@@ -905,12 +907,6 @@ export default class Presentation extends React.Component {
         <Slide>
           <Heading size={4}>There's a problem, though...</Heading>
           <br />
-          <br />
-          <Heading size={6}>
-            TODO: update it to do the multiplication math in Waveform, to show
-            the problems
-          </Heading>
-
           <ReactRallyWaveformV3 />
         </Slide>
 
@@ -918,9 +914,30 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformV3 useMultiplier />
         </Slide>
 
-        <Slide>Show multiplier prop on Timekeeper</Slide>
+        <Slide>
+          <div style={{ textAlign: 'left' }}>
+            <ComponentPlayground
+              code={require('./code/playground/timekeeper-multiplier.example')}
+              theme="external"
+              scope={{ Timekeeper }}
+            />
+          </div>
+        </Slide>
 
-        <Slide>Fun superhero image</Slide>
+        <Slide bgImage={timekeeperSuperheroSrc} />
+
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/react-rally-waveform-timekeeper-multiplier.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<ReactRallyWaveform>',
+            },
+            { loc: [26, 28] },
+          ]}
+        />
 
         <Slide bgColor="blue">
           <Heading size={2} textColor="primary">
@@ -947,10 +964,6 @@ export default class Presentation extends React.Component {
             { loc: [20, 25] },
           ]}
         />
-
-        <Slide>
-          Hm maybe show a half-hearted attempt to do this right in Waveform?
-        </Slide>
 
         <CodeSlide
           bgColor="secondary"
@@ -987,21 +1000,22 @@ export default class Presentation extends React.Component {
             { loc: [17, 29] },
             { loc: [30, 31] },
             { loc: [31, 41] },
-            { loc: [31, 41], title: '*Ominous Music*' },
+            { loc: [36, 38] },
+            { loc: [38, 39] },
+            { loc: [32, 35] },
+            { loc: [32, 35], title: '*Ominous Music*' },
             { loc: [41, 46] },
-            { loc: [46, 55] },
-            { loc: [56, 65] },
-            { loc: [66, 71] },
-            { loc: [72, 74] },
-            { loc: [75, 76] },
+            { loc: [46, 54] },
+            { loc: [55, 63] },
+            { loc: [63, 69] },
+            { loc: [70, 72] },
+            { loc: [73, 74] },
           ]}
         />
 
         <Slide>
           <ReactRallyWaveformV4 useBrokenCalculator />
         </Slide>
-
-        <Slide>It don't work that way.</Slide>
 
         <CodeSlide
           bgColor="secondary"

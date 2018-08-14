@@ -48,7 +48,7 @@ class ReactRallyWaveform extends Component {
               frequency={frequency}
               amplitude={amplitude}
               shape={shape}
-              timeElapsed={timeElapsed}
+              timeElapsed={useMultiplier ? timeElapsed : timeElapsed * frequency}
               color={COLORS.blue[700]}
               strokeWidth={4}
             />

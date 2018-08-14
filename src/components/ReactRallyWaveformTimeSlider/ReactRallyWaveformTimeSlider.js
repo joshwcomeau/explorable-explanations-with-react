@@ -15,6 +15,7 @@ class ReactRallyWaveform extends Component {
     frequency: 1,
     amplitude: 1,
     shape: 'sine',
+    timeElapsed: 0,
   };
 
   static defaultProps = {

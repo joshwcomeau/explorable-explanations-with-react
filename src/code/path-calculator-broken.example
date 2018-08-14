@@ -45,7 +45,6 @@ class PathCalculator extends PureComponent {
           ratio
         }) => {
           const from = getPointsForWaveform({
-            shape,
             amplitude,
             frequency,
             width,
@@ -55,7 +54,6 @@ class PathCalculator extends PureComponent {
           });
 
           const to = getPointsForWaveform({
-            shape,
             amplitude,
             frequency,
             width,
