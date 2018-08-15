@@ -1,15 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-
-import { COLORS } from '../../constants';
 
 import Slider from '../Slider';
 import Spacer from '../Spacer';
-import Label from '../Label';
 import Waveform from '../Waveform';
 import WaveformAxis from '../WaveformAxis';
-import WaveformCalculator from '../WaveformCalculator';
-import WaveformStopwatch from '../WaveformStopwatch/WaveformStopwatchSimple';
 
 class ReactRallyWaveform extends Component {
   state = {

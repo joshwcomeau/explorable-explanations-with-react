@@ -1,4 +1,14 @@
-import React, { Component, Fragment } from 'react';
+/**
+ * IGNORE ME
+ * This component is from a prior universe. It still exists only because I
+ * didn't have time to backtrack and clean up old components.
+ *
+ * The older version was actually more modular, which was important for this
+ * presentation (for example, there's no way to avoid springing values in the
+ * new Waveform component). Outside of the very niche concenrs of this
+ * presentation, though, the new form works better
+ */
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import { COLORS } from '../../constants';
