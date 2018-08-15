@@ -33,9 +33,10 @@ import hadoukenSrc from './assets/hadouken.jpeg';
 import heavenSrc from './assets/heaven.jpg';
 import oprahSrc from './assets/oprah.gif';
 import timekeeperSrc from './assets/timekeeper.jpg';
+import timekeeperThanosSrc from './assets/timekeeper-thanos.jpg';
 import judgeJudySrc from './assets/judge-judy.gif';
 import explorablesSrc from './assets/explorables.gif';
-import timekeeperSuperheroSrc from './assets/timekeeper-super.png';
+import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
 
 import TitleSlide from './slides/Title';
 import IntroSlide from './slides/Intro';
@@ -79,8 +80,9 @@ preloader({
   hadoukenSrc,
   heavenSrc,
   timekeeperSrc,
-  timekeeperSuperheroSrc,
+  timekeeperThanosSrc,
   judgeJudySrc,
+  clockStockPhotosSrc,
 });
 
 // Require CSS
@@ -872,9 +874,11 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformTimeSlider />
         </Slide>
 
-        <Slide bgImage={timekeeperSrc} />
+        <Slide>
+          <img src={timekeeperSrc} height="100%" />
+        </Slide>
 
-        <Slide bgImage={judgeJudySrc} />
+        <Slide bgImage={clockStockPhotosSrc} />
 
         <Slide>
           <div style={{ textAlign: 'left' }}>
@@ -919,12 +923,14 @@ export default class Presentation extends React.Component {
             <ComponentPlayground
               code={require('./code/playground/timekeeper-multiplier.example')}
               theme="external"
-              scope={{ Timekeeper }}
+              scope={{ Timekeeper, Value }}
             />
           </div>
         </Slide>
 
-        <Slide bgImage={timekeeperSuperheroSrc} />
+        <Slide>
+          <img src={timekeeperThanosSrc} height="100%" />
+        </Slide>
 
         <CodeSlide
           bgColor="secondary"

@@ -5,6 +5,7 @@ import { COLORS } from '../../constants';
 
 import Slider from '../Slider';
 import Spacer from '../Spacer';
+import Button from '../Button';
 import Waveform from '../Waveform';
 import WaveformAxis from '../WaveformAxis';
 import Label from '../Label';
@@ -36,11 +37,11 @@ class ReactRallyWaveform extends Component {
 
   render() {
     const { width, height, useBrokenCalculator } = this.props;
-    const { frequency, amplitude, shape, stopwatchRunning } = this.state;
+    const { frequency, amplitude, shape, isRunning } = this.state;
 
     return (
       <Timekeeper eased multiplier={frequency}>
-        {({ timeElapsed, toggleRunning }) => (
+        {({ timeElapsed, isRunning, toggleRunning }) => (
           <Wrapper>
             <Waveform
               useBrokenCalculator={useBrokenCalculator}
@@ -79,7 +80,7 @@ class ReactRallyWaveform extends Component {
                     onChange={this.updateAmplitude}
                   />
                 </Column>
-                <Spacer size={70} />
+                <Spacer size={30} />
                 <Column>
                   <Slider
                     label="frequency"
@@ -95,21 +96,37 @@ class ReactRallyWaveform extends Component {
               <Row>
                 <Column>
                   <Label>Shape</Label>
-                  <button onClick={() => this.updateShape('sine')}>Sine</button>
-                  <button onClick={() => this.updateShape('triangle')}>
+                  <Button
+                    isSelected={shape === 'sine'}
+                    onClick={() => this.updateShape('sine')}
+                  >
+                    Sine
+                  </Button>
+                  <Button
+                    isSelected={shape === 'triangle'}
+                    onClick={() => this.updateShape('triangle')}
+                  >
                     Triangle
-                  </button>
-                  <button onClick={() => this.updateShape('square')}>
+                  </Button>
+                  <Button
+                    isSelected={shape === 'square'}
+                    onClick={() => this.updateShape('square')}
+                  >
                     Square
-                  </button>
-                  <button onClick={() => this.updateShape('sawtooth')}>
+                  </Button>
+                  <Button
+                    isSelected={shape === 'sawtooth'}
+                    onClick={() => this.updateShape('sawtooth')}
+                  >
                     Sawtooth
-                  </button>
+                  </Button>
                 </Column>
-                <Spacer size={70} />
+                <Spacer size={30} />
                 <Column>
                   <Label>Play</Label>
-                  <button onClick={toggleRunning}>Toggle</button>
+                  <Button isSelected={isRunning} onClick={toggleRunning}>
+                    Toggle
+                  </Button>
                 </Column>
               </Row>
             </Controls>
@@ -139,6 +156,10 @@ const Row = styled.div`
 
 const Column = styled.div`
   flex: 1;
+`;
+
+const HalfWidthButton = Button.extend`
+  width: calc(50% - 5px);
 `;
 
 export default ReactRallyWaveform;

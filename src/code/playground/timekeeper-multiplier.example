@@ -1,15 +1,26 @@
 const Demo = () => (
-  <Timekeeper multiplier={1}>
-    {({ timeElapsed, toggleRunning }) => (
-      <>
-        Time Elapsed: {timeElapsed}
-        <br /><br />
-        <button onClick={toggleRunning}>
-          Toggle
-        </button>
-      </>
+  <Value initial={1}>
+    {({ value, set }) => (
+      <Timekeeper
+        runOnMount={true}
+        multiplier={value}
+      >
+        {({ timeElapsed }) => (
+          <>
+            Time Elapsed: {timeElapsed}
+            <br /><br />
+            <input
+              type="number"
+              value={value}
+              onChange={ev =>
+                set(ev.target.value)
+              }
+            />
+          </>
+        )}
+      </Timekeeper>
     )}
-  </Timekeeper>
+  </Value>
 );
 
 render(<Demo />);

@@ -65,7 +65,7 @@ class Timekeeper extends Component {
 
   render() {
     const { eased, children } = this.props;
-    const { timeElapsed } = this.state;
+    const { timeElapsed, isRunning } = this.state;
     const { toggleRunning } = this;
 
     return (
@@ -73,6 +73,7 @@ class Timekeeper extends Component {
         {({ timeElapsed }) =>
           children({
             timeElapsed: Math.round(timeElapsed),
+            isRunning,
             toggleRunning,
           })
         }

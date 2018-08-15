@@ -5,6 +5,7 @@ import { COLORS } from '../../constants';
 
 import Slider from '../Slider';
 import Spacer from '../Spacer';
+import Button from '../Button';
 import Waveform from '../Waveform';
 import WaveformAxis from '../WaveformAxis';
 import Label from '../Label';
@@ -40,7 +41,7 @@ class ReactRallyWaveform extends Component {
 
     return (
       <Timekeeper multiplier={useMultiplier ? frequency : 1}>
-        {({ timeElapsed, toggleRunning }) => (
+        {({ timeElapsed, isRunning, toggleRunning }) => (
           <Wrapper>
             <Waveform
               width={width}
@@ -48,7 +49,7 @@ class ReactRallyWaveform extends Component {
               frequency={frequency}
               amplitude={amplitude}
               shape={shape}
-              timeElapsed={useMultiplier ? timeElapsed : timeElapsed * frequency}
+              timeElapsed={timeElapsed}
               color={COLORS.blue[700]}
               strokeWidth={4}
             />
@@ -94,7 +95,9 @@ class ReactRallyWaveform extends Component {
               <Row>
                 <Column>
                   <Label>Play</Label>
-                  <button onClick={toggleRunning}>Toggle</button>
+                  <Button isSelected={isRunning} onClick={toggleRunning}>
+                    Toggle
+                  </Button>
                 </Column>
               </Row>
             </Controls>
