@@ -1,3 +1,9 @@
+/**
+ * IGNORE ME
+ * This component is from a prior universe. It still exists only because I
+ * didn't have time to backtrack and clean up old components.
+ */
+
 import { Component } from 'react';
 
 class WaveformState extends Component {

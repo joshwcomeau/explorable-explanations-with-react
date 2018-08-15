@@ -1,19 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import {
-  BlockQuote,
-  Cite,
-  Deck,
-  Heading,
-  ListItem,
-  List,
-  Quote,
-  Slide,
-  Text,
-} from 'spectacle';
 import styled from 'styled-components';
 
-import GameOfLife from '../../components/GameOfLife';
-import WindowDimensions from '../../components/WindowDimensions';
+import GameOfLife from '../GameOfLife';
+import WindowDimensions from '../WindowDimensions';
 import { COLORS } from '../../constants';
 
 class Title extends Component {

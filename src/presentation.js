@@ -1,10 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { injectGlobal } from 'styled-components';
 import {
   Deck,
   Heading,
-  ListItem,
-  List,
   Slide,
   ComponentPlayground,
 } from 'spectacle';
@@ -15,32 +13,23 @@ import { Spring } from 'react-spring';
 import { Value } from 'react-powerplug';
 
 import { COLORS } from './constants';
-import { roundTo } from './utils';
 
-import spacerSrc from './assets/spacer.png';
 import basketballSrc from './assets/basketball.gif';
 import districtSrc from './assets/district-v2.mp4';
 import traditionalSoundArticleSrc from './assets/traditional-sound-article.png';
 import convergingSquareSrc from './assets/converging-square.gif';
 import bananaPathSrc from './assets/banana-path.png';
-import stopwatchSrc from './assets/stopwatch.jpg';
-import phaseSrc from './assets/phase-4.gif';
 import legoSrc from './assets/lego.jpeg';
 import modularSynthSrc from './assets/modular-synth.jpg';
 import allTheThingsFastSrc from './assets/all-the-things-fast.mp4';
 import howItsMadeSrc from './assets/how-its-made.jpg';
-import hadoukenSrc from './assets/hadouken.jpeg';
 import heavenSrc from './assets/heaven.jpg';
-import oprahSrc from './assets/oprah.gif';
 import timekeeperSrc from './assets/timekeeper.jpg';
 import timekeeperThanosSrc from './assets/timekeeper-thanos.jpg';
-import judgeJudySrc from './assets/judge-judy.gif';
 import explorablesSrc from './assets/explorables.gif';
 import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
 
-import TitleSlide from './slides/Title';
-import IntroSlide from './slides/Intro';
-
+import Title from './components/Title';
 import Highlighted from './components/Highlighted';
 import Quote from './components/Quote';
 import Waveform from './components/Waveform';
@@ -48,15 +37,10 @@ import AirGrid from './components/AirGrid';
 import Slider from './components/Slider';
 import Oscillator from './components/Oscillator';
 import AudioOutput from './components/AudioOutput';
-import WaveformCalculator from './components/WaveformCalculator';
 import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave';
-import Stopwatch from './components/Stopwatch';
 import Timekeeper from './components/Timekeeper';
-import WaveformState from './components/WaveformState';
-import WaveformStateWithContainer from './components/WaveformState/WaveformState.withContainer';
-import StopwatchSimple from './components/Stopwatch/Stopwatch.no-animation';
 import ReactRallyWaveformV1 from './components/ReactRallyWaveformV1';
 import ReactRallyWaveformV2 from './components/ReactRallyWaveformV2';
 import ReactRallyWaveformV3 from './components/ReactRallyWaveformV3';
@@ -67,21 +51,16 @@ import UnsplashCredit from './components/UnsplashCredit/UnsplashCredit';
 import VennDiagram from './components/VennDiagram/VennDiagram';
 
 preloader({
-  spacerSrc,
   basketballSrc,
   districtSrc,
   convergingSquareSrc,
   bananaPathSrc,
-  stopwatchSrc,
-  phaseSrc,
   legoSrc,
   modularSynthSrc,
   howItsMadeSrc,
-  hadoukenSrc,
   heavenSrc,
   timekeeperSrc,
   timekeeperThanosSrc,
-  judgeJudySrc,
   clockStockPhotosSrc,
 });
 
@@ -131,15 +110,14 @@ export default class Presentation extends React.Component {
         theme={theme}
       >
         <Slide>
-          <TitleSlide />
+          <Title />
         </Slide>
 
-        <Slide
-          notes={`
-            Hello! My name is Josh, and I work for Khan Academy. Today I'd like to talk about an exciting new form of media.
-          `}
-        >
-          <IntroSlide />
+        <Slide>
+          <Heading size={2}>👋🏻 Hi, I'm Josh</Heading>
+          <br />
+          <br />
+          <Heading size={4}>I work for Khan Academy</Heading>
         </Slide>
 
         <Slide
@@ -172,37 +150,6 @@ export default class Presentation extends React.Component {
         >
           <img src={traditionalSoundArticleSrc} width="100%" />
         </Slide>
-
-        {/* <Slide
-          notes={`
-            The first is that language is lossy.
-
-            Words are a way to try and transmit an idea from my head to yours,
-            but at best they're a rough approximation. Complex systems aren't
-            easily compressed into a handful of vocal bits, it would take hours
-            of talking just to go over all the rules of a system.
-
-            And, it still wouldn't be sufficient, because...
-          `}
-        >
-          <Heading size={3}>
-            Language is lossy
-          </Heading>
-        </Slide>
-
-        <Slide
-          notes={`
-            ...learning is active. Deep, intuitive understanding requires that
-            your brain not only absorb the words, but think about them, make
-            the connections, create a working model of the system. And it's
-            hard to bridge the gap between theoretical and intuitive
-            understanding
-          `}
-        >
-          <Heading size={3}>
-            Learning is active
-          </Heading>
-        </Slide> */}
 
         <Slide
           notes={`
@@ -397,77 +344,6 @@ export default class Presentation extends React.Component {
           <Heading size={4}>{'<Waveform>'}</Heading>
         </Slide>
 
-        {/* <Slide
-          bgColor="secondary"
-          notes={`
-            The first thing I needed was a Waveform component, and the first step was figuring out if I wanted to use Canvas or SVG.
-
-            In general, I prefer SVG - it's easier to work with in React, it's easier to inspect with browser tools, it's more accessible. But I wasn't sure if performance would suffer.
-
-            So I built it using both technologies, a task that is surprisingly easy, since both technologies have very similar drawing APIs.
-          `}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-end',
-            }}
-          >
-            <Heading size={3} textColor="primary">
-              Canvas
-            </Heading>
-
-            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">
-              VS
-            </Heading>
-
-            <Heading size={3} textColor="primary">
-              SVG
-            </Heading>
-          </div>
-        </Slide>
-
-        <Slide
-          bgColor="secondary"
-          transition={[null]}
-          notes={`
-            And it turns out that there was no measurable difference in performance, so SVG it was!
-          `}
-        >
-          <div
-            style={{
-              position: 'relative',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-end',
-            }}
-          >
-            <Heading
-              size={3}
-              style={{
-                position: 'absolute',
-                top: -110,
-                right: 100,
-              }}
-            >
-              🎉
-            </Heading>
-
-            <Heading size={3} textColor="rgba(255, 255, 255, 0.5)">
-              Canvas
-            </Heading>
-
-            <Heading size={5} textColor="rgba(255, 255, 255, 0.5)">
-              VS
-            </Heading>
-
-            <Heading size={3} textColor="#1cff8d">
-              SVG
-            </Heading>
-          </div>
-        </Slide> */}
-
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
@@ -625,77 +501,6 @@ export default class Presentation extends React.Component {
           ]}
         />
 
-        {/* <Slide
-          notes={`
-            So this works quite well! We have a top level "view"-type component, that manages the state and assembles the pieces we've built.
-
-            But, this is a side-project, and I always like to experiment with side-projects. So I thought, what if this used...
-          `}
-        >
-          <Heading size={3}>
-            A "View" component that manages state.
-          </Heading>
-        </Slide>
-
-        <Slide bgImage={oprahSrc}>
-          <Heading size={1}>Render Props!!!1</Heading>
-        </Slide>
-
-        <CodeSlide
-          notes={`
-            Here's what I imagine. All of this state can live in a new
-            component, and both the state and the setters to update that
-            state can be passed down through a render prop.
-          `}
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/react-rally-waveform-with-axes.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title:
-                '<ReactRallyWaveform>',
-            },
-            { loc: [1, 3] },
-            { loc: [4, 12] },
-            { loc: [13, 22] },
-            { loc: [23, 33] },
-            { loc: [35, 46] },
-          ]}
-        />
-
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code/waveform-state.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title: '<WaveformState>',
-            },
-            { loc: [1, 4] },
-            { loc: [5, 9] },
-            { loc: [10, 17] },
-            { loc: [18, 19] },
-            { loc: [29, 35] },
-          ]}
-        />
-
-        <Slide
-          notes={`
-            Is this actually better though?
-
-            Well, it depends.
-
-            On the one hand, we've made it a bit more complicated, we've added a layer of abstraction, and so that's a real cost. Also, some people really hate render props...
-
-            In the actual Waveforms project, I kept the state living in the view, because the waveform is persistent. In this presentation, though, I need lots of subtly-different demos.
-          `}
-        >
-          <Heading size={3}>Is this actually better tho?</Heading>
-        </Slide> */}
-
         <Slide>
           <ReactRallyWaveformV1 />
         </Slide>
@@ -797,62 +602,6 @@ export default class Presentation extends React.Component {
             { loc: [44, 57] },
           ]}
         />
-
-        {/* <Slide>
-          <Heading size={3}>
-            Calculating the points is becoming a pretty big concern
-          </Heading>
-        </Slide>
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code-old/waveform-calculator-consumption.example')}
-          ranges={[
-            {
-              loc: [0],
-              title: 'New data flow',
-            },
-            { loc: [0, 5] },
-            { loc: [5, 10] },
-            { loc: [10, 11] },
-            { loc: [11, 16] },
-          ]}
-        /> */}
-
-        {/* <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code-old/waveform-points.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title: '<Waveform>',
-            },
-            { loc: [1, 8] },
-            { loc: [9, 10] },
-            { loc: [18, 21] },
-            { loc: [23, 35] },
-          ]}
-        />
-
-        <CodeSlide
-          bgColor="secondary"
-          lang="jsx"
-          code={require('./code-old/waveform-calculator-amp-freq.example')}
-          ranges={[
-            {
-              loc: [0, 1],
-              title: '<WaveformCalculator>',
-            },
-            { loc: [1, 9] },
-            { loc: [10, 11] },
-            { loc: [20, 27] },
-            { loc: [27, 28] },
-            { loc: [28, 36] },
-            { loc: [37, 38] },
-          ]}
-        /> */}
 
         <Slide bgColor="blue">
           <Heading size={2} textColor="primary">
