@@ -17,7 +17,6 @@ import { COLORS } from './constants';
 import basketballSrc from './assets/basketball.gif';
 import districtSrc from './assets/district-v2.mp4';
 import traditionalSoundArticleSrc from './assets/traditional-sound-article.png';
-import convergingSquareSrc from './assets/converging-square.gif';
 import bananaPathSrc from './assets/banana-path.png';
 import legoSrc from './assets/lego.jpeg';
 import modularSynthSrc from './assets/modular-synth.jpg';
@@ -28,6 +27,7 @@ import timekeeperSrc from './assets/timekeeper.jpg';
 import timekeeperThanosSrc from './assets/timekeeper-thanos.jpg';
 import explorablesSrc from './assets/explorables.gif';
 import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
+import shiftingSrc from './assets/shifting.gif';
 
 import Title from './components/Title';
 import Highlighted from './components/Highlighted';
@@ -53,7 +53,6 @@ import VennDiagram from './components/VennDiagram/VennDiagram';
 preloader({
   basketballSrc,
   districtSrc,
-  convergingSquareSrc,
   bananaPathSrc,
   legoSrc,
   modularSynthSrc,
@@ -62,6 +61,7 @@ preloader({
   timekeeperSrc,
   timekeeperThanosSrc,
   clockStockPhotosSrc,
+  shiftingSrc,
 });
 
 // Require CSS
@@ -399,7 +399,7 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <img src={convergingSquareSrc} style={{ margin: 'auto' }} />
+          <img src={shiftingSrc} style={{ margin: 'auto' }} />
         </Slide>
 
         <Slide>
@@ -679,6 +679,10 @@ export default class Presentation extends React.Component {
 
         <Slide>
           <img src={timekeeperThanosSrc} height="100%" />
+        </Slide>
+
+        <Slide>
+          <ReactRallyWaveformV3 useMultiplier />
         </Slide>
 
         <CodeSlide
