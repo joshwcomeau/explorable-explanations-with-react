@@ -2,9 +2,25 @@
 
 This repo holds the presentation and associated code for my 2018 React Rally talk, "Explorable Explanations with React".
 
+### Waveforms Project
+
+View the Waveforms project live on [The Pudding](https://pudding.cool/2018/02/waveforms/). You can also view the original repo [on Github](https://github.com/joshwcomeau/waveforms).
+
+
+### More Info on Explorable Explanations
+
+- Explorable explanations was coined by Bret Victor, someone who has done a ton of interesting work in the space. In particular, I really like his [talk on "Thinking the Unthinkable"](http://worrydream.com/MediaForThinkingTheUnthinkable/). He has a bunch of great stuff on his website, [worrydream.com](http://worrydream.com/).
+- Browse some explorable explanations on [explorabl.es](https://explorabl.es/)
+- A really exciting project is [Idyll](https://idyll-lang.org/), a React-based markup language that allows creation of explorable explanations.
+- [Nicky Case](https://twitter.com/ncasenmare) is an ultra-talented developer, and his work is how I first discovered this space. Check out [Nicky's website](https://ncase.me/), or some of my favourite pieces: [To Build a Better Ballot](https://ncase.me/ballot/), or [The Evolution of Trust](https://ncase.me/trust/).
+
+### Code Used in the Presentation
+
 Something you should know: The code _used_ this presentation differs here and there from the code _shown_ in the presentation. In some cases, there's a good reason for this (eg. the presentation needs to show the waveform without <Spring>, which isn't something we want in the real waveforms project). In other cases, I just didn't have time to backtrack and refactor.
 
 The code used/shown in this project is also quite different from the code in the [actual Waveforms project](https://github.com/joshwcomeau/waveforms). The reason for this is that I refactored/rethought a bunch of stuff when preparing this presentation, and didn't have the chance to retrofit the original project. Many of the underlying concepts are the same, but the component architecture is different.
+
+Remember, real-world projects are messy!
 
 With these caveats in mind, here is some of the interesting "real-world" code from this presentation:
 
