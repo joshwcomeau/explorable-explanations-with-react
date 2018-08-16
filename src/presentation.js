@@ -28,6 +28,8 @@ import timekeeperThanosSrc from './assets/timekeeper-thanos.jpg';
 import explorablesSrc from './assets/explorables.gif';
 import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
 import shiftingSrc from './assets/shifting.gif';
+import meSrc from './assets/me.jpeg';
+import khanAcademySrc from './assets/khan-academy.jpeg';
 
 import Title from './components/Title';
 import Highlighted from './components/Highlighted';
@@ -62,6 +64,8 @@ preloader({
   timekeeperThanosSrc,
   clockStockPhotosSrc,
   shiftingSrc,
+  meSrc,
+  khanAcademySrc,
 });
 
 // Require CSS
@@ -114,10 +118,20 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Heading size={2}>👋🏻 Hi, I'm Josh</Heading>
-          <br />
-          <br />
-          <Heading size={4}>I work for Khan Academy</Heading>
+          <Heading size={1} textColor="secondary">👋🏻 Hi!</Heading>
+        </Slide>
+
+        <Slide>
+          <img src={meSrc} style={{ borderRadius: '50%' }} />
+          <br /><br />
+
+          <Heading size={1} textColor="secondary">@joshwcomeau</Heading>
+        </Slide>
+
+        <Slide>
+          <img src={khanAcademySrc} />
+          <br /><br />
+          <Heading size={2}>I work at <br />Khan Academy</Heading>
         </Slide>
 
         <Slide
@@ -133,7 +147,7 @@ export default class Presentation extends React.Component {
             When you google "How sound works", you get a page that looks like...
           `}
         >
-          <Heading size={1}>🔊</Heading>
+          <Heading style={{ fontSize: '16rem' }}>🔊</Heading>
         </Slide>
 
         <Slide
@@ -160,7 +174,7 @@ export default class Presentation extends React.Component {
             toss things in the air and see how they react.
           `}
         >
-          <Heading size={1}>👩‍🔬</Heading>
+          <Heading style={{ fontSize: '16rem' }}>👩‍🔬</Heading>
         </Slide>
 
         <Slide
@@ -270,7 +284,7 @@ export default class Presentation extends React.Component {
           <video autoPlay loop src={districtSrc} style={{ width: '100%' }} />
         </Slide>
 
-        <Slide bgImage={explorablesSrc}>
+        {/* <Slide bgImage={explorablesSrc}>
           <a
             href="https://explorabl.es/"
             style={{
@@ -286,7 +300,7 @@ export default class Presentation extends React.Component {
           >
             https://explorabl.es/
           </a>
-        </Slide>
+        </Slide> */}
 
         <Slide
           notes={`
