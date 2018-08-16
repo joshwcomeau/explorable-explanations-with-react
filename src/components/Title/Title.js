@@ -1,28 +1,74 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
-import GameOfLife from '../GameOfLife';
-import WindowDimensions from '../WindowDimensions';
 import { COLORS } from '../../constants';
 
+import GameOfLife from '../GameOfLife';
+import WindowDimensions from '../WindowDimensions';
+import AudioOutput from '../AudioOutput';
+import Oscillator from '../Oscillator';
+
 class Title extends Component {
+  state = {
+    // Later in this presentation, I have some audible tones.
+    // It occurs to me that it would be nice to know if the audio works earlier!
+    // So, this title slide can toggle a simple sine wave on/off.
+    playTestTone: false,
+  };
+
+  componentDidMount() {
+    window.addEventListener('keypress', this.handleKeypress);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keypress', this.handleKeypress);
+  }
+
+  handleKeypress = ev => {
+    if (ev.key === 'p') {
+      this.setState(state => ({
+        playTestTone: !state.playTestTone,
+      }));
+    }
+  };
+
   render() {
+    const { playTestTone } = this.state;
+
     return (
-      <Fragment>
-        <TitleText>Explorable Explanations with React</TitleText>
-        <WindowDimensions>
-          {({ width, height }) => (
-            <GameOfLifeWrapper>
-              <GameOfLife
-                width={width}
-                height={height}
-                colors={['#FFFFFF', '#f4f4f4', '#ececec', '#e0e0e0', '#dadada']}
-                framesPerTick={90}
+      <AudioOutput masterVolume={5}>
+        {(audioCtx, masterOut) => (
+          <Fragment>
+            <TitleText>Explorable Explanations with React</TitleText>
+            <WindowDimensions>
+              {({ width, height }) => (
+                <GameOfLifeWrapper>
+                  <GameOfLife
+                    width={width}
+                    height={height}
+                    colors={[
+                      '#FFFFFF',
+                      COLORS.indigo[500],
+                      COLORS.purple[500],
+                      COLORS.pink[500],
+                    ]}
+                    framesPerTick={80}
+                  />
+                </GameOfLifeWrapper>
+              )}
+            </WindowDimensions>
+            {playTestTone && (
+              <Oscillator
+                slidePitch={false}
+                audioCtx={audioCtx}
+                masterOut={masterOut}
+                frequency={440}
+                amplitude={0.08}
               />
-            </GameOfLifeWrapper>
-          )}
-        </WindowDimensions>
-      </Fragment>
+            )}
+          </Fragment>
+        )}
+      </AudioOutput>
     );
   }
 }

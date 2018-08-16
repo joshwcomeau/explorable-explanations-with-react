@@ -1,11 +1,6 @@
 import React, { Fragment } from 'react';
 import { injectGlobal } from 'styled-components';
-import {
-  Deck,
-  Heading,
-  Slide,
-  ComponentPlayground,
-} from 'spectacle';
+import { Deck, Heading, Slide, ComponentPlayground } from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
 import preloader from 'spectacle/lib/utils/preloader';
 import CodeSlide from 'spectacle-code-slide';
@@ -25,7 +20,6 @@ import howItsMadeSrc from './assets/how-its-made.jpg';
 import heavenSrc from './assets/heaven.jpg';
 import timekeeperSrc from './assets/timekeeper.jpg';
 import timekeeperThanosSrc from './assets/timekeeper-thanos.jpg';
-import explorablesSrc from './assets/explorables.gif';
 import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
 import shiftingSrc from './assets/shifting.gif';
 import meSrc from './assets/me.jpeg';
@@ -37,8 +31,8 @@ import Quote from './components/Quote';
 import Waveform from './components/Waveform';
 import AirGrid from './components/AirGrid';
 import Slider from './components/Slider';
-import Oscillator from './components/Oscillator';
 import AudioOutput from './components/AudioOutput';
+import Oscillator from './components/Oscillator';
 import WaveformPointManager from './components/WaveformPointManager';
 import AmplitudeFrequencyManager from './components/AmplitudeFrequencyManager';
 import GridVsWave from './components/GridVsWave';
@@ -55,9 +49,11 @@ import VennDiagram from './components/VennDiagram/VennDiagram';
 preloader({
   basketballSrc,
   districtSrc,
+  traditionalSoundArticleSrc,
   bananaPathSrc,
   legoSrc,
   modularSynthSrc,
+  allTheThingsFastSrc,
   howItsMadeSrc,
   heavenSrc,
   timekeeperSrc,
@@ -118,20 +114,34 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <Heading size={1} textColor="secondary">👋🏻 Hi!</Heading>
+          <Heading size={1} textColor="secondary">
+            👋🏻 Hi!
+          </Heading>
         </Slide>
 
         <Slide>
           <img src={meSrc} style={{ borderRadius: '50%' }} />
-          <br /><br />
+          <br />
+          <br />
 
-          <Heading size={1} textColor="secondary">@joshwcomeau</Heading>
+          <Heading size={1} textColor="secondary">
+            <a
+              href="https://twitter.com/JoshWComeau"
+              style={{ textDecoration: 'none' }}
+            >
+              @joshwcomeau
+            </a>
+          </Heading>
         </Slide>
 
         <Slide>
           <img src={khanAcademySrc} />
-          <br /><br />
-          <Heading size={2}>I work at <br />Khan Academy</Heading>
+          <br />
+          <br />
+          <Heading size={2}>
+            I work for <br />
+            Khan Academy
+          </Heading>
         </Slide>
 
         <Slide
@@ -937,7 +947,7 @@ export default class Presentation extends React.Component {
           <br />
           <br />
           <Heading size={5} textColor="secondary">
-            Slides and code available on Twitter:
+            Slides, code, and more available on Twitter:
           </Heading>
           <Heading size={2}>
             <a href="https://twitter.com/JoshWComeau">@joshwcomeau</a>

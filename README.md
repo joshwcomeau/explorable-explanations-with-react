@@ -2,10 +2,13 @@
 
 This repo holds the presentation and associated code for my 2018 React Rally talk, "Explorable Explanations with React".
 
+### Slides
+
+View the slides here: [http://jovial-hypatia-a56434.netlify.com](http://jovial-hypatia-a56434.netlify.com)
+
 ### Waveforms Project
 
 View the Waveforms project live on [The Pudding](https://pudding.cool/2018/02/waveforms/). You can also view the original repo [on Github](https://github.com/joshwcomeau/waveforms).
-
 
 ### More Info on Explorable Explanations
 

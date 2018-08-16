@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
 import {
   generateNewBoard,
@@ -24,18 +23,6 @@ const buildBlendedColorString = compose(
 );
 
 class GameOfLife extends PureComponent {
-  static PropTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    colors: PropTypes.arrayOf(COLOR_TYPE).isRequired,
-    backgroundColor: COLOR_TYPE,
-    cellWidth: PropTypes.number.isRequired,
-    cellHeight: PropTypes.number.isRequired,
-    cellGap: PropTypes.number.isRequired,
-    stackedHeight: PropTypes.number.isRequired,
-    framesPerTick: PropTypes.number.isRequired,
-  };
-
   static defaultProps = {
     // Default props are set in GameOfLifePropConverter.js!
     // Done this way to handle the prop-derivation for `cellHeight` and
