@@ -24,6 +24,8 @@ import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
 import shiftingSrc from './assets/shifting.gif';
 import meSrc from './assets/me.jpeg';
 import khanAcademySrc from './assets/khan-academy.jpeg';
+import curves1Src from './assets/curves1.png';
+import curves2Src from './assets/curves2.png';
 
 import Title from './components/Title';
 import Highlighted from './components/Highlighted';
@@ -62,6 +64,8 @@ preloader({
   shiftingSrc,
   meSrc,
   khanAcademySrc,
+  curves1Src,
+  curves2Src,
 });
 
 // Require CSS
@@ -423,7 +427,11 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
-          <img src={shiftingSrc} style={{ margin: 'auto' }} />
+          <img src={curves1Src} style={{ width: 500 }} />
+        </Slide>
+
+        <Slide>
+          <img src={curves2Src} style={{ width: 500 }} />
         </Slide>
 
         <Slide>
@@ -582,20 +590,6 @@ export default class Presentation extends React.Component {
         <Slide>
           <div style={{ textAlign: 'left' }}>
             <ComponentPlayground
-              code={require('./code/playground/react-spring-pre.example')}
-              theme="external"
-              scope={{
-                Slider,
-                Fragment,
-                Value,
-              }}
-            />
-          </div>
-        </Slide>
-
-        <Slide>
-          <div style={{ textAlign: 'left' }}>
-            <ComponentPlayground
               code={require('./code/playground/react-spring.example')}
               theme="external"
               scope={{
@@ -705,10 +699,6 @@ export default class Presentation extends React.Component {
           <img src={timekeeperThanosSrc} height="100%" />
         </Slide>
 
-        <Slide>
-          <ReactRallyWaveformV3 useMultiplier />
-        </Slide>
-
         <CodeSlide
           bgColor="secondary"
           lang="jsx"
@@ -721,6 +711,10 @@ export default class Presentation extends React.Component {
             { loc: [26, 28] },
           ]}
         />
+
+        <Slide>
+          <ReactRallyWaveformV3 useMultiplier />
+        </Slide>
 
         <Slide bgColor="blue">
           <Heading size={2} textColor="primary">
