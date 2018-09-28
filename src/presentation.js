@@ -17,7 +17,7 @@ import legoSrc from './assets/lego.jpeg';
 import modularSynthSrc from './assets/modular-synth.jpg';
 import allTheThingsFastSrc from './assets/all-the-things-fast.mp4';
 import howItsMadeSrc from './assets/how-its-made.jpg';
-import heavenSrc from './assets/heaven.jpg';
+import slinkySrc from './assets/slinky.jpg';
 import timekeeperSrc from './assets/timekeeper.jpg';
 import timekeeperThanosSrc from './assets/timekeeper-thanos.jpg';
 import clockStockPhotosSrc from './assets/clock-stock-photos.gif';
@@ -57,7 +57,7 @@ preloader({
   modularSynthSrc,
   allTheThingsFastSrc,
   howItsMadeSrc,
-  heavenSrc,
+  slinkySrc,
   timekeeperSrc,
   timekeeperThanosSrc,
   clockStockPhotosSrc,
@@ -435,6 +435,10 @@ export default class Presentation extends React.Component {
         </Slide>
 
         <Slide>
+          <span style={{ fontSize: 144 }}>💡</span>
+        </Slide>
+
+        <Slide>
           <WaveformPointManager />
         </Slide>
 
@@ -551,22 +555,23 @@ export default class Presentation extends React.Component {
           <ReactRallyWaveformV2 />
         </Slide>
 
-        <Slide bgImage={heavenSrc}>
+        <Slide bgImage={slinkySrc}>
           <Heading
             size={1}
             style={{
               color: '#FFF',
-              textShadow: '4px 4px 30px rgba(0, 0, 0, 0.4)',
+              textShadow: `
+                1px 1px 0px #111,
+                2px 2px 0px #111,
+                3px 3px 0px #111,
+                4px 4px 0px #111
+              `,
             }}
           >
             Spring Physics
           </Heading>
 
-          <UnsplashCredit
-            username="ianstauffer"
-            fullName="
-            Ian Stauffer"
-          />
+          <UnsplashCredit username="rawpixel" fullName="rawpixel" />
         </Slide>
 
         <Slide>
@@ -675,6 +680,21 @@ export default class Presentation extends React.Component {
           ]}
         />
 
+        <CodeSlide
+          bgColor="secondary"
+          lang="jsx"
+          code={require('./code/waveform-with-time-elapsed.example')}
+          ranges={[
+            {
+              loc: [0, 1],
+              title: '<Waveform>',
+            },
+            { loc: [12, 13] },
+            { loc: [32, 41] },
+            { loc: [37, 38] },
+          ]}
+        />
+
         <Slide>
           <Heading size={4}>There's a problem, though...</Heading>
           <br />
@@ -756,6 +776,7 @@ export default class Presentation extends React.Component {
             { loc: [23, 32] },
             { loc: [32, 33] },
             { loc: [33, 44] },
+            { loc: [38, 39] },
           ]}
         />
 

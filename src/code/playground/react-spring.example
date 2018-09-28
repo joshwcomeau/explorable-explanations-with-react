@@ -8,11 +8,11 @@ const Demo = () => (
         </div>
 
         <Spring to={{ value }}>
-          {({ value }) => (
+          {(interpolated) => (
             <div>
               Value (spring):
               <strong>
-                {Math.round(value)}
+                {Math.round(interpolated.value)}
               </strong>
             </div>
           )}

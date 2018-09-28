@@ -10,6 +10,7 @@ class Waveform extends Component {
     ]),
     frequency: PropTypes.number.isRequired,
     amplitude: PropTypes.number.isRequired,
+    timeElapsed: PropTypes.number.isRequired,
     color: PropTypes.string.isRequired,
     strokeWidth: PropTypes.number.isRequired,
   };
@@ -21,6 +22,7 @@ class Waveform extends Component {
       shape,
       frequency,
       amplitude,
+      timeElapsed,
       color,
       strokeWidth,
     } = this.props;
@@ -33,6 +35,7 @@ class Waveform extends Component {
               shape,
               frequency: sprung.frequency,
               amplitude: sprung.amplitude,
+              timeElapsed,
               width,
               height,
             });
